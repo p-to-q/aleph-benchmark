@@ -1,0 +1,294 @@
+{
+  "artifacts": [
+    {
+      "bytes": 3427,
+      "encodingFormat": "text/markdown",
+      "note": "Platform package documentation.",
+      "path": "EVALUATION.md",
+      "role": "metadata",
+      "sha256": "aa3f181f2ecf0380f46ff5b406c8333a33f395735a715d09f5bef442789479e8"
+    },
+    {
+      "bytes": 8015,
+      "encodingFormat": "text/markdown",
+      "note": "Platform package documentation.",
+      "path": "PLATFORM_LAUNCH_CHECKLIST.md",
+      "role": "metadata",
+      "sha256": "cc8687b40e37836d792b0da12fb96bdeb8d643e763359d4881b0de278d771a1a"
+    },
+    {
+      "bytes": 6618,
+      "encodingFormat": "text/markdown",
+      "note": "Hugging Face dataset card with YAML metadata.",
+      "path": "README.md",
+      "role": "metadata",
+      "sha256": "97c3b2499c10ed69f629834a44acb9e4dd6b453c8db28be92b2ccf0b5621e188"
+    },
+    {
+      "bytes": 17765,
+      "encodingFormat": "application/json",
+      "note": "Croissant JSON-LD metadata for cross-platform discovery.",
+      "path": "croissant.json",
+      "role": "metadata",
+      "sha256": "610ab8ad6aaac1e720873a3c47decb959df48275830f3603ce1acb229ccab869"
+    },
+    {
+      "bytes": 8731,
+      "encodingFormat": "text/csv",
+      "note": "Platform-facing benchmark data table.",
+      "path": "data/public_s2_items.csv",
+      "role": "data",
+      "sha256": "d23615372ddbe8749621e612f0cd1e18025de8bb0150419926b805591cf18900"
+    },
+    {
+      "bytes": 92015,
+      "encodingFormat": "application/jsonlines",
+      "note": "Platform-facing benchmark data table.",
+      "path": "data/public_s2_items.jsonl",
+      "role": "data",
+      "sha256": "f6a8fc84861259ece233a2c883ca5cdc6eebe45c2f699a0898c790653f2b870a"
+    },
+    {
+      "bytes": 56884,
+      "encodingFormat": "text/csv",
+      "note": "Platform-facing benchmark data table.",
+      "path": "data/public_s2_prompts.csv",
+      "role": "data",
+      "sha256": "ab71399b7b8e5c543dccb1493fcb6df5b3f687c30c8a01666b48404ee2af8034"
+    },
+    {
+      "bytes": 133353,
+      "encodingFormat": "application/jsonlines",
+      "note": "Platform-facing benchmark data table.",
+      "path": "data/public_s2_prompts.jsonl",
+      "role": "data",
+      "sha256": "32cb5757463ce8d520f24888009c272c022b9d95f9bf59a6bf7ff8b15fd281cc"
+    },
+    {
+      "bytes": 7606,
+      "encodingFormat": "text/csv",
+      "note": "Platform-facing benchmark data table.",
+      "path": "data/submission_format.csv",
+      "role": "data",
+      "sha256": "617849929146fb8e5c2b95bcd91f49d3c84fea4ff4d008741680a761901e6e34"
+    },
+    {
+      "bytes": 4725,
+      "encodingFormat": "application/json",
+      "note": "Kaggle Dataset metadata.",
+      "path": "dataset-metadata.json",
+      "role": "metadata",
+      "sha256": "a411045a7236fc3ed87777720b1974f8d638b10c216788e418e3e5bed325eb43"
+    },
+    {
+      "bytes": 5022,
+      "encodingFormat": "text/markdown",
+      "note": "Platform package documentation.",
+      "path": "docs/hosted-m0-runbook.md",
+      "role": "docs",
+      "sha256": "13796b957eb8418b731648f8e61638c05c727bd547a22c48cfc940fe40791758"
+    },
+    {
+      "bytes": 2191,
+      "encodingFormat": "application/json",
+      "note": "Mock evidence artifact or generated evidence note.",
+      "path": "evidence/m0-audit.json",
+      "role": "evidence",
+      "sha256": "0ea2afc0484d62d1809752cf757cbbb87978a066a94b57f6cb067a83118b70c0"
+    },
+    {
+      "bytes": 2382,
+      "encodingFormat": "application/json",
+      "note": "Mock evidence artifact or generated evidence note.",
+      "path": "evidence/m0-bundle.json",
+      "role": "evidence",
+      "sha256": "80c6fd9ede41d127abfdd60e8197cd6c64b2aa68f659c28558cf423700b63206"
+    },
+    {
+      "bytes": 148252,
+      "encodingFormat": "application/json",
+      "note": "Mock evidence artifact or generated evidence note.",
+      "path": "evidence/m0-call-manifest.json",
+      "role": "evidence",
+      "sha256": "840d72ed6a238d62ee7c72a379667fd96220640da4d6afb92409afc590561e74"
+    },
+    {
+      "bytes": 9172,
+      "encodingFormat": "text/markdown",
+      "note": "Mock evidence artifact or generated evidence note.",
+      "path": "evidence/m0-evidence.md",
+      "role": "evidence",
+      "sha256": "71c7c2bf5395ac48e659dced28d4381f7ee902fc235a0fa30ff74351eaba8ee8"
+    },
+    {
+      "bytes": 1495191,
+      "encodingFormat": "application/json",
+      "note": "Mock evidence artifact or generated evidence note.",
+      "path": "evidence/m0-first-run.json",
+      "role": "evidence",
+      "sha256": "af2869f7c3da70c1484fd583905f4a119c8f4bddba6341801cb73e07525cf985"
+    },
+    {
+      "bytes": 2330,
+      "encodingFormat": "text/markdown",
+      "note": "Mock evidence artifact or generated evidence note.",
+      "path": "evidence/m0-report.md",
+      "role": "evidence",
+      "sha256": "b8f0bd43f283d4648232431923bc46c25f7213e1a52f858ab176c9e26564b5ce"
+    },
+    {
+      "bytes": 3708,
+      "encodingFormat": "text/csv",
+      "note": "Mock evidence artifact or generated evidence note.",
+      "path": "evidence/mock_item_metrics.csv",
+      "role": "evidence",
+      "sha256": "4d2f51b93e97d5a8be998a67880ff179b619cafdec58b66b6ade3beacfc0b4e8"
+    },
+    {
+      "bytes": 328,
+      "encodingFormat": "text/csv",
+      "note": "Mock evidence artifact or generated evidence note.",
+      "path": "evidence/mock_model_summary.csv",
+      "role": "evidence",
+      "sha256": "9d23ddbe9d06b012741b9185352a8aac6175d45bd7169422a0ab73e847025ba4"
+    },
+    {
+      "bytes": 1359,
+      "encodingFormat": "text/markdown",
+      "note": "Hugging Face upload preparation artifact.",
+      "path": "huggingface/README.md",
+      "role": "huggingface",
+      "sha256": "4886187bc95c86a9e5e1100fc836e991c55b73e4d69ebf0b7df34fed523a504b"
+    },
+    {
+      "bytes": 6528,
+      "encodingFormat": "text/plain",
+      "note": "Hugging Face upload preparation artifact.",
+      "path": "huggingface/upload_dataset.py",
+      "role": "huggingface",
+      "sha256": "b85ec45eddb535f6f99c7bd2aab7f72635612312207104d6d714a85633cd6b93"
+    },
+    {
+      "bytes": 3827,
+      "encodingFormat": "text/markdown",
+      "note": "Kaggle Community Benchmark preparation artifact.",
+      "path": "kaggle/README.md",
+      "role": "kaggle",
+      "sha256": "ae01e23932708f963c4c4d2a0ef476855466455913e784aa521828fa57ffc1c7"
+    },
+    {
+      "bytes": 9633,
+      "encodingFormat": "text/plain",
+      "note": "Kaggle Community Benchmark preparation artifact.",
+      "path": "kaggle/_scoring.py",
+      "role": "kaggle",
+      "sha256": "411d33844252a327f8f95c92131387632e0fb1e145e5898ef213bd060f634874"
+    },
+    {
+      "bytes": 3888,
+      "encodingFormat": "text/plain",
+      "note": "Kaggle Community Benchmark preparation artifact.",
+      "path": "kaggle/aleph_bench_frozen_ladder_task_cli.py",
+      "role": "kaggle",
+      "sha256": "39b4db758d8ab07ac98f474ff1e1f1789bb61b5d7572fc799823d3f202a4da5b"
+    },
+    {
+      "bytes": 4098,
+      "encodingFormat": "text/plain",
+      "note": "Kaggle Community Benchmark preparation artifact.",
+      "path": "kaggle/aleph_bench_m0_task.py",
+      "role": "kaggle",
+      "sha256": "6c15bb221d69822209aff2f14518fb1efa9dc823fdf1a34f640527a92164e4fc"
+    },
+    {
+      "bytes": 6072,
+      "encodingFormat": "text/plain",
+      "note": "Kaggle Community Benchmark preparation artifact.",
+      "path": "kaggle/api_test_smoke.py",
+      "role": "kaggle",
+      "sha256": "0fa4d1912f87a8861c93c978a87c8e9da2173ec6d1cbe2846e93b7aaa80b6afb"
+    },
+    {
+      "bytes": 9964,
+      "encodingFormat": "text/plain",
+      "note": "Kaggle Community Benchmark preparation artifact.",
+      "path": "kaggle/score_outputs.py",
+      "role": "kaggle",
+      "sha256": "af02758150ed761e2ccf77553fb0c870d8fce9ab529462fef765beb1b94466fa"
+    },
+    {
+      "bytes": 1170,
+      "encodingFormat": "application/json",
+      "note": "JSON Schema validation artifact.",
+      "path": "schemas/aleph-bench-audit.schema.json",
+      "role": "schemas",
+      "sha256": "09c20f86f1a034ff6c2224b59f5f803f41b8caf10b0e588be4ff268052055671"
+    },
+    {
+      "bytes": 1525,
+      "encodingFormat": "application/json",
+      "note": "JSON Schema validation artifact.",
+      "path": "schemas/aleph-bench-bundle.schema.json",
+      "role": "schemas",
+      "sha256": "01cad1f7144fd0edf842fca556e402c1514ed97261284f62568154996f3f6e5e"
+    },
+    {
+      "bytes": 2255,
+      "encodingFormat": "application/json",
+      "note": "JSON Schema validation artifact.",
+      "path": "schemas/aleph-bench-item.schema.json",
+      "role": "schemas",
+      "sha256": "f7a2de686713e0b98921bd124ccf2cb83aa6682a476e11bd0938db7f5175e1b8"
+    },
+    {
+      "bytes": 5322,
+      "encodingFormat": "application/json",
+      "note": "JSON Schema validation artifact.",
+      "path": "schemas/aleph-bench-manifest.schema.json",
+      "role": "schemas",
+      "sha256": "2709b0b7e133e6c1bcb7b70b35906b023e85f0cc0129dc6d0fe28a0b632f2fa0"
+    },
+    {
+      "bytes": 1800,
+      "encodingFormat": "application/json",
+      "note": "JSON Schema validation artifact.",
+      "path": "schemas/aleph-bench-platform-package.schema.json",
+      "role": "schemas",
+      "sha256": "87f86c7290670033ba6ecf8f9080f79f10593859d39ad652c5d70274ce79aff5"
+    },
+    {
+      "bytes": 11824,
+      "encodingFormat": "application/json",
+      "note": "JSON Schema validation artifact.",
+      "path": "schemas/aleph-bench-result.schema.json",
+      "role": "schemas",
+      "sha256": "4ecc511c021ac5642279fb709e905d83c4853e9f89a3be3fd9139e82eaa69891"
+    }
+  ],
+  "createdAt": "2026-06-03T00:00:00Z",
+  "evidenceMode": "mock",
+  "huggingFaceDatasetId": "p-to-q/aleph-bench",
+  "id": "aleph-bench-frozen-ladder-mock-platform-package",
+  "kaggleDatasetId": "p-to-q/aleph-bench",
+  "notes": [
+    "This package is platform-ready seed data and deterministic mock pipeline evidence.",
+    "It is not a real model leaderboard.",
+    "Hosted black-box results must produce their own result, manifest, report, and evidence note."
+  ],
+  "packageKind": "platform_release",
+  "root": "bench/results/platform/m0-mock",
+  "targetPlatforms": [
+    "huggingface_dataset",
+    "kaggle_dataset",
+    "kaggle_community_benchmark",
+    "croissant"
+  ],
+  "validationCommands": [
+    "./aleph-bench verify --audit bench/results/m0-audit.json --bundle bench/results/m0-bundle.json",
+    "./aleph-bench package --check bench/results/platform/m0-mock/package-manifest.json",
+    "python3 bench/results/platform/m0-mock/kaggle/api_test_smoke.py",
+    "python3 bench/results/platform/m0-mock/huggingface/upload_dataset.py --dry-run",
+    "npm run lint",
+    "npm run test"
+  ]
+}

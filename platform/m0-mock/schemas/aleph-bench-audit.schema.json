@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BenchAudit",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "dataDir", "resultPath", "evidenceNotePath", "checks"],
+  "properties": {
+    "status": { "enum": ["ok", "failed"] },
+    "dataDir": { "type": "string" },
+    "resultPath": { "type": "string" },
+    "evidenceNotePath": { "type": "string" },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/check" }
+    }
+  },
+  "$defs": {
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "status", "evidence"],
+      "properties": {
+        "id": {
+          "enum": [
+            "schema-valid",
+            "dataset-integrity",
+            "mock-only-audit",
+            "aleph-run-contract",
+            "exact-match",
+            "seed-0-reproducible",
+            "rank-stable",
+            "leakage-gate",
+            "iia",
+            "metric-reporting",
+            "evidence-note"
+          ]
+        },
+        "status": { "enum": ["ok", "failed"] },
+        "evidence": { "type": "string" }
+      }
+    }
+  }
+}

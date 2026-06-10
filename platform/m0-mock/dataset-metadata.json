@@ -1,0 +1,175 @@
+{
+  "description": "AlephBench Frozen Ladder contains 30 rule-generated S2 compositional targets, frozen-ladder prompts, JSON schemas, and deterministic mock evidence. It is a benchmark procedure package, not a real model leaderboard.",
+  "id": "p-to-q/aleph-bench",
+  "isPrivate": false,
+  "keywords": [
+    "benchmark",
+    "prompt-compression",
+    "reverse-prompt-search",
+    "synthetic-data",
+    "llm-evaluation"
+  ],
+  "licenses": [
+    {
+      "name": "CC0-1.0"
+    }
+  ],
+  "resources": [
+    {
+      "description": "Flat public S2 item table for Kaggle Dataset preview.",
+      "path": "data/public_s2_items.csv",
+      "schema": {
+        "fields": [
+          {
+            "name": "item_id",
+            "title": "Bench item id.",
+            "type": "string"
+          },
+          {
+            "name": "stratum",
+            "title": "Benchmark stratum.",
+            "type": "string"
+          },
+          {
+            "name": "language",
+            "title": "Language code.",
+            "type": "string"
+          },
+          {
+            "name": "metric_class",
+            "title": "Primary metric class.",
+            "type": "string"
+          },
+          {
+            "name": "target_label",
+            "title": "Human-readable target label.",
+            "type": "string"
+          },
+          {
+            "name": "target_text",
+            "title": "Target output text.",
+            "type": "string"
+          },
+          {
+            "name": "family",
+            "title": "S2 generator family.",
+            "type": "string"
+          },
+          {
+            "name": "canary_guid",
+            "title": "Dataset-level contamination canary, kept out of target and prompt text.",
+            "type": "string"
+          },
+          {
+            "name": "license",
+            "title": "Item license.",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "description": "Flat frozen-ladder prompt table with leakage-gate measurements.",
+      "path": "data/public_s2_prompts.csv",
+      "schema": {
+        "fields": [
+          {
+            "name": "item_id",
+            "title": "Bench item id.",
+            "type": "string"
+          },
+          {
+            "name": "prompt_id",
+            "title": "Frozen ladder prompt id.",
+            "type": "string"
+          },
+          {
+            "name": "rung",
+            "title": "Frozen ladder rung.",
+            "type": "integer"
+          },
+          {
+            "name": "paraphrase",
+            "title": "Paraphrase index within rung.",
+            "type": "integer"
+          },
+          {
+            "name": "label",
+            "title": "Rung label.",
+            "type": "string"
+          },
+          {
+            "name": "expected_leakage",
+            "title": "Expected leakage class.",
+            "type": "string"
+          },
+          {
+            "name": "tokens",
+            "title": "Regex token count.",
+            "type": "integer"
+          },
+          {
+            "name": "disqualified",
+            "title": "Whether the leakage gate disqualifies the prompt.",
+            "type": "boolean"
+          },
+          {
+            "name": "lcs_ratio",
+            "title": "Prompt-target LCS ratio.",
+            "type": "number"
+          },
+          {
+            "name": "trigram_overlap",
+            "title": "Target trigram overlap.",
+            "type": "number"
+          },
+          {
+            "name": "verbatim_span_tokens",
+            "title": "Longest verbatim token span.",
+            "type": "integer"
+          },
+          {
+            "name": "prompt",
+            "title": "Prompt text.",
+            "type": "string"
+          }
+        ]
+      }
+    },
+    {
+      "description": "Community benchmark output submission shape.",
+      "path": "data/submission_format.csv",
+      "schema": {
+        "fields": [
+          {
+            "name": "row_id",
+            "title": "Submission row id.",
+            "type": "string"
+          },
+          {
+            "name": "model_id",
+            "title": "Provider-facing model id.",
+            "type": "string"
+          },
+          {
+            "name": "item_id",
+            "title": "Bench item id.",
+            "type": "string"
+          },
+          {
+            "name": "prompt_id",
+            "title": "Frozen ladder prompt id.",
+            "type": "string"
+          },
+          {
+            "name": "output_text",
+            "title": "Generated model output.",
+            "type": "string"
+          }
+        ]
+      }
+    }
+  ],
+  "subtitle": "Frozen-ladder prompt-compression seed benchmark with mock pipeline evidence",
+  "title": "AlephBench Frozen Ladder"
+}

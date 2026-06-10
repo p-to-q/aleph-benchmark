@@ -1,0 +1,63 @@
+{
+  "checks": [
+    {
+      "evidence": "30 BenchItems and bench/results/m0-first-run.json validate against checked-in schemas.",
+      "id": "schema-valid",
+      "status": "ok"
+    },
+    {
+      "evidence": "30 S2 items share one field-level canary, keep it out of target/prompt text, use a 10/10/10 family split, and carry 4x2 ladder coordinates.",
+      "id": "dataset-integrity",
+      "status": "ok"
+    },
+    {
+      "evidence": "audit is limited to deterministic mock results so it never spends hosted model calls.",
+      "id": "mock-only-audit",
+      "status": "ok"
+    },
+    {
+      "evidence": "all 90 item runs validate against schemas/aleph-run.schema.json.",
+      "id": "aleph-run-contract",
+      "status": "ok"
+    },
+    {
+      "evidence": "target==output gives fidelity 1.0 and distortion 0.0 for every S2 item.",
+      "id": "exact-match",
+      "status": "ok"
+    },
+    {
+      "evidence": "checked-in seed 0 result exactly matches a fresh run with the same config and has three model summaries.",
+      "id": "seed-0-reproducible",
+      "status": "ok"
+    },
+    {
+      "evidence": "seed 0 order=['mock-frontier', 'mock-mid', 'mock-small']; seed 1 order=['mock-frontier', 'mock-mid', 'mock-small']; adjacent AURC CI bands do not overlap.",
+      "id": "rank-stable",
+      "status": "ok"
+    },
+    {
+      "evidence": "all 60 rung-0 anchors gate, no rung 1-3 prompts gate, and result frontiers contain no disqualified points.",
+      "id": "leakage-gate",
+      "status": "ok"
+    },
+    {
+      "evidence": "removing any one model preserves the relative AURC order of the other two.",
+      "id": "iia",
+      "status": "ok"
+    },
+    {
+      "evidence": "result reports S2 stratum, bootstrap CIs for AURC/ECL/Elicit, and no forbidden fused-score keys.",
+      "id": "metric-reporting",
+      "status": "ok"
+    },
+    {
+      "evidence": "docs/benchmark/m0-evidence.md contains the required cold-read sections and honesty phrases.",
+      "id": "evidence-note",
+      "status": "ok"
+    }
+  ],
+  "dataDir": "bench/data/public/s2",
+  "evidenceNotePath": "docs/benchmark/m0-evidence.md",
+  "resultPath": "bench/results/m0-first-run.json",
+  "status": "ok"
+}

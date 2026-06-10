@@ -1,0 +1,5030 @@
+{
+  "configuredReruns": 3,
+  "createdAt": "2026-06-03T00:00:00Z",
+  "datasetPath": "bench/data/public/s2",
+  "effectiveReruns": 1,
+  "estimatedGenerations": 540,
+  "gatedPromptCount": 60,
+  "gatedPrompts": [
+    {
+      "itemId": "s2-001",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-001-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 001",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-001",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-001-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 001",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-002",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 0,
+      "promptId": "s2-002-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 002",
+      "tokens": 43
+    },
+    {
+      "itemId": "s2-002",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 1,
+      "promptId": "s2-002-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 002",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-003",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-003-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 003",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-003",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-003-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 003",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-004",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-004-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 004",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-004",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-004-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 004",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-005",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 0,
+      "promptId": "s2-005-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 005",
+      "tokens": 43
+    },
+    {
+      "itemId": "s2-005",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 1,
+      "promptId": "s2-005-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 005",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-006",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-006-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 006",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-006",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-006-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 006",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-007",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-007-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 007",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-007",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-007-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 007",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-008",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 0,
+      "promptId": "s2-008-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 008",
+      "tokens": 43
+    },
+    {
+      "itemId": "s2-008",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 1,
+      "promptId": "s2-008-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 008",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-009",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-009-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 009",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-009",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-009-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 009",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-010",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-010-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 010",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-010",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-010-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 010",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-011",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 0,
+      "promptId": "s2-011-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 011",
+      "tokens": 43
+    },
+    {
+      "itemId": "s2-011",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 1,
+      "promptId": "s2-011-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 011",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-012",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-012-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 012",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-012",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-012-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 012",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-013",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-013-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 013",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-013",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-013-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 013",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-014",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 0,
+      "promptId": "s2-014-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 014",
+      "tokens": 43
+    },
+    {
+      "itemId": "s2-014",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 1,
+      "promptId": "s2-014-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 014",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-015",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-015-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 015",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-015",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-015-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 015",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-016",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-016-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 016",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-016",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-016-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 016",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-017",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 0,
+      "promptId": "s2-017-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 017",
+      "tokens": 43
+    },
+    {
+      "itemId": "s2-017",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 1,
+      "promptId": "s2-017-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 017",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-018",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-018-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 018",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-018",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-018-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 018",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-019",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-019-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 019",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-019",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-019-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 019",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-020",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 0,
+      "promptId": "s2-020-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 020",
+      "tokens": 43
+    },
+    {
+      "itemId": "s2-020",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 1,
+      "promptId": "s2-020-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 020",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-021",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-021-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 021",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-021",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-021-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 021",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-022",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-022-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 022",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-022",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-022-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 022",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-023",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 0,
+      "promptId": "s2-023-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 023",
+      "tokens": 43
+    },
+    {
+      "itemId": "s2-023",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 1,
+      "promptId": "s2-023-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 023",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-024",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-024-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 024",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-024",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-024-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 024",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-025",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-025-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 025",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-025",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-025-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 025",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-026",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 0,
+      "promptId": "s2-026-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 026",
+      "tokens": 43
+    },
+    {
+      "itemId": "s2-026",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 1,
+      "promptId": "s2-026-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 026",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-027",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-027-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 027",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-027",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-027-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 027",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-028",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-028-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 028",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-028",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-028-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 028",
+      "tokens": 51
+    },
+    {
+      "itemId": "s2-029",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 0,
+      "promptId": "s2-029-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 029",
+      "tokens": 43
+    },
+    {
+      "itemId": "s2-029",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 39
+      },
+      "paraphrase": 1,
+      "promptId": "s2-029-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 029",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-030",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 0,
+      "promptId": "s2-030-r0-p0",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 030",
+      "tokens": 47
+    },
+    {
+      "itemId": "s2-030",
+      "label": "Explicit Reconstruction",
+      "leakageGate": {
+        "disqualified": true,
+        "lcsRatio": 1.0,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 1.0,
+        "verbatimSpanTokens": 43
+      },
+      "paraphrase": 1,
+      "promptId": "s2-030-r0-p1",
+      "rung": 0,
+      "targetLabel": "S2 compositional seed 030",
+      "tokens": 51
+    }
+  ],
+  "id": "aleph-bench-m0-manifest-seed-0",
+  "itemCount": 30,
+  "leakageThresholds": {
+    "lcsRatio": 0.65,
+    "trigramOverlap": 0.5,
+    "verbatimSpanTokens": 16
+  },
+  "modelCount": 3,
+  "models": [
+    {
+      "evidenceMode": "mock",
+      "missingEnv": [],
+      "model": "mock-frontier",
+      "status": "ready"
+    },
+    {
+      "evidenceMode": "mock",
+      "missingEnv": [],
+      "model": "mock-mid",
+      "status": "ready"
+    },
+    {
+      "evidenceMode": "mock",
+      "missingEnv": [],
+      "model": "mock-small",
+      "status": "ready"
+    }
+  ],
+  "nonLeakingPromptCount": 180,
+  "notes": [
+    "Manifest lists only non-leaking prompts that would be sent to model adapters.",
+    "Gated prompts are retained as IDs and leakage measurements, without prompt text.",
+    "Manifest generation does not call any model and is not model evidence."
+  ],
+  "promptCount": 240,
+  "prompts": [
+    {
+      "itemId": "s2-001",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-001 arithmetic card. Use start 6, step 3, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence blue, copper, jade. End with checksum A-195.",
+      "promptId": "s2-001-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 001",
+      "tokens": 37
+    },
+    {
+      "itemId": "s2-001",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.395349,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-001 arithmetic card: three numbered rows from start 6 with step 3; include fields n, n+step, n*step, glyph using blue, copper, jade; final checksum A-195.",
+      "promptId": "s2-001-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 001",
+      "tokens": 34
+    },
+    {
+      "itemId": "s2-001",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.27907,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.102564,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-001 arithmetic card; arithmetic schema; start 6; step 3; glyphs blue, copper, jade; checksum A-195.",
+      "promptId": "s2-001-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 001",
+      "tokens": 17
+    },
+    {
+      "itemId": "s2-001",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.255814,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.051282,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-001: start 6, step 3, glyph cycle blue/copper/jade, checksum A-195.",
+      "promptId": "s2-001-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 001",
+      "tokens": 16
+    },
+    {
+      "itemId": "s2-001",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.162791,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.025641,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-001 arithmetic 6/3/A-195",
+      "promptId": "s2-001-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 001",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-001",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "card 001: 6+3, A-195",
+      "promptId": "s2-001-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 001",
+      "tokens": 6
+    },
+    {
+      "itemId": "s2-002",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.641026,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.081081,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-002 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:copper:cipher:clicks:24; Beryl:jade:delta:drifts:33; Cato:violet:ember:echoes:42; Dessa:silver:fable:folds:51. End with checksum L-108.",
+      "promptId": "s2-002-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 002",
+      "tokens": 55
+    },
+    {
+      "itemId": "s2-002",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.108108,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-002 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:copper:cipher:clicks:24; Beryl:jade:delta:drifts:33; Cato:violet:ember:echoes:42; Dessa:silver:fable:folds:51 and final checksum L-108.",
+      "promptId": "s2-002-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 002",
+      "tokens": 46
+    },
+    {
+      "itemId": "s2-002",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.135135,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 0,
+      "prompt": "S2-002 letter lattice; A-D lattice; tuples Aster:copper:cipher:clicks:24 | Beryl:jade:delta:drifts:33 | Cato:violet:ember:echoes:42 | Dessa:silver:fable:folds:51; checksum L-108.",
+      "promptId": "s2-002-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 002",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-002",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.512821,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Lattice S2-002: Aster/Beryl/Cato/Dessa tuple list Aster:copper:cipher:clicks:24 | Beryl:jade:delta:drifts:33 | Cato:violet:ember:echoes:42 | Dessa:silver:fable:folds:51; L-108.",
+      "promptId": "s2-002-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 002",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-002",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.128205,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 0,
+      "prompt": "S2-002 lattice L-108",
+      "promptId": "s2-002-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 002",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-002",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.179487,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "lattice 002: Aster:copper:cipher:clicks:24 ... L-108",
+      "promptId": "s2-002-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 002",
+      "tokens": 9
+    },
+    {
+      "itemId": "s2-003",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.581395,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.170732,
+        "verbatimSpanTokens": 7
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-003 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples west:14:Q5; north:7:T8; east:13:N4; south:6:V6. Then print total 40, parity even, code R-775.",
+      "promptId": "s2-003-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 003",
+      "tokens": 41
+    },
+    {
+      "itemId": "s2-003",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.534884,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.121951,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-003 route receipt; four legs from triples west:14:Q5; north:7:T8; east:13:N4; south:6:V6; finish with total 40, parity even, and code R-775.",
+      "promptId": "s2-003-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 003",
+      "tokens": 35
+    },
+    {
+      "itemId": "s2-003",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.488372,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.073171,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-003 route receipt; route schema; legs west:14:Q5 | north:7:T8 | east:13:N4 | south:6:V6; total 40; even; R-775.",
+      "promptId": "s2-003-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 003",
+      "tokens": 24
+    },
+    {
+      "itemId": "s2-003",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Route S2-003: west:14:Q5 | north:7:T8 | east:13:N4 | south:6:V6 -> 40/even/R-775.",
+      "promptId": "s2-003-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 003",
+      "tokens": 19
+    },
+    {
+      "itemId": "s2-003",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.02439,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-003 route R-775",
+      "promptId": "s2-003-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 003",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-003",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "route 003: west:14:Q5 ... R-775",
+      "promptId": "s2-003-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 003",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-004",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-004 arithmetic card. Use start 9, step 6, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence violet, silver, crimson. End with checksum A-339.",
+      "promptId": "s2-004-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 004",
+      "tokens": 37
+    },
+    {
+      "itemId": "s2-004",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.395349,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-004 arithmetic card: three numbered rows from start 9 with step 6; include fields n, n+step, n*step, glyph using violet, silver, crimson; final checksum A-339.",
+      "promptId": "s2-004-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 004",
+      "tokens": 34
+    },
+    {
+      "itemId": "s2-004",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.27907,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.102564,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-004 arithmetic card; arithmetic schema; start 9; step 6; glyphs violet, silver, crimson; checksum A-339.",
+      "promptId": "s2-004-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 004",
+      "tokens": 17
+    },
+    {
+      "itemId": "s2-004",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.255814,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.051282,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-004: start 9, step 6, glyph cycle violet/silver/crimson, checksum A-339.",
+      "promptId": "s2-004-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 004",
+      "tokens": 16
+    },
+    {
+      "itemId": "s2-004",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.025641,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-004 arithmetic 9/6/A-339",
+      "promptId": "s2-004-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 004",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-004",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.093023,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "card 004: 9+6, A-339",
+      "promptId": "s2-004-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 004",
+      "tokens": 6
+    },
+    {
+      "itemId": "s2-005",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.641026,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.081081,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-005 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:silver:fable:folds:45; Beryl:crimson:glyph:glows:54; Cato:olive:harbor:halts:63; Dessa:amber:atom:arcs:72. End with checksum L-270.",
+      "promptId": "s2-005-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 005",
+      "tokens": 55
+    },
+    {
+      "itemId": "s2-005",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.108108,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-005 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:silver:fable:folds:45; Beryl:crimson:glyph:glows:54; Cato:olive:harbor:halts:63; Dessa:amber:atom:arcs:72 and final checksum L-270.",
+      "promptId": "s2-005-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 005",
+      "tokens": 46
+    },
+    {
+      "itemId": "s2-005",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.135135,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 0,
+      "prompt": "S2-005 letter lattice; A-D lattice; tuples Aster:silver:fable:folds:45 | Beryl:crimson:glyph:glows:54 | Cato:olive:harbor:halts:63 | Dessa:amber:atom:arcs:72; checksum L-270.",
+      "promptId": "s2-005-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 005",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-005",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.512821,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Lattice S2-005: Aster/Beryl/Cato/Dessa tuple list Aster:silver:fable:folds:45 | Beryl:crimson:glyph:glows:54 | Cato:olive:harbor:halts:63 | Dessa:amber:atom:arcs:72; L-270.",
+      "promptId": "s2-005-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 005",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-005",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.128205,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 0,
+      "prompt": "S2-005 lattice L-270",
+      "promptId": "s2-005-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 005",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-005",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.179487,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "lattice 005: Aster:silver:fable:folds:45 ... L-270",
+      "promptId": "s2-005-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 005",
+      "tokens": 9
+    },
+    {
+      "itemId": "s2-006",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.581395,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.170732,
+        "verbatimSpanTokens": 7
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-006 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples south:7:V6; west:3:P9; north:12:R3; east:8:K7. Then print total 30, parity even, code R-600.",
+      "promptId": "s2-006-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 006",
+      "tokens": 41
+    },
+    {
+      "itemId": "s2-006",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.534884,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.121951,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-006 route receipt; four legs from triples south:7:V6; west:3:P9; north:12:R3; east:8:K7; finish with total 30, parity even, and code R-600.",
+      "promptId": "s2-006-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 006",
+      "tokens": 35
+    },
+    {
+      "itemId": "s2-006",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.488372,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.073171,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-006 route receipt; route schema; legs south:7:V6 | west:3:P9 | north:12:R3 | east:8:K7; total 30; even; R-600.",
+      "promptId": "s2-006-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 006",
+      "tokens": 24
+    },
+    {
+      "itemId": "s2-006",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Route S2-006: south:7:V6 | west:3:P9 | north:12:R3 | east:8:K7 -> 30/even/R-600.",
+      "promptId": "s2-006-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 006",
+      "tokens": 19
+    },
+    {
+      "itemId": "s2-006",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.02439,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-006 route R-600",
+      "promptId": "s2-006-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 006",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-006",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "route 006: south:7:V6 ... R-600",
+      "promptId": "s2-006-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 006",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-007",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-007 arithmetic card. Use start 12, step 4, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence olive, amber, blue. End with checksum A-328.",
+      "promptId": "s2-007-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 007",
+      "tokens": 37
+    },
+    {
+      "itemId": "s2-007",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.395349,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-007 arithmetic card: three numbered rows from start 12 with step 4; include fields n, n+step, n*step, glyph using olive, amber, blue; final checksum A-328.",
+      "promptId": "s2-007-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 007",
+      "tokens": 34
+    },
+    {
+      "itemId": "s2-007",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.27907,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.102564,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-007 arithmetic card; arithmetic schema; start 12; step 4; glyphs olive, amber, blue; checksum A-328.",
+      "promptId": "s2-007-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 007",
+      "tokens": 17
+    },
+    {
+      "itemId": "s2-007",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.255814,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.051282,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-007: start 12, step 4, glyph cycle olive/amber/blue, checksum A-328.",
+      "promptId": "s2-007-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 007",
+      "tokens": 16
+    },
+    {
+      "itemId": "s2-007",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.025641,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-007 arithmetic 12/4/A-328",
+      "promptId": "s2-007-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 007",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-007",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.093023,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "card 007: 12+4, A-328",
+      "promptId": "s2-007-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 007",
+      "tokens": 6
+    },
+    {
+      "itemId": "s2-008",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.641026,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.081081,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-008 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:amber:atom:arcs:66; Beryl:blue:binary:bends:75; Cato:copper:cipher:clicks:84; Dessa:jade:delta:drifts:93. End with checksum L-344.",
+      "promptId": "s2-008-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 008",
+      "tokens": 55
+    },
+    {
+      "itemId": "s2-008",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.108108,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-008 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:amber:atom:arcs:66; Beryl:blue:binary:bends:75; Cato:copper:cipher:clicks:84; Dessa:jade:delta:drifts:93 and final checksum L-344.",
+      "promptId": "s2-008-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 008",
+      "tokens": 46
+    },
+    {
+      "itemId": "s2-008",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.135135,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 0,
+      "prompt": "S2-008 letter lattice; A-D lattice; tuples Aster:amber:atom:arcs:66 | Beryl:blue:binary:bends:75 | Cato:copper:cipher:clicks:84 | Dessa:jade:delta:drifts:93; checksum L-344.",
+      "promptId": "s2-008-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 008",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-008",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.512821,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Lattice S2-008: Aster/Beryl/Cato/Dessa tuple list Aster:amber:atom:arcs:66 | Beryl:blue:binary:bends:75 | Cato:copper:cipher:clicks:84 | Dessa:jade:delta:drifts:93; L-344.",
+      "promptId": "s2-008-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 008",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-008",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.128205,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 0,
+      "prompt": "S2-008 lattice L-344",
+      "promptId": "s2-008-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 008",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-008",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.179487,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "lattice 008: Aster:amber:atom:arcs:66 ... L-344",
+      "promptId": "s2-008-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 008",
+      "tokens": 9
+    },
+    {
+      "itemId": "s2-009",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.581395,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.170732,
+        "verbatimSpanTokens": 7
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-009 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples east:13:K7; south:12:M2; west:11:Q5; north:10:T8. Then print total 46, parity even, code R-919.",
+      "promptId": "s2-009-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 009",
+      "tokens": 41
+    },
+    {
+      "itemId": "s2-009",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.534884,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.121951,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-009 route receipt; four legs from triples east:13:K7; south:12:M2; west:11:Q5; north:10:T8; finish with total 46, parity even, and code R-919.",
+      "promptId": "s2-009-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 009",
+      "tokens": 35
+    },
+    {
+      "itemId": "s2-009",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.488372,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.073171,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-009 route receipt; route schema; legs east:13:K7 | south:12:M2 | west:11:Q5 | north:10:T8; total 46; even; R-919.",
+      "promptId": "s2-009-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 009",
+      "tokens": 24
+    },
+    {
+      "itemId": "s2-009",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Route S2-009: east:13:K7 | south:12:M2 | west:11:Q5 | north:10:T8 -> 46/even/R-919.",
+      "promptId": "s2-009-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 009",
+      "tokens": 19
+    },
+    {
+      "itemId": "s2-009",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.02439,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-009 route R-919",
+      "promptId": "s2-009-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 009",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-009",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "route 009: east:13:K7 ... R-919",
+      "promptId": "s2-009-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 009",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-010",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-010 arithmetic card. Use start 15, step 2, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence copper, jade, violet. End with checksum A-317.",
+      "promptId": "s2-010-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 010",
+      "tokens": 37
+    },
+    {
+      "itemId": "s2-010",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-010 arithmetic card: three numbered rows from start 15 with step 2; include fields n, n+step, n*step, glyph using copper, jade, violet; final checksum A-317.",
+      "promptId": "s2-010-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 010",
+      "tokens": 34
+    },
+    {
+      "itemId": "s2-010",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.27907,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.102564,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-010 arithmetic card; arithmetic schema; start 15; step 2; glyphs copper, jade, violet; checksum A-317.",
+      "promptId": "s2-010-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 010",
+      "tokens": 17
+    },
+    {
+      "itemId": "s2-010",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.255814,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.051282,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-010: start 15, step 2, glyph cycle copper/jade/violet, checksum A-317.",
+      "promptId": "s2-010-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 010",
+      "tokens": 16
+    },
+    {
+      "itemId": "s2-010",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.162791,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.025641,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-010 arithmetic 15/2/A-317",
+      "promptId": "s2-010-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 010",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-010",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "card 010: 15+2, A-317",
+      "promptId": "s2-010-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 010",
+      "tokens": 6
+    },
+    {
+      "itemId": "s2-011",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.641026,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.081081,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-011 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:jade:delta:drifts:87; Beryl:violet:ember:echoes:96; Cato:silver:fable:folds:16; Dessa:crimson:glyph:glows:25. End with checksum L-506.",
+      "promptId": "s2-011-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 011",
+      "tokens": 55
+    },
+    {
+      "itemId": "s2-011",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.108108,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-011 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:jade:delta:drifts:87; Beryl:violet:ember:echoes:96; Cato:silver:fable:folds:16; Dessa:crimson:glyph:glows:25 and final checksum L-506.",
+      "promptId": "s2-011-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 011",
+      "tokens": 46
+    },
+    {
+      "itemId": "s2-011",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.135135,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 0,
+      "prompt": "S2-011 letter lattice; A-D lattice; tuples Aster:jade:delta:drifts:87 | Beryl:violet:ember:echoes:96 | Cato:silver:fable:folds:16 | Dessa:crimson:glyph:glows:25; checksum L-506.",
+      "promptId": "s2-011-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 011",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-011",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.512821,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Lattice S2-011: Aster/Beryl/Cato/Dessa tuple list Aster:jade:delta:drifts:87 | Beryl:violet:ember:echoes:96 | Cato:silver:fable:folds:16 | Dessa:crimson:glyph:glows:25; L-506.",
+      "promptId": "s2-011-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 011",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-011",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.128205,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 0,
+      "prompt": "S2-011 lattice L-506",
+      "promptId": "s2-011-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 011",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-011",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.179487,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "lattice 011: Aster:jade:delta:drifts:87 ... L-506",
+      "promptId": "s2-011-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 011",
+      "tokens": 9
+    },
+    {
+      "itemId": "s2-012",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.581395,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.170732,
+        "verbatimSpanTokens": 7
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-012 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples north:6:T8; east:8:N4; south:10:V6; west:12:P9. Then print total 36, parity even, code R-744.",
+      "promptId": "s2-012-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 012",
+      "tokens": 41
+    },
+    {
+      "itemId": "s2-012",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.534884,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.121951,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-012 route receipt; four legs from triples north:6:T8; east:8:N4; south:10:V6; west:12:P9; finish with total 36, parity even, and code R-744.",
+      "promptId": "s2-012-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 012",
+      "tokens": 35
+    },
+    {
+      "itemId": "s2-012",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.488372,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.073171,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-012 route receipt; route schema; legs north:6:T8 | east:8:N4 | south:10:V6 | west:12:P9; total 36; even; R-744.",
+      "promptId": "s2-012-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 012",
+      "tokens": 24
+    },
+    {
+      "itemId": "s2-012",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Route S2-012: north:6:T8 | east:8:N4 | south:10:V6 | west:12:P9 -> 36/even/R-744.",
+      "promptId": "s2-012-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 012",
+      "tokens": 19
+    },
+    {
+      "itemId": "s2-012",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.02439,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-012 route R-744",
+      "promptId": "s2-012-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 012",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-012",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "route 012: north:6:T8 ... R-744",
+      "promptId": "s2-012-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 012",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-013",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-013 arithmetic card. Use start 18, step 5, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence silver, crimson, olive. End with checksum A-461.",
+      "promptId": "s2-013-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 013",
+      "tokens": 37
+    },
+    {
+      "itemId": "s2-013",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.395349,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-013 arithmetic card: three numbered rows from start 18 with step 5; include fields n, n+step, n*step, glyph using silver, crimson, olive; final checksum A-461.",
+      "promptId": "s2-013-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 013",
+      "tokens": 34
+    },
+    {
+      "itemId": "s2-013",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.27907,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.102564,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-013 arithmetic card; arithmetic schema; start 18; step 5; glyphs silver, crimson, olive; checksum A-461.",
+      "promptId": "s2-013-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 013",
+      "tokens": 17
+    },
+    {
+      "itemId": "s2-013",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.255814,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.051282,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-013: start 18, step 5, glyph cycle silver/crimson/olive, checksum A-461.",
+      "promptId": "s2-013-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 013",
+      "tokens": 16
+    },
+    {
+      "itemId": "s2-013",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.025641,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-013 arithmetic 18/5/A-461",
+      "promptId": "s2-013-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 013",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-013",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.093023,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "card 013: 18+5, A-461",
+      "promptId": "s2-013-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 013",
+      "tokens": 6
+    },
+    {
+      "itemId": "s2-014",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.641026,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.081081,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-014 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:crimson:glyph:glows:19; Beryl:olive:harbor:halts:28; Cato:amber:atom:arcs:37; Dessa:blue:binary:bends:46. End with checksum L-668.",
+      "promptId": "s2-014-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 014",
+      "tokens": 55
+    },
+    {
+      "itemId": "s2-014",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.108108,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-014 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:crimson:glyph:glows:19; Beryl:olive:harbor:halts:28; Cato:amber:atom:arcs:37; Dessa:blue:binary:bends:46 and final checksum L-668.",
+      "promptId": "s2-014-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 014",
+      "tokens": 46
+    },
+    {
+      "itemId": "s2-014",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.135135,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 0,
+      "prompt": "S2-014 letter lattice; A-D lattice; tuples Aster:crimson:glyph:glows:19 | Beryl:olive:harbor:halts:28 | Cato:amber:atom:arcs:37 | Dessa:blue:binary:bends:46; checksum L-668.",
+      "promptId": "s2-014-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 014",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-014",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.512821,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Lattice S2-014: Aster/Beryl/Cato/Dessa tuple list Aster:crimson:glyph:glows:19 | Beryl:olive:harbor:halts:28 | Cato:amber:atom:arcs:37 | Dessa:blue:binary:bends:46; L-668.",
+      "promptId": "s2-014-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 014",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-014",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.128205,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 0,
+      "prompt": "S2-014 lattice L-668",
+      "promptId": "s2-014-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 014",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-014",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.179487,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "lattice 014: Aster:crimson:glyph:glows:19 ... L-668",
+      "promptId": "s2-014-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 014",
+      "tokens": 9
+    },
+    {
+      "itemId": "s2-015",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.581395,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.170732,
+        "verbatimSpanTokens": 7
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-015 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples west:12:P9; north:4:R3; east:9:K7; south:14:M2. Then print total 39, parity odd, code R-816.",
+      "promptId": "s2-015-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 015",
+      "tokens": 41
+    },
+    {
+      "itemId": "s2-015",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.534884,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.121951,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-015 route receipt; four legs from triples west:12:P9; north:4:R3; east:9:K7; south:14:M2; finish with total 39, parity odd, and code R-816.",
+      "promptId": "s2-015-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 015",
+      "tokens": 35
+    },
+    {
+      "itemId": "s2-015",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.488372,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.073171,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-015 route receipt; route schema; legs west:12:P9 | north:4:R3 | east:9:K7 | south:14:M2; total 39; odd; R-816.",
+      "promptId": "s2-015-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 015",
+      "tokens": 24
+    },
+    {
+      "itemId": "s2-015",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Route S2-015: west:12:P9 | north:4:R3 | east:9:K7 | south:14:M2 -> 39/odd/R-816.",
+      "promptId": "s2-015-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 015",
+      "tokens": 19
+    },
+    {
+      "itemId": "s2-015",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.02439,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-015 route R-816",
+      "promptId": "s2-015-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 015",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-015",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "route 015: west:12:P9 ... R-816",
+      "promptId": "s2-015-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 015",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-016",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-016 arithmetic card. Use start 21, step 3, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence amber, blue, copper. End with checksum A-450.",
+      "promptId": "s2-016-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 016",
+      "tokens": 37
+    },
+    {
+      "itemId": "s2-016",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.395349,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-016 arithmetic card: three numbered rows from start 21 with step 3; include fields n, n+step, n*step, glyph using amber, blue, copper; final checksum A-450.",
+      "promptId": "s2-016-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 016",
+      "tokens": 34
+    },
+    {
+      "itemId": "s2-016",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.27907,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.102564,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-016 arithmetic card; arithmetic schema; start 21; step 3; glyphs amber, blue, copper; checksum A-450.",
+      "promptId": "s2-016-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 016",
+      "tokens": 17
+    },
+    {
+      "itemId": "s2-016",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.255814,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.051282,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-016: start 21, step 3, glyph cycle amber/blue/copper, checksum A-450.",
+      "promptId": "s2-016-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 016",
+      "tokens": 16
+    },
+    {
+      "itemId": "s2-016",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.162791,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.025641,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-016 arithmetic 21/3/A-450",
+      "promptId": "s2-016-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 016",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-016",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "card 016: 21+3, A-450",
+      "promptId": "s2-016-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 016",
+      "tokens": 6
+    },
+    {
+      "itemId": "s2-017",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.641026,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.081081,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-017 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:blue:binary:bends:40; Beryl:copper:cipher:clicks:49; Cato:jade:delta:drifts:58; Dessa:violet:ember:echoes:67. End with checksum L-742.",
+      "promptId": "s2-017-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 017",
+      "tokens": 55
+    },
+    {
+      "itemId": "s2-017",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.108108,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-017 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:blue:binary:bends:40; Beryl:copper:cipher:clicks:49; Cato:jade:delta:drifts:58; Dessa:violet:ember:echoes:67 and final checksum L-742.",
+      "promptId": "s2-017-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 017",
+      "tokens": 46
+    },
+    {
+      "itemId": "s2-017",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.135135,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 0,
+      "prompt": "S2-017 letter lattice; A-D lattice; tuples Aster:blue:binary:bends:40 | Beryl:copper:cipher:clicks:49 | Cato:jade:delta:drifts:58 | Dessa:violet:ember:echoes:67; checksum L-742.",
+      "promptId": "s2-017-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 017",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-017",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.512821,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Lattice S2-017: Aster/Beryl/Cato/Dessa tuple list Aster:blue:binary:bends:40 | Beryl:copper:cipher:clicks:49 | Cato:jade:delta:drifts:58 | Dessa:violet:ember:echoes:67; L-742.",
+      "promptId": "s2-017-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 017",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-017",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.128205,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 0,
+      "prompt": "S2-017 lattice L-742",
+      "promptId": "s2-017-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 017",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-017",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.179487,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "lattice 017: Aster:blue:binary:bends:40 ... L-742",
+      "promptId": "s2-017-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 017",
+      "tokens": 9
+    },
+    {
+      "itemId": "s2-018",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.581395,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.170732,
+        "verbatimSpanTokens": 7
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-018 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples south:5:M2; west:13:Q5; north:8:T8; east:3:N4. Then print total 29, parity odd, code R-641.",
+      "promptId": "s2-018-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 018",
+      "tokens": 41
+    },
+    {
+      "itemId": "s2-018",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.534884,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.121951,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-018 route receipt; four legs from triples south:5:M2; west:13:Q5; north:8:T8; east:3:N4; finish with total 29, parity odd, and code R-641.",
+      "promptId": "s2-018-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 018",
+      "tokens": 35
+    },
+    {
+      "itemId": "s2-018",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.488372,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.073171,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-018 route receipt; route schema; legs south:5:M2 | west:13:Q5 | north:8:T8 | east:3:N4; total 29; odd; R-641.",
+      "promptId": "s2-018-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 018",
+      "tokens": 24
+    },
+    {
+      "itemId": "s2-018",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Route S2-018: south:5:M2 | west:13:Q5 | north:8:T8 | east:3:N4 -> 29/odd/R-641.",
+      "promptId": "s2-018-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 018",
+      "tokens": 19
+    },
+    {
+      "itemId": "s2-018",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.02439,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-018 route R-641",
+      "promptId": "s2-018-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 018",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-018",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "route 018: south:5:M2 ... R-641",
+      "promptId": "s2-018-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 018",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-019",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-019 arithmetic card. Use start 24, step 6, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence jade, violet, silver. End with checksum A-594.",
+      "promptId": "s2-019-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 019",
+      "tokens": 37
+    },
+    {
+      "itemId": "s2-019",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.395349,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-019 arithmetic card: three numbered rows from start 24 with step 6; include fields n, n+step, n*step, glyph using jade, violet, silver; final checksum A-594.",
+      "promptId": "s2-019-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 019",
+      "tokens": 34
+    },
+    {
+      "itemId": "s2-019",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.27907,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.102564,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-019 arithmetic card; arithmetic schema; start 24; step 6; glyphs jade, violet, silver; checksum A-594.",
+      "promptId": "s2-019-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 019",
+      "tokens": 17
+    },
+    {
+      "itemId": "s2-019",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.255814,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.051282,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-019: start 24, step 6, glyph cycle jade/violet/silver, checksum A-594.",
+      "promptId": "s2-019-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 019",
+      "tokens": 16
+    },
+    {
+      "itemId": "s2-019",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.025641,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-019 arithmetic 24/6/A-594",
+      "promptId": "s2-019-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 019",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-019",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.093023,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "card 019: 24+6, A-594",
+      "promptId": "s2-019-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 019",
+      "tokens": 6
+    },
+    {
+      "itemId": "s2-020",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.641026,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.081081,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-020 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:violet:ember:echoes:61; Beryl:silver:fable:folds:70; Cato:crimson:glyph:glows:79; Dessa:olive:harbor:halts:88. End with checksum L-904.",
+      "promptId": "s2-020-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 020",
+      "tokens": 55
+    },
+    {
+      "itemId": "s2-020",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.108108,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-020 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:violet:ember:echoes:61; Beryl:silver:fable:folds:70; Cato:crimson:glyph:glows:79; Dessa:olive:harbor:halts:88 and final checksum L-904.",
+      "promptId": "s2-020-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 020",
+      "tokens": 46
+    },
+    {
+      "itemId": "s2-020",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.135135,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 0,
+      "prompt": "S2-020 letter lattice; A-D lattice; tuples Aster:violet:ember:echoes:61 | Beryl:silver:fable:folds:70 | Cato:crimson:glyph:glows:79 | Dessa:olive:harbor:halts:88; checksum L-904.",
+      "promptId": "s2-020-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 020",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-020",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.512821,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Lattice S2-020: Aster/Beryl/Cato/Dessa tuple list Aster:violet:ember:echoes:61 | Beryl:silver:fable:folds:70 | Cato:crimson:glyph:glows:79 | Dessa:olive:harbor:halts:88; L-904.",
+      "promptId": "s2-020-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 020",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-020",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.128205,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 0,
+      "prompt": "S2-020 lattice L-904",
+      "promptId": "s2-020-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 020",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-020",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.179487,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "lattice 020: Aster:violet:ember:echoes:61 ... L-904",
+      "promptId": "s2-020-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 020",
+      "tokens": 9
+    },
+    {
+      "itemId": "s2-021",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.581395,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.170732,
+        "verbatimSpanTokens": 7
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-021 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples east:11:N4; south:9:V6; west:7:P9; north:5:R3. Then print total 32, parity even, code R-713.",
+      "promptId": "s2-021-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 021",
+      "tokens": 41
+    },
+    {
+      "itemId": "s2-021",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.534884,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.121951,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-021 route receipt; four legs from triples east:11:N4; south:9:V6; west:7:P9; north:5:R3; finish with total 32, parity even, and code R-713.",
+      "promptId": "s2-021-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 021",
+      "tokens": 35
+    },
+    {
+      "itemId": "s2-021",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.488372,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.073171,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-021 route receipt; route schema; legs east:11:N4 | south:9:V6 | west:7:P9 | north:5:R3; total 32; even; R-713.",
+      "promptId": "s2-021-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 021",
+      "tokens": 24
+    },
+    {
+      "itemId": "s2-021",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Route S2-021: east:11:N4 | south:9:V6 | west:7:P9 | north:5:R3 -> 32/even/R-713.",
+      "promptId": "s2-021-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 021",
+      "tokens": 19
+    },
+    {
+      "itemId": "s2-021",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.02439,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-021 route R-713",
+      "promptId": "s2-021-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 021",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-021",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "route 021: east:11:N4 ... R-713",
+      "promptId": "s2-021-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 021",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-022",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-022 arithmetic card. Use start 27, step 4, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence crimson, olive, amber. End with checksum A-583.",
+      "promptId": "s2-022-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 022",
+      "tokens": 37
+    },
+    {
+      "itemId": "s2-022",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.395349,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-022 arithmetic card: three numbered rows from start 27 with step 4; include fields n, n+step, n*step, glyph using crimson, olive, amber; final checksum A-583.",
+      "promptId": "s2-022-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 022",
+      "tokens": 34
+    },
+    {
+      "itemId": "s2-022",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.27907,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.102564,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-022 arithmetic card; arithmetic schema; start 27; step 4; glyphs crimson, olive, amber; checksum A-583.",
+      "promptId": "s2-022-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 022",
+      "tokens": 17
+    },
+    {
+      "itemId": "s2-022",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.255814,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.051282,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-022: start 27, step 4, glyph cycle crimson/olive/amber, checksum A-583.",
+      "promptId": "s2-022-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 022",
+      "tokens": 16
+    },
+    {
+      "itemId": "s2-022",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.025641,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-022 arithmetic 27/4/A-583",
+      "promptId": "s2-022-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 022",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-022",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.093023,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "card 022: 27+4, A-583",
+      "promptId": "s2-022-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 022",
+      "tokens": 6
+    },
+    {
+      "itemId": "s2-023",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.641026,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.081081,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-023 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:olive:harbor:halts:82; Beryl:amber:atom:arcs:91; Cato:blue:binary:bends:11; Dessa:copper:cipher:clicks:20. End with checksum L-069.",
+      "promptId": "s2-023-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 023",
+      "tokens": 55
+    },
+    {
+      "itemId": "s2-023",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.108108,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-023 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:olive:harbor:halts:82; Beryl:amber:atom:arcs:91; Cato:blue:binary:bends:11; Dessa:copper:cipher:clicks:20 and final checksum L-069.",
+      "promptId": "s2-023-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 023",
+      "tokens": 46
+    },
+    {
+      "itemId": "s2-023",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.135135,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 0,
+      "prompt": "S2-023 letter lattice; A-D lattice; tuples Aster:olive:harbor:halts:82 | Beryl:amber:atom:arcs:91 | Cato:blue:binary:bends:11 | Dessa:copper:cipher:clicks:20; checksum L-069.",
+      "promptId": "s2-023-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 023",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-023",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.512821,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Lattice S2-023: Aster/Beryl/Cato/Dessa tuple list Aster:olive:harbor:halts:82 | Beryl:amber:atom:arcs:91 | Cato:blue:binary:bends:11 | Dessa:copper:cipher:clicks:20; L-069.",
+      "promptId": "s2-023-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 023",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-023",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.128205,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 0,
+      "prompt": "S2-023 lattice L-069",
+      "promptId": "s2-023-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 023",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-023",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.179487,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "lattice 023: Aster:olive:harbor:halts:82 ... L-069",
+      "promptId": "s2-023-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 023",
+      "tokens": 9
+    },
+    {
+      "itemId": "s2-024",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.581395,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.170732,
+        "verbatimSpanTokens": 7
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-024 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples north:4:R3; east:5:K7; south:6:M2; west:7:Q5. Then print total 22, parity even, code R-538.",
+      "promptId": "s2-024-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 024",
+      "tokens": 41
+    },
+    {
+      "itemId": "s2-024",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.534884,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.121951,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-024 route receipt; four legs from triples north:4:R3; east:5:K7; south:6:M2; west:7:Q5; finish with total 22, parity even, and code R-538.",
+      "promptId": "s2-024-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 024",
+      "tokens": 35
+    },
+    {
+      "itemId": "s2-024",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.488372,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.073171,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-024 route receipt; route schema; legs north:4:R3 | east:5:K7 | south:6:M2 | west:7:Q5; total 22; even; R-538.",
+      "promptId": "s2-024-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 024",
+      "tokens": 24
+    },
+    {
+      "itemId": "s2-024",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Route S2-024: north:4:R3 | east:5:K7 | south:6:M2 | west:7:Q5 -> 22/even/R-538.",
+      "promptId": "s2-024-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 024",
+      "tokens": 19
+    },
+    {
+      "itemId": "s2-024",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.02439,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-024 route R-538",
+      "promptId": "s2-024-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 024",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-024",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "route 024: north:4:R3 ... R-538",
+      "promptId": "s2-024-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 024",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-025",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-025 arithmetic card. Use start 30, step 2, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence blue, copper, jade. End with checksum A-572.",
+      "promptId": "s2-025-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 025",
+      "tokens": 37
+    },
+    {
+      "itemId": "s2-025",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-025 arithmetic card: three numbered rows from start 30 with step 2; include fields n, n+step, n*step, glyph using blue, copper, jade; final checksum A-572.",
+      "promptId": "s2-025-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 025",
+      "tokens": 34
+    },
+    {
+      "itemId": "s2-025",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.27907,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.102564,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-025 arithmetic card; arithmetic schema; start 30; step 2; glyphs blue, copper, jade; checksum A-572.",
+      "promptId": "s2-025-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 025",
+      "tokens": 17
+    },
+    {
+      "itemId": "s2-025",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.255814,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.051282,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-025: start 30, step 2, glyph cycle blue/copper/jade, checksum A-572.",
+      "promptId": "s2-025-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 025",
+      "tokens": 16
+    },
+    {
+      "itemId": "s2-025",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.162791,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.025641,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-025 arithmetic 30/2/A-572",
+      "promptId": "s2-025-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 025",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-025",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "card 025: 30+2, A-572",
+      "promptId": "s2-025-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 025",
+      "tokens": 6
+    },
+    {
+      "itemId": "s2-026",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.641026,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.081081,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-026 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:copper:cipher:clicks:14; Beryl:jade:delta:drifts:23; Cato:violet:ember:echoes:32; Dessa:silver:fable:folds:41. End with checksum L-143.",
+      "promptId": "s2-026-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 026",
+      "tokens": 55
+    },
+    {
+      "itemId": "s2-026",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.108108,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-026 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:copper:cipher:clicks:14; Beryl:jade:delta:drifts:23; Cato:violet:ember:echoes:32; Dessa:silver:fable:folds:41 and final checksum L-143.",
+      "promptId": "s2-026-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 026",
+      "tokens": 46
+    },
+    {
+      "itemId": "s2-026",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.135135,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 0,
+      "prompt": "S2-026 letter lattice; A-D lattice; tuples Aster:copper:cipher:clicks:14 | Beryl:jade:delta:drifts:23 | Cato:violet:ember:echoes:32 | Dessa:silver:fable:folds:41; checksum L-143.",
+      "promptId": "s2-026-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 026",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-026",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.512821,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Lattice S2-026: Aster/Beryl/Cato/Dessa tuple list Aster:copper:cipher:clicks:14 | Beryl:jade:delta:drifts:23 | Cato:violet:ember:echoes:32 | Dessa:silver:fable:folds:41; L-143.",
+      "promptId": "s2-026-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 026",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-026",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.128205,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 0,
+      "prompt": "S2-026 lattice L-143",
+      "promptId": "s2-026-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 026",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-026",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.179487,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "lattice 026: Aster:copper:cipher:clicks:14 ... L-143",
+      "promptId": "s2-026-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 026",
+      "tokens": 9
+    },
+    {
+      "itemId": "s2-027",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.581395,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.170732,
+        "verbatimSpanTokens": 7
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-027 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples west:10:Q5; north:14:T8; east:5:N4; south:9:V6. Then print total 38, parity even, code R-857.",
+      "promptId": "s2-027-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 027",
+      "tokens": 41
+    },
+    {
+      "itemId": "s2-027",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.534884,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.121951,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-027 route receipt; four legs from triples west:10:Q5; north:14:T8; east:5:N4; south:9:V6; finish with total 38, parity even, and code R-857.",
+      "promptId": "s2-027-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 027",
+      "tokens": 35
+    },
+    {
+      "itemId": "s2-027",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.488372,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.073171,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-027 route receipt; route schema; legs west:10:Q5 | north:14:T8 | east:5:N4 | south:9:V6; total 38; even; R-857.",
+      "promptId": "s2-027-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 027",
+      "tokens": 24
+    },
+    {
+      "itemId": "s2-027",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Route S2-027: west:10:Q5 | north:14:T8 | east:5:N4 | south:9:V6 -> 38/even/R-857.",
+      "promptId": "s2-027-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 027",
+      "tokens": 19
+    },
+    {
+      "itemId": "s2-027",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.02439,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-027 route R-857",
+      "promptId": "s2-027-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 027",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-027",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "route 027: west:10:Q5 ... R-857",
+      "promptId": "s2-027-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 027",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-028",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-028 arithmetic card. Use start 33, step 5, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence violet, silver, crimson. End with checksum A-716.",
+      "promptId": "s2-028-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 028",
+      "tokens": 37
+    },
+    {
+      "itemId": "s2-028",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.395349,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.076923,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-028 arithmetic card: three numbered rows from start 33 with step 5; include fields n, n+step, n*step, glyph using violet, silver, crimson; final checksum A-716.",
+      "promptId": "s2-028-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 028",
+      "tokens": 34
+    },
+    {
+      "itemId": "s2-028",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.27907,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.102564,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-028 arithmetic card; arithmetic schema; start 33; step 5; glyphs violet, silver, crimson; checksum A-716.",
+      "promptId": "s2-028-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 028",
+      "tokens": 17
+    },
+    {
+      "itemId": "s2-028",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.255814,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.051282,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-028: start 33, step 5, glyph cycle violet/silver/crimson, checksum A-716.",
+      "promptId": "s2-028-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 028",
+      "tokens": 16
+    },
+    {
+      "itemId": "s2-028",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.025641,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-028 arithmetic 33/5/A-716",
+      "promptId": "s2-028-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 028",
+      "tokens": 7
+    },
+    {
+      "itemId": "s2-028",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.093023,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "card 028: 33+5, A-716",
+      "promptId": "s2-028-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 028",
+      "tokens": 6
+    },
+    {
+      "itemId": "s2-029",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.641026,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.081081,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-029 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:silver:fable:folds:35; Beryl:crimson:glyph:glows:44; Cato:olive:harbor:halts:53; Dessa:amber:atom:arcs:62. End with checksum L-305.",
+      "promptId": "s2-029-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 029",
+      "tokens": 55
+    },
+    {
+      "itemId": "s2-029",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.108108,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-029 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:silver:fable:folds:35; Beryl:crimson:glyph:glows:44; Cato:olive:harbor:halts:53; Dessa:amber:atom:arcs:62 and final checksum L-305.",
+      "promptId": "s2-029-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 029",
+      "tokens": 46
+    },
+    {
+      "itemId": "s2-029",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.615385,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.135135,
+        "verbatimSpanTokens": 5
+      },
+      "paraphrase": 0,
+      "prompt": "S2-029 letter lattice; A-D lattice; tuples Aster:silver:fable:folds:35 | Beryl:crimson:glyph:glows:44 | Cato:olive:harbor:halts:53 | Dessa:amber:atom:arcs:62; checksum L-305.",
+      "promptId": "s2-029-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 029",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-029",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.512821,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Lattice S2-029: Aster/Beryl/Cato/Dessa tuple list Aster:silver:fable:folds:35 | Beryl:crimson:glyph:glows:44 | Cato:olive:harbor:halts:53 | Dessa:amber:atom:arcs:62; L-305.",
+      "promptId": "s2-029-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 029",
+      "tokens": 31
+    },
+    {
+      "itemId": "s2-029",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.128205,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 0,
+      "prompt": "S2-029 lattice L-305",
+      "promptId": "s2-029-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 029",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-029",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.179487,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "lattice 029: Aster:silver:fable:folds:35 ... L-305",
+      "promptId": "s2-029-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 029",
+      "tokens": 9
+    },
+    {
+      "itemId": "s2-030",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.581395,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.170732,
+        "verbatimSpanTokens": 7
+      },
+      "paraphrase": 0,
+      "prompt": "Create S2-030 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples south:3:V6; west:10:P9; north:4:R3; east:11:K7. Then print total 28, parity even, code R-682.",
+      "promptId": "s2-030-r1-p0",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 030",
+      "tokens": 41
+    },
+    {
+      "itemId": "s2-030",
+      "label": "Descriptive Rule",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.534884,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.121951,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-030 route receipt; four legs from triples south:3:V6; west:10:P9; north:4:R3; east:11:K7; finish with total 28, parity even, and code R-682.",
+      "promptId": "s2-030-r1-p1",
+      "rung": 1,
+      "targetLabel": "S2 compositional seed 030",
+      "tokens": 35
+    },
+    {
+      "itemId": "s2-030",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.488372,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.073171,
+        "verbatimSpanTokens": 4
+      },
+      "paraphrase": 0,
+      "prompt": "S2-030 route receipt; route schema; legs south:3:V6 | west:10:P9 | north:4:R3 | east:11:K7; total 28; even; R-682.",
+      "promptId": "s2-030-r2-p0",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 030",
+      "tokens": 24
+    },
+    {
+      "itemId": "s2-030",
+      "label": "Concept Prompt",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.418605,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "Route S2-030: south:3:V6 | west:10:P9 | north:4:R3 | east:11:K7 -> 28/even/R-682.",
+      "promptId": "s2-030-r2-p1",
+      "rung": 2,
+      "targetLabel": "S2 compositional seed 030",
+      "tokens": 19
+    },
+    {
+      "itemId": "s2-030",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.116279,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.02439,
+        "verbatimSpanTokens": 3
+      },
+      "paraphrase": 0,
+      "prompt": "S2-030 route R-682",
+      "promptId": "s2-030-r3-p0",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 030",
+      "tokens": 5
+    },
+    {
+      "itemId": "s2-030",
+      "label": "Minimal Cue",
+      "leakageGate": {
+        "disqualified": false,
+        "lcsRatio": 0.139535,
+        "thresholds": {
+          "lcsRatio": 0.65,
+          "trigramOverlap": 0.5,
+          "verbatimSpanTokens": 16
+        },
+        "trigramOverlap": 0.0,
+        "verbatimSpanTokens": 2
+      },
+      "paraphrase": 1,
+      "prompt": "route 030: south:3:V6 ... R-682",
+      "promptId": "s2-030-r3-p1",
+      "rung": 3,
+      "targetLabel": "S2 compositional seed 030",
+      "tokens": 7
+    }
+  ],
+  "seed": 0,
+  "split": "public",
+  "track": "F"
+}

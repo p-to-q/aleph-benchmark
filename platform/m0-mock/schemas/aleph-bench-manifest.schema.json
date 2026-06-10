@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BenchManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "createdAt",
+    "track",
+    "split",
+    "seed",
+    "datasetPath",
+    "itemCount",
+    "modelCount",
+    "models",
+    "configuredReruns",
+    "effectiveReruns",
+    "promptCount",
+    "nonLeakingPromptCount",
+    "gatedPromptCount",
+    "estimatedGenerations",
+    "leakageThresholds",
+    "prompts",
+    "gatedPrompts",
+    "notes"
+  ],
+  "properties": {
+    "id": { "type": "string" },
+    "createdAt": { "type": "string" },
+    "track": { "enum": ["F"] },
+    "split": { "type": "string" },
+    "seed": { "type": "integer" },
+    "datasetPath": { "type": "string" },
+    "itemCount": { "type": "integer", "minimum": 0 },
+    "modelCount": { "type": "integer", "minimum": 0 },
+    "models": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/model" }
+    },
+    "configuredReruns": { "type": "integer", "minimum": 1 },
+    "effectiveReruns": { "type": "integer", "minimum": 1 },
+    "promptCount": { "type": "integer", "minimum": 0 },
+    "nonLeakingPromptCount": { "type": "integer", "minimum": 0 },
+    "gatedPromptCount": { "type": "integer", "minimum": 0 },
+    "estimatedGenerations": { "type": "integer", "minimum": 0 },
+    "leakageThresholds": { "$ref": "#/$defs/leakageThresholds" },
+    "prompts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/prompt" }
+    },
+    "gatedPrompts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/gatedPrompt" }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "evidenceMode", "status", "missingEnv"],
+      "properties": {
+        "model": { "type": "string" },
+        "evidenceMode": { "enum": ["fixture", "mock", "black_box", "white_box", "simulated", "unknown"] },
+        "status": { "enum": ["ready", "blocked"] },
+        "missingEnv": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "error": { "type": "string" }
+      }
+    },
+    "leakageThresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["lcsRatio", "trigramOverlap", "verbatimSpanTokens"],
+      "properties": {
+        "lcsRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "trigramOverlap": { "type": "number", "minimum": 0, "maximum": 1 },
+        "verbatimSpanTokens": { "type": "integer", "minimum": 1 }
+      }
+    },
+    "leakageGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["disqualified", "lcsRatio", "trigramOverlap", "verbatimSpanTokens", "thresholds"],
+      "properties": {
+        "disqualified": { "type": "boolean" },
+        "lcsRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "trigramOverlap": { "type": "number", "minimum": 0, "maximum": 1 },
+        "verbatimSpanTokens": { "type": "integer", "minimum": 0 },
+        "thresholds": { "$ref": "#/$defs/leakageThresholds" }
+      }
+    },
+    "promptBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["itemId", "targetLabel", "promptId", "rung", "paraphrase", "label", "tokens", "leakageGate"],
+      "properties": {
+        "itemId": { "type": "string" },
+        "targetLabel": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "promptId": { "type": "string" },
+        "rung": { "enum": [0, 1, 2, 3] },
+        "paraphrase": { "enum": [0, 1] },
+        "label": { "type": "string" },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "leakageGate": { "$ref": "#/$defs/leakageGate" }
+      }
+    },
+    "prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "itemId",
+        "targetLabel",
+        "promptId",
+        "rung",
+        "paraphrase",
+        "label",
+        "tokens",
+        "leakageGate",
+        "prompt"
+      ],
+      "properties": {
+        "itemId": { "type": "string" },
+        "targetLabel": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "promptId": { "type": "string" },
+        "rung": { "enum": [0, 1, 2, 3] },
+        "paraphrase": { "enum": [0, 1] },
+        "label": { "type": "string" },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "leakageGate": { "$ref": "#/$defs/leakageGate" },
+        "prompt": { "type": "string" }
+      }
+    },
+    "gatedPrompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["itemId", "targetLabel", "promptId", "rung", "paraphrase", "label", "tokens", "leakageGate"],
+      "properties": {
+        "itemId": { "type": "string" },
+        "targetLabel": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "promptId": { "type": "string" },
+        "rung": { "enum": [0, 1, 2, 3] },
+        "paraphrase": { "enum": [0, 1] },
+        "label": { "type": "string" },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "leakageGate": { "$ref": "#/$defs/leakageGate" }
+      }
+    }
+  }
+}

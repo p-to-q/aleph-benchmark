@@ -1,0 +1,641 @@
+item_id,prompt_id,rung,paraphrase,label,expected_leakage,tokens,disqualified,lcs_ratio,trigram_overlap,verbatim_span_tokens,prompt
+s2-001,s2-001-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-001 arithmetic card
+row 1: n=6; n+step=9; n*step=18; glyph=blue
+row 2: n=9; n+step=12; n*step=27; glyph=copper
+row 3: n=12; n+step=15; n*step=36; glyph=jade
+checksum: A-195"
+s2-001,s2-001-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-001 arithmetic card
+row 1: n=6; n+step=9; n*step=18; glyph=blue
+row 2: n=9; n+step=12; n*step=27; glyph=copper
+row 3: n=12; n+step=15; n*step=36; glyph=jade
+checksum: A-195"
+s2-001,s2-001-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,37,False,0.418605,0.076923,4,"Create S2-001 arithmetic card. Use start 6, step 3, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence blue, copper, jade. End with checksum A-195."
+s2-001,s2-001-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,34,False,0.395349,0.076923,4,"Render an arithmetic card named S2-001 arithmetic card: three numbered rows from start 6 with step 3; include fields n, n+step, n*step, glyph using blue, copper, jade; final checksum A-195."
+s2-001,s2-001-r2-p0,2,0,Concept Prompt,non_leaking_candidate,17,False,0.27907,0.102564,4,"S2-001 arithmetic card; arithmetic schema; start 6; step 3; glyphs blue, copper, jade; checksum A-195."
+s2-001,s2-001-r2-p1,2,1,Concept Prompt,non_leaking_candidate,16,False,0.255814,0.051282,4,"Arithmetic card S2-001: start 6, step 3, glyph cycle blue/copper/jade, checksum A-195."
+s2-001,s2-001-r3-p0,3,0,Minimal Cue,non_leaking_candidate,7,False,0.162791,0.025641,3,S2-001 arithmetic 6/3/A-195
+s2-001,s2-001-r3-p1,3,1,Minimal Cue,non_leaking_candidate,6,False,0.116279,0.0,2,"card 001: 6+3, A-195"
+s2-002,s2-002-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,43,True,1.0,1.0,39,"Reproduce this text exactly:
+
+S2-002 letter lattice
+A. Aster clicks the copper cipher at 24.
+B. Beryl drifts the jade delta at 33.
+C. Cato echoes the violet ember at 42.
+D. Dessa folds the silver fable at 51.
+checksum: L-108"
+s2-002,s2-002-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,39,"Copy the target verbatim with no extra words:
+
+S2-002 letter lattice
+A. Aster clicks the copper cipher at 24.
+B. Beryl drifts the jade delta at 33.
+C. Cato echoes the violet ember at 42.
+D. Dessa folds the silver fable at 51.
+checksum: L-108"
+s2-002,s2-002-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,55,False,0.641026,0.081081,4,"Create S2-002 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:copper:cipher:clicks:24; Beryl:jade:delta:drifts:33; Cato:violet:ember:echoes:42; Dessa:silver:fable:folds:51. End with checksum L-108."
+s2-002,s2-002-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,46,False,0.615385,0.108108,5,Render a letter lattice titled S2-002 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:copper:cipher:clicks:24; Beryl:jade:delta:drifts:33; Cato:violet:ember:echoes:42; Dessa:silver:fable:folds:51 and final checksum L-108.
+s2-002,s2-002-r2-p0,2,0,Concept Prompt,non_leaking_candidate,31,False,0.615385,0.135135,5,S2-002 letter lattice; A-D lattice; tuples Aster:copper:cipher:clicks:24 | Beryl:jade:delta:drifts:33 | Cato:violet:ember:echoes:42 | Dessa:silver:fable:folds:51; checksum L-108.
+s2-002,s2-002-r2-p1,2,1,Concept Prompt,non_leaking_candidate,31,False,0.512821,0.0,2,Lattice S2-002: Aster/Beryl/Cato/Dessa tuple list Aster:copper:cipher:clicks:24 | Beryl:jade:delta:drifts:33 | Cato:violet:ember:echoes:42 | Dessa:silver:fable:folds:51; L-108.
+s2-002,s2-002-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.128205,0.0,2,S2-002 lattice L-108
+s2-002,s2-002-r3-p1,3,1,Minimal Cue,non_leaking_candidate,9,False,0.179487,0.0,2,lattice 002: Aster:copper:cipher:clicks:24 ... L-108
+s2-003,s2-003-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-003 route receipt
+leg 1: go west for 14; mark=Q5
+leg 2: go north for 7; mark=T8
+leg 3: go east for 13; mark=N4
+leg 4: go south for 6; mark=V6
+total: 40; parity: even; code: R-775"
+s2-003,s2-003-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-003 route receipt
+leg 1: go west for 14; mark=Q5
+leg 2: go north for 7; mark=T8
+leg 3: go east for 13; mark=N4
+leg 4: go south for 6; mark=V6
+total: 40; parity: even; code: R-775"
+s2-003,s2-003-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,41,False,0.581395,0.170732,7,"Create S2-003 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples west:14:Q5; north:7:T8; east:13:N4; south:6:V6. Then print total 40, parity even, code R-775."
+s2-003,s2-003-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,35,False,0.534884,0.121951,4,"Render a route receipt named S2-003 route receipt; four legs from triples west:14:Q5; north:7:T8; east:13:N4; south:6:V6; finish with total 40, parity even, and code R-775."
+s2-003,s2-003-r2-p0,2,0,Concept Prompt,non_leaking_candidate,24,False,0.488372,0.073171,4,S2-003 route receipt; route schema; legs west:14:Q5 | north:7:T8 | east:13:N4 | south:6:V6; total 40; even; R-775.
+s2-003,s2-003-r2-p1,2,1,Concept Prompt,non_leaking_candidate,19,False,0.418605,0.0,2,Route S2-003: west:14:Q5 | north:7:T8 | east:13:N4 | south:6:V6 -> 40/even/R-775.
+s2-003,s2-003-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.116279,0.02439,3,S2-003 route R-775
+s2-003,s2-003-r3-p1,3,1,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.0,2,route 003: west:14:Q5 ... R-775
+s2-004,s2-004-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-004 arithmetic card
+row 1: n=9; n+step=15; n*step=54; glyph=violet
+row 2: n=15; n+step=21; n*step=90; glyph=silver
+row 3: n=21; n+step=27; n*step=126; glyph=crimson
+checksum: A-339"
+s2-004,s2-004-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-004 arithmetic card
+row 1: n=9; n+step=15; n*step=54; glyph=violet
+row 2: n=15; n+step=21; n*step=90; glyph=silver
+row 3: n=21; n+step=27; n*step=126; glyph=crimson
+checksum: A-339"
+s2-004,s2-004-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,37,False,0.418605,0.076923,4,"Create S2-004 arithmetic card. Use start 9, step 6, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence violet, silver, crimson. End with checksum A-339."
+s2-004,s2-004-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,34,False,0.395349,0.076923,4,"Render an arithmetic card named S2-004 arithmetic card: three numbered rows from start 9 with step 6; include fields n, n+step, n*step, glyph using violet, silver, crimson; final checksum A-339."
+s2-004,s2-004-r2-p0,2,0,Concept Prompt,non_leaking_candidate,17,False,0.27907,0.102564,4,"S2-004 arithmetic card; arithmetic schema; start 9; step 6; glyphs violet, silver, crimson; checksum A-339."
+s2-004,s2-004-r2-p1,2,1,Concept Prompt,non_leaking_candidate,16,False,0.255814,0.051282,4,"Arithmetic card S2-004: start 9, step 6, glyph cycle violet/silver/crimson, checksum A-339."
+s2-004,s2-004-r3-p0,3,0,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.025641,3,S2-004 arithmetic 9/6/A-339
+s2-004,s2-004-r3-p1,3,1,Minimal Cue,non_leaking_candidate,6,False,0.093023,0.0,2,"card 004: 9+6, A-339"
+s2-005,s2-005-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,43,True,1.0,1.0,39,"Reproduce this text exactly:
+
+S2-005 letter lattice
+A. Aster folds the silver fable at 45.
+B. Beryl glows the crimson glyph at 54.
+C. Cato halts the olive harbor at 63.
+D. Dessa arcs the amber atom at 72.
+checksum: L-270"
+s2-005,s2-005-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,39,"Copy the target verbatim with no extra words:
+
+S2-005 letter lattice
+A. Aster folds the silver fable at 45.
+B. Beryl glows the crimson glyph at 54.
+C. Cato halts the olive harbor at 63.
+D. Dessa arcs the amber atom at 72.
+checksum: L-270"
+s2-005,s2-005-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,55,False,0.641026,0.081081,4,"Create S2-005 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:silver:fable:folds:45; Beryl:crimson:glyph:glows:54; Cato:olive:harbor:halts:63; Dessa:amber:atom:arcs:72. End with checksum L-270."
+s2-005,s2-005-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,46,False,0.615385,0.108108,5,Render a letter lattice titled S2-005 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:silver:fable:folds:45; Beryl:crimson:glyph:glows:54; Cato:olive:harbor:halts:63; Dessa:amber:atom:arcs:72 and final checksum L-270.
+s2-005,s2-005-r2-p0,2,0,Concept Prompt,non_leaking_candidate,31,False,0.615385,0.135135,5,S2-005 letter lattice; A-D lattice; tuples Aster:silver:fable:folds:45 | Beryl:crimson:glyph:glows:54 | Cato:olive:harbor:halts:63 | Dessa:amber:atom:arcs:72; checksum L-270.
+s2-005,s2-005-r2-p1,2,1,Concept Prompt,non_leaking_candidate,31,False,0.512821,0.0,2,Lattice S2-005: Aster/Beryl/Cato/Dessa tuple list Aster:silver:fable:folds:45 | Beryl:crimson:glyph:glows:54 | Cato:olive:harbor:halts:63 | Dessa:amber:atom:arcs:72; L-270.
+s2-005,s2-005-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.128205,0.0,2,S2-005 lattice L-270
+s2-005,s2-005-r3-p1,3,1,Minimal Cue,non_leaking_candidate,9,False,0.179487,0.0,2,lattice 005: Aster:silver:fable:folds:45 ... L-270
+s2-006,s2-006-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-006 route receipt
+leg 1: go south for 7; mark=V6
+leg 2: go west for 3; mark=P9
+leg 3: go north for 12; mark=R3
+leg 4: go east for 8; mark=K7
+total: 30; parity: even; code: R-600"
+s2-006,s2-006-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-006 route receipt
+leg 1: go south for 7; mark=V6
+leg 2: go west for 3; mark=P9
+leg 3: go north for 12; mark=R3
+leg 4: go east for 8; mark=K7
+total: 30; parity: even; code: R-600"
+s2-006,s2-006-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,41,False,0.581395,0.170732,7,"Create S2-006 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples south:7:V6; west:3:P9; north:12:R3; east:8:K7. Then print total 30, parity even, code R-600."
+s2-006,s2-006-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,35,False,0.534884,0.121951,4,"Render a route receipt named S2-006 route receipt; four legs from triples south:7:V6; west:3:P9; north:12:R3; east:8:K7; finish with total 30, parity even, and code R-600."
+s2-006,s2-006-r2-p0,2,0,Concept Prompt,non_leaking_candidate,24,False,0.488372,0.073171,4,S2-006 route receipt; route schema; legs south:7:V6 | west:3:P9 | north:12:R3 | east:8:K7; total 30; even; R-600.
+s2-006,s2-006-r2-p1,2,1,Concept Prompt,non_leaking_candidate,19,False,0.418605,0.0,2,Route S2-006: south:7:V6 | west:3:P9 | north:12:R3 | east:8:K7 -> 30/even/R-600.
+s2-006,s2-006-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.116279,0.02439,3,S2-006 route R-600
+s2-006,s2-006-r3-p1,3,1,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.0,2,route 006: south:7:V6 ... R-600
+s2-007,s2-007-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-007 arithmetic card
+row 1: n=12; n+step=16; n*step=48; glyph=olive
+row 2: n=16; n+step=20; n*step=64; glyph=amber
+row 3: n=20; n+step=24; n*step=80; glyph=blue
+checksum: A-328"
+s2-007,s2-007-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-007 arithmetic card
+row 1: n=12; n+step=16; n*step=48; glyph=olive
+row 2: n=16; n+step=20; n*step=64; glyph=amber
+row 3: n=20; n+step=24; n*step=80; glyph=blue
+checksum: A-328"
+s2-007,s2-007-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,37,False,0.418605,0.076923,4,"Create S2-007 arithmetic card. Use start 12, step 4, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence olive, amber, blue. End with checksum A-328."
+s2-007,s2-007-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,34,False,0.395349,0.076923,4,"Render an arithmetic card named S2-007 arithmetic card: three numbered rows from start 12 with step 4; include fields n, n+step, n*step, glyph using olive, amber, blue; final checksum A-328."
+s2-007,s2-007-r2-p0,2,0,Concept Prompt,non_leaking_candidate,17,False,0.27907,0.102564,4,"S2-007 arithmetic card; arithmetic schema; start 12; step 4; glyphs olive, amber, blue; checksum A-328."
+s2-007,s2-007-r2-p1,2,1,Concept Prompt,non_leaking_candidate,16,False,0.255814,0.051282,4,"Arithmetic card S2-007: start 12, step 4, glyph cycle olive/amber/blue, checksum A-328."
+s2-007,s2-007-r3-p0,3,0,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.025641,3,S2-007 arithmetic 12/4/A-328
+s2-007,s2-007-r3-p1,3,1,Minimal Cue,non_leaking_candidate,6,False,0.093023,0.0,2,"card 007: 12+4, A-328"
+s2-008,s2-008-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,43,True,1.0,1.0,39,"Reproduce this text exactly:
+
+S2-008 letter lattice
+A. Aster arcs the amber atom at 66.
+B. Beryl bends the blue binary at 75.
+C. Cato clicks the copper cipher at 84.
+D. Dessa drifts the jade delta at 93.
+checksum: L-344"
+s2-008,s2-008-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,39,"Copy the target verbatim with no extra words:
+
+S2-008 letter lattice
+A. Aster arcs the amber atom at 66.
+B. Beryl bends the blue binary at 75.
+C. Cato clicks the copper cipher at 84.
+D. Dessa drifts the jade delta at 93.
+checksum: L-344"
+s2-008,s2-008-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,55,False,0.641026,0.081081,4,"Create S2-008 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:amber:atom:arcs:66; Beryl:blue:binary:bends:75; Cato:copper:cipher:clicks:84; Dessa:jade:delta:drifts:93. End with checksum L-344."
+s2-008,s2-008-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,46,False,0.615385,0.108108,5,Render a letter lattice titled S2-008 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:amber:atom:arcs:66; Beryl:blue:binary:bends:75; Cato:copper:cipher:clicks:84; Dessa:jade:delta:drifts:93 and final checksum L-344.
+s2-008,s2-008-r2-p0,2,0,Concept Prompt,non_leaking_candidate,31,False,0.615385,0.135135,5,S2-008 letter lattice; A-D lattice; tuples Aster:amber:atom:arcs:66 | Beryl:blue:binary:bends:75 | Cato:copper:cipher:clicks:84 | Dessa:jade:delta:drifts:93; checksum L-344.
+s2-008,s2-008-r2-p1,2,1,Concept Prompt,non_leaking_candidate,31,False,0.512821,0.0,2,Lattice S2-008: Aster/Beryl/Cato/Dessa tuple list Aster:amber:atom:arcs:66 | Beryl:blue:binary:bends:75 | Cato:copper:cipher:clicks:84 | Dessa:jade:delta:drifts:93; L-344.
+s2-008,s2-008-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.128205,0.0,2,S2-008 lattice L-344
+s2-008,s2-008-r3-p1,3,1,Minimal Cue,non_leaking_candidate,9,False,0.179487,0.0,2,lattice 008: Aster:amber:atom:arcs:66 ... L-344
+s2-009,s2-009-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-009 route receipt
+leg 1: go east for 13; mark=K7
+leg 2: go south for 12; mark=M2
+leg 3: go west for 11; mark=Q5
+leg 4: go north for 10; mark=T8
+total: 46; parity: even; code: R-919"
+s2-009,s2-009-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-009 route receipt
+leg 1: go east for 13; mark=K7
+leg 2: go south for 12; mark=M2
+leg 3: go west for 11; mark=Q5
+leg 4: go north for 10; mark=T8
+total: 46; parity: even; code: R-919"
+s2-009,s2-009-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,41,False,0.581395,0.170732,7,"Create S2-009 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples east:13:K7; south:12:M2; west:11:Q5; north:10:T8. Then print total 46, parity even, code R-919."
+s2-009,s2-009-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,35,False,0.534884,0.121951,4,"Render a route receipt named S2-009 route receipt; four legs from triples east:13:K7; south:12:M2; west:11:Q5; north:10:T8; finish with total 46, parity even, and code R-919."
+s2-009,s2-009-r2-p0,2,0,Concept Prompt,non_leaking_candidate,24,False,0.488372,0.073171,4,S2-009 route receipt; route schema; legs east:13:K7 | south:12:M2 | west:11:Q5 | north:10:T8; total 46; even; R-919.
+s2-009,s2-009-r2-p1,2,1,Concept Prompt,non_leaking_candidate,19,False,0.418605,0.0,2,Route S2-009: east:13:K7 | south:12:M2 | west:11:Q5 | north:10:T8 -> 46/even/R-919.
+s2-009,s2-009-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.116279,0.02439,3,S2-009 route R-919
+s2-009,s2-009-r3-p1,3,1,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.0,2,route 009: east:13:K7 ... R-919
+s2-010,s2-010-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-010 arithmetic card
+row 1: n=15; n+step=17; n*step=30; glyph=copper
+row 2: n=17; n+step=19; n*step=34; glyph=jade
+row 3: n=19; n+step=21; n*step=38; glyph=violet
+checksum: A-317"
+s2-010,s2-010-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-010 arithmetic card
+row 1: n=15; n+step=17; n*step=30; glyph=copper
+row 2: n=17; n+step=19; n*step=34; glyph=jade
+row 3: n=19; n+step=21; n*step=38; glyph=violet
+checksum: A-317"
+s2-010,s2-010-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,37,False,0.418605,0.076923,4,"Create S2-010 arithmetic card. Use start 15, step 2, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence copper, jade, violet. End with checksum A-317."
+s2-010,s2-010-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,34,False,0.418605,0.076923,4,"Render an arithmetic card named S2-010 arithmetic card: three numbered rows from start 15 with step 2; include fields n, n+step, n*step, glyph using copper, jade, violet; final checksum A-317."
+s2-010,s2-010-r2-p0,2,0,Concept Prompt,non_leaking_candidate,17,False,0.27907,0.102564,4,"S2-010 arithmetic card; arithmetic schema; start 15; step 2; glyphs copper, jade, violet; checksum A-317."
+s2-010,s2-010-r2-p1,2,1,Concept Prompt,non_leaking_candidate,16,False,0.255814,0.051282,4,"Arithmetic card S2-010: start 15, step 2, glyph cycle copper/jade/violet, checksum A-317."
+s2-010,s2-010-r3-p0,3,0,Minimal Cue,non_leaking_candidate,7,False,0.162791,0.025641,3,S2-010 arithmetic 15/2/A-317
+s2-010,s2-010-r3-p1,3,1,Minimal Cue,non_leaking_candidate,6,False,0.116279,0.0,2,"card 010: 15+2, A-317"
+s2-011,s2-011-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,43,True,1.0,1.0,39,"Reproduce this text exactly:
+
+S2-011 letter lattice
+A. Aster drifts the jade delta at 87.
+B. Beryl echoes the violet ember at 96.
+C. Cato folds the silver fable at 16.
+D. Dessa glows the crimson glyph at 25.
+checksum: L-506"
+s2-011,s2-011-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,39,"Copy the target verbatim with no extra words:
+
+S2-011 letter lattice
+A. Aster drifts the jade delta at 87.
+B. Beryl echoes the violet ember at 96.
+C. Cato folds the silver fable at 16.
+D. Dessa glows the crimson glyph at 25.
+checksum: L-506"
+s2-011,s2-011-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,55,False,0.641026,0.081081,4,"Create S2-011 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:jade:delta:drifts:87; Beryl:violet:ember:echoes:96; Cato:silver:fable:folds:16; Dessa:crimson:glyph:glows:25. End with checksum L-506."
+s2-011,s2-011-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,46,False,0.615385,0.108108,5,Render a letter lattice titled S2-011 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:jade:delta:drifts:87; Beryl:violet:ember:echoes:96; Cato:silver:fable:folds:16; Dessa:crimson:glyph:glows:25 and final checksum L-506.
+s2-011,s2-011-r2-p0,2,0,Concept Prompt,non_leaking_candidate,31,False,0.615385,0.135135,5,S2-011 letter lattice; A-D lattice; tuples Aster:jade:delta:drifts:87 | Beryl:violet:ember:echoes:96 | Cato:silver:fable:folds:16 | Dessa:crimson:glyph:glows:25; checksum L-506.
+s2-011,s2-011-r2-p1,2,1,Concept Prompt,non_leaking_candidate,31,False,0.512821,0.0,2,Lattice S2-011: Aster/Beryl/Cato/Dessa tuple list Aster:jade:delta:drifts:87 | Beryl:violet:ember:echoes:96 | Cato:silver:fable:folds:16 | Dessa:crimson:glyph:glows:25; L-506.
+s2-011,s2-011-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.128205,0.0,2,S2-011 lattice L-506
+s2-011,s2-011-r3-p1,3,1,Minimal Cue,non_leaking_candidate,9,False,0.179487,0.0,2,lattice 011: Aster:jade:delta:drifts:87 ... L-506
+s2-012,s2-012-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-012 route receipt
+leg 1: go north for 6; mark=T8
+leg 2: go east for 8; mark=N4
+leg 3: go south for 10; mark=V6
+leg 4: go west for 12; mark=P9
+total: 36; parity: even; code: R-744"
+s2-012,s2-012-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-012 route receipt
+leg 1: go north for 6; mark=T8
+leg 2: go east for 8; mark=N4
+leg 3: go south for 10; mark=V6
+leg 4: go west for 12; mark=P9
+total: 36; parity: even; code: R-744"
+s2-012,s2-012-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,41,False,0.581395,0.170732,7,"Create S2-012 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples north:6:T8; east:8:N4; south:10:V6; west:12:P9. Then print total 36, parity even, code R-744."
+s2-012,s2-012-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,35,False,0.534884,0.121951,4,"Render a route receipt named S2-012 route receipt; four legs from triples north:6:T8; east:8:N4; south:10:V6; west:12:P9; finish with total 36, parity even, and code R-744."
+s2-012,s2-012-r2-p0,2,0,Concept Prompt,non_leaking_candidate,24,False,0.488372,0.073171,4,S2-012 route receipt; route schema; legs north:6:T8 | east:8:N4 | south:10:V6 | west:12:P9; total 36; even; R-744.
+s2-012,s2-012-r2-p1,2,1,Concept Prompt,non_leaking_candidate,19,False,0.418605,0.0,2,Route S2-012: north:6:T8 | east:8:N4 | south:10:V6 | west:12:P9 -> 36/even/R-744.
+s2-012,s2-012-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.116279,0.02439,3,S2-012 route R-744
+s2-012,s2-012-r3-p1,3,1,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.0,2,route 012: north:6:T8 ... R-744
+s2-013,s2-013-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-013 arithmetic card
+row 1: n=18; n+step=23; n*step=90; glyph=silver
+row 2: n=23; n+step=28; n*step=115; glyph=crimson
+row 3: n=28; n+step=33; n*step=140; glyph=olive
+checksum: A-461"
+s2-013,s2-013-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-013 arithmetic card
+row 1: n=18; n+step=23; n*step=90; glyph=silver
+row 2: n=23; n+step=28; n*step=115; glyph=crimson
+row 3: n=28; n+step=33; n*step=140; glyph=olive
+checksum: A-461"
+s2-013,s2-013-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,37,False,0.418605,0.076923,4,"Create S2-013 arithmetic card. Use start 18, step 5, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence silver, crimson, olive. End with checksum A-461."
+s2-013,s2-013-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,34,False,0.395349,0.076923,4,"Render an arithmetic card named S2-013 arithmetic card: three numbered rows from start 18 with step 5; include fields n, n+step, n*step, glyph using silver, crimson, olive; final checksum A-461."
+s2-013,s2-013-r2-p0,2,0,Concept Prompt,non_leaking_candidate,17,False,0.27907,0.102564,4,"S2-013 arithmetic card; arithmetic schema; start 18; step 5; glyphs silver, crimson, olive; checksum A-461."
+s2-013,s2-013-r2-p1,2,1,Concept Prompt,non_leaking_candidate,16,False,0.255814,0.051282,4,"Arithmetic card S2-013: start 18, step 5, glyph cycle silver/crimson/olive, checksum A-461."
+s2-013,s2-013-r3-p0,3,0,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.025641,3,S2-013 arithmetic 18/5/A-461
+s2-013,s2-013-r3-p1,3,1,Minimal Cue,non_leaking_candidate,6,False,0.093023,0.0,2,"card 013: 18+5, A-461"
+s2-014,s2-014-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,43,True,1.0,1.0,39,"Reproduce this text exactly:
+
+S2-014 letter lattice
+A. Aster glows the crimson glyph at 19.
+B. Beryl halts the olive harbor at 28.
+C. Cato arcs the amber atom at 37.
+D. Dessa bends the blue binary at 46.
+checksum: L-668"
+s2-014,s2-014-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,39,"Copy the target verbatim with no extra words:
+
+S2-014 letter lattice
+A. Aster glows the crimson glyph at 19.
+B. Beryl halts the olive harbor at 28.
+C. Cato arcs the amber atom at 37.
+D. Dessa bends the blue binary at 46.
+checksum: L-668"
+s2-014,s2-014-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,55,False,0.641026,0.081081,4,"Create S2-014 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:crimson:glyph:glows:19; Beryl:olive:harbor:halts:28; Cato:amber:atom:arcs:37; Dessa:blue:binary:bends:46. End with checksum L-668."
+s2-014,s2-014-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,46,False,0.615385,0.108108,5,Render a letter lattice titled S2-014 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:crimson:glyph:glows:19; Beryl:olive:harbor:halts:28; Cato:amber:atom:arcs:37; Dessa:blue:binary:bends:46 and final checksum L-668.
+s2-014,s2-014-r2-p0,2,0,Concept Prompt,non_leaking_candidate,31,False,0.615385,0.135135,5,S2-014 letter lattice; A-D lattice; tuples Aster:crimson:glyph:glows:19 | Beryl:olive:harbor:halts:28 | Cato:amber:atom:arcs:37 | Dessa:blue:binary:bends:46; checksum L-668.
+s2-014,s2-014-r2-p1,2,1,Concept Prompt,non_leaking_candidate,31,False,0.512821,0.0,2,Lattice S2-014: Aster/Beryl/Cato/Dessa tuple list Aster:crimson:glyph:glows:19 | Beryl:olive:harbor:halts:28 | Cato:amber:atom:arcs:37 | Dessa:blue:binary:bends:46; L-668.
+s2-014,s2-014-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.128205,0.0,2,S2-014 lattice L-668
+s2-014,s2-014-r3-p1,3,1,Minimal Cue,non_leaking_candidate,9,False,0.179487,0.0,2,lattice 014: Aster:crimson:glyph:glows:19 ... L-668
+s2-015,s2-015-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-015 route receipt
+leg 1: go west for 12; mark=P9
+leg 2: go north for 4; mark=R3
+leg 3: go east for 9; mark=K7
+leg 4: go south for 14; mark=M2
+total: 39; parity: odd; code: R-816"
+s2-015,s2-015-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-015 route receipt
+leg 1: go west for 12; mark=P9
+leg 2: go north for 4; mark=R3
+leg 3: go east for 9; mark=K7
+leg 4: go south for 14; mark=M2
+total: 39; parity: odd; code: R-816"
+s2-015,s2-015-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,41,False,0.581395,0.170732,7,"Create S2-015 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples west:12:P9; north:4:R3; east:9:K7; south:14:M2. Then print total 39, parity odd, code R-816."
+s2-015,s2-015-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,35,False,0.534884,0.121951,4,"Render a route receipt named S2-015 route receipt; four legs from triples west:12:P9; north:4:R3; east:9:K7; south:14:M2; finish with total 39, parity odd, and code R-816."
+s2-015,s2-015-r2-p0,2,0,Concept Prompt,non_leaking_candidate,24,False,0.488372,0.073171,4,S2-015 route receipt; route schema; legs west:12:P9 | north:4:R3 | east:9:K7 | south:14:M2; total 39; odd; R-816.
+s2-015,s2-015-r2-p1,2,1,Concept Prompt,non_leaking_candidate,19,False,0.418605,0.0,2,Route S2-015: west:12:P9 | north:4:R3 | east:9:K7 | south:14:M2 -> 39/odd/R-816.
+s2-015,s2-015-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.116279,0.02439,3,S2-015 route R-816
+s2-015,s2-015-r3-p1,3,1,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.0,2,route 015: west:12:P9 ... R-816
+s2-016,s2-016-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-016 arithmetic card
+row 1: n=21; n+step=24; n*step=63; glyph=amber
+row 2: n=24; n+step=27; n*step=72; glyph=blue
+row 3: n=27; n+step=30; n*step=81; glyph=copper
+checksum: A-450"
+s2-016,s2-016-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-016 arithmetic card
+row 1: n=21; n+step=24; n*step=63; glyph=amber
+row 2: n=24; n+step=27; n*step=72; glyph=blue
+row 3: n=27; n+step=30; n*step=81; glyph=copper
+checksum: A-450"
+s2-016,s2-016-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,37,False,0.418605,0.076923,4,"Create S2-016 arithmetic card. Use start 21, step 3, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence amber, blue, copper. End with checksum A-450."
+s2-016,s2-016-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,34,False,0.395349,0.076923,4,"Render an arithmetic card named S2-016 arithmetic card: three numbered rows from start 21 with step 3; include fields n, n+step, n*step, glyph using amber, blue, copper; final checksum A-450."
+s2-016,s2-016-r2-p0,2,0,Concept Prompt,non_leaking_candidate,17,False,0.27907,0.102564,4,"S2-016 arithmetic card; arithmetic schema; start 21; step 3; glyphs amber, blue, copper; checksum A-450."
+s2-016,s2-016-r2-p1,2,1,Concept Prompt,non_leaking_candidate,16,False,0.255814,0.051282,4,"Arithmetic card S2-016: start 21, step 3, glyph cycle amber/blue/copper, checksum A-450."
+s2-016,s2-016-r3-p0,3,0,Minimal Cue,non_leaking_candidate,7,False,0.162791,0.025641,3,S2-016 arithmetic 21/3/A-450
+s2-016,s2-016-r3-p1,3,1,Minimal Cue,non_leaking_candidate,6,False,0.116279,0.0,2,"card 016: 21+3, A-450"
+s2-017,s2-017-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,43,True,1.0,1.0,39,"Reproduce this text exactly:
+
+S2-017 letter lattice
+A. Aster bends the blue binary at 40.
+B. Beryl clicks the copper cipher at 49.
+C. Cato drifts the jade delta at 58.
+D. Dessa echoes the violet ember at 67.
+checksum: L-742"
+s2-017,s2-017-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,39,"Copy the target verbatim with no extra words:
+
+S2-017 letter lattice
+A. Aster bends the blue binary at 40.
+B. Beryl clicks the copper cipher at 49.
+C. Cato drifts the jade delta at 58.
+D. Dessa echoes the violet ember at 67.
+checksum: L-742"
+s2-017,s2-017-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,55,False,0.641026,0.081081,4,"Create S2-017 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:blue:binary:bends:40; Beryl:copper:cipher:clicks:49; Cato:jade:delta:drifts:58; Dessa:violet:ember:echoes:67. End with checksum L-742."
+s2-017,s2-017-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,46,False,0.615385,0.108108,5,Render a letter lattice titled S2-017 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:blue:binary:bends:40; Beryl:copper:cipher:clicks:49; Cato:jade:delta:drifts:58; Dessa:violet:ember:echoes:67 and final checksum L-742.
+s2-017,s2-017-r2-p0,2,0,Concept Prompt,non_leaking_candidate,31,False,0.615385,0.135135,5,S2-017 letter lattice; A-D lattice; tuples Aster:blue:binary:bends:40 | Beryl:copper:cipher:clicks:49 | Cato:jade:delta:drifts:58 | Dessa:violet:ember:echoes:67; checksum L-742.
+s2-017,s2-017-r2-p1,2,1,Concept Prompt,non_leaking_candidate,31,False,0.512821,0.0,2,Lattice S2-017: Aster/Beryl/Cato/Dessa tuple list Aster:blue:binary:bends:40 | Beryl:copper:cipher:clicks:49 | Cato:jade:delta:drifts:58 | Dessa:violet:ember:echoes:67; L-742.
+s2-017,s2-017-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.128205,0.0,2,S2-017 lattice L-742
+s2-017,s2-017-r3-p1,3,1,Minimal Cue,non_leaking_candidate,9,False,0.179487,0.0,2,lattice 017: Aster:blue:binary:bends:40 ... L-742
+s2-018,s2-018-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-018 route receipt
+leg 1: go south for 5; mark=M2
+leg 2: go west for 13; mark=Q5
+leg 3: go north for 8; mark=T8
+leg 4: go east for 3; mark=N4
+total: 29; parity: odd; code: R-641"
+s2-018,s2-018-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-018 route receipt
+leg 1: go south for 5; mark=M2
+leg 2: go west for 13; mark=Q5
+leg 3: go north for 8; mark=T8
+leg 4: go east for 3; mark=N4
+total: 29; parity: odd; code: R-641"
+s2-018,s2-018-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,41,False,0.581395,0.170732,7,"Create S2-018 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples south:5:M2; west:13:Q5; north:8:T8; east:3:N4. Then print total 29, parity odd, code R-641."
+s2-018,s2-018-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,35,False,0.534884,0.121951,4,"Render a route receipt named S2-018 route receipt; four legs from triples south:5:M2; west:13:Q5; north:8:T8; east:3:N4; finish with total 29, parity odd, and code R-641."
+s2-018,s2-018-r2-p0,2,0,Concept Prompt,non_leaking_candidate,24,False,0.488372,0.073171,4,S2-018 route receipt; route schema; legs south:5:M2 | west:13:Q5 | north:8:T8 | east:3:N4; total 29; odd; R-641.
+s2-018,s2-018-r2-p1,2,1,Concept Prompt,non_leaking_candidate,19,False,0.418605,0.0,2,Route S2-018: south:5:M2 | west:13:Q5 | north:8:T8 | east:3:N4 -> 29/odd/R-641.
+s2-018,s2-018-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.116279,0.02439,3,S2-018 route R-641
+s2-018,s2-018-r3-p1,3,1,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.0,2,route 018: south:5:M2 ... R-641
+s2-019,s2-019-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-019 arithmetic card
+row 1: n=24; n+step=30; n*step=144; glyph=jade
+row 2: n=30; n+step=36; n*step=180; glyph=violet
+row 3: n=36; n+step=42; n*step=216; glyph=silver
+checksum: A-594"
+s2-019,s2-019-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-019 arithmetic card
+row 1: n=24; n+step=30; n*step=144; glyph=jade
+row 2: n=30; n+step=36; n*step=180; glyph=violet
+row 3: n=36; n+step=42; n*step=216; glyph=silver
+checksum: A-594"
+s2-019,s2-019-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,37,False,0.418605,0.076923,4,"Create S2-019 arithmetic card. Use start 24, step 6, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence jade, violet, silver. End with checksum A-594."
+s2-019,s2-019-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,34,False,0.395349,0.076923,4,"Render an arithmetic card named S2-019 arithmetic card: three numbered rows from start 24 with step 6; include fields n, n+step, n*step, glyph using jade, violet, silver; final checksum A-594."
+s2-019,s2-019-r2-p0,2,0,Concept Prompt,non_leaking_candidate,17,False,0.27907,0.102564,4,"S2-019 arithmetic card; arithmetic schema; start 24; step 6; glyphs jade, violet, silver; checksum A-594."
+s2-019,s2-019-r2-p1,2,1,Concept Prompt,non_leaking_candidate,16,False,0.255814,0.051282,4,"Arithmetic card S2-019: start 24, step 6, glyph cycle jade/violet/silver, checksum A-594."
+s2-019,s2-019-r3-p0,3,0,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.025641,3,S2-019 arithmetic 24/6/A-594
+s2-019,s2-019-r3-p1,3,1,Minimal Cue,non_leaking_candidate,6,False,0.093023,0.0,2,"card 019: 24+6, A-594"
+s2-020,s2-020-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,43,True,1.0,1.0,39,"Reproduce this text exactly:
+
+S2-020 letter lattice
+A. Aster echoes the violet ember at 61.
+B. Beryl folds the silver fable at 70.
+C. Cato glows the crimson glyph at 79.
+D. Dessa halts the olive harbor at 88.
+checksum: L-904"
+s2-020,s2-020-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,39,"Copy the target verbatim with no extra words:
+
+S2-020 letter lattice
+A. Aster echoes the violet ember at 61.
+B. Beryl folds the silver fable at 70.
+C. Cato glows the crimson glyph at 79.
+D. Dessa halts the olive harbor at 88.
+checksum: L-904"
+s2-020,s2-020-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,55,False,0.641026,0.081081,4,"Create S2-020 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:violet:ember:echoes:61; Beryl:silver:fable:folds:70; Cato:crimson:glyph:glows:79; Dessa:olive:harbor:halts:88. End with checksum L-904."
+s2-020,s2-020-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,46,False,0.615385,0.108108,5,Render a letter lattice titled S2-020 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:violet:ember:echoes:61; Beryl:silver:fable:folds:70; Cato:crimson:glyph:glows:79; Dessa:olive:harbor:halts:88 and final checksum L-904.
+s2-020,s2-020-r2-p0,2,0,Concept Prompt,non_leaking_candidate,31,False,0.615385,0.135135,5,S2-020 letter lattice; A-D lattice; tuples Aster:violet:ember:echoes:61 | Beryl:silver:fable:folds:70 | Cato:crimson:glyph:glows:79 | Dessa:olive:harbor:halts:88; checksum L-904.
+s2-020,s2-020-r2-p1,2,1,Concept Prompt,non_leaking_candidate,31,False,0.512821,0.0,2,Lattice S2-020: Aster/Beryl/Cato/Dessa tuple list Aster:violet:ember:echoes:61 | Beryl:silver:fable:folds:70 | Cato:crimson:glyph:glows:79 | Dessa:olive:harbor:halts:88; L-904.
+s2-020,s2-020-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.128205,0.0,2,S2-020 lattice L-904
+s2-020,s2-020-r3-p1,3,1,Minimal Cue,non_leaking_candidate,9,False,0.179487,0.0,2,lattice 020: Aster:violet:ember:echoes:61 ... L-904
+s2-021,s2-021-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-021 route receipt
+leg 1: go east for 11; mark=N4
+leg 2: go south for 9; mark=V6
+leg 3: go west for 7; mark=P9
+leg 4: go north for 5; mark=R3
+total: 32; parity: even; code: R-713"
+s2-021,s2-021-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-021 route receipt
+leg 1: go east for 11; mark=N4
+leg 2: go south for 9; mark=V6
+leg 3: go west for 7; mark=P9
+leg 4: go north for 5; mark=R3
+total: 32; parity: even; code: R-713"
+s2-021,s2-021-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,41,False,0.581395,0.170732,7,"Create S2-021 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples east:11:N4; south:9:V6; west:7:P9; north:5:R3. Then print total 32, parity even, code R-713."
+s2-021,s2-021-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,35,False,0.534884,0.121951,4,"Render a route receipt named S2-021 route receipt; four legs from triples east:11:N4; south:9:V6; west:7:P9; north:5:R3; finish with total 32, parity even, and code R-713."
+s2-021,s2-021-r2-p0,2,0,Concept Prompt,non_leaking_candidate,24,False,0.488372,0.073171,4,S2-021 route receipt; route schema; legs east:11:N4 | south:9:V6 | west:7:P9 | north:5:R3; total 32; even; R-713.
+s2-021,s2-021-r2-p1,2,1,Concept Prompt,non_leaking_candidate,19,False,0.418605,0.0,2,Route S2-021: east:11:N4 | south:9:V6 | west:7:P9 | north:5:R3 -> 32/even/R-713.
+s2-021,s2-021-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.116279,0.02439,3,S2-021 route R-713
+s2-021,s2-021-r3-p1,3,1,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.0,2,route 021: east:11:N4 ... R-713
+s2-022,s2-022-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-022 arithmetic card
+row 1: n=27; n+step=31; n*step=108; glyph=crimson
+row 2: n=31; n+step=35; n*step=124; glyph=olive
+row 3: n=35; n+step=39; n*step=140; glyph=amber
+checksum: A-583"
+s2-022,s2-022-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-022 arithmetic card
+row 1: n=27; n+step=31; n*step=108; glyph=crimson
+row 2: n=31; n+step=35; n*step=124; glyph=olive
+row 3: n=35; n+step=39; n*step=140; glyph=amber
+checksum: A-583"
+s2-022,s2-022-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,37,False,0.418605,0.076923,4,"Create S2-022 arithmetic card. Use start 27, step 4, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence crimson, olive, amber. End with checksum A-583."
+s2-022,s2-022-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,34,False,0.395349,0.076923,4,"Render an arithmetic card named S2-022 arithmetic card: three numbered rows from start 27 with step 4; include fields n, n+step, n*step, glyph using crimson, olive, amber; final checksum A-583."
+s2-022,s2-022-r2-p0,2,0,Concept Prompt,non_leaking_candidate,17,False,0.27907,0.102564,4,"S2-022 arithmetic card; arithmetic schema; start 27; step 4; glyphs crimson, olive, amber; checksum A-583."
+s2-022,s2-022-r2-p1,2,1,Concept Prompt,non_leaking_candidate,16,False,0.255814,0.051282,4,"Arithmetic card S2-022: start 27, step 4, glyph cycle crimson/olive/amber, checksum A-583."
+s2-022,s2-022-r3-p0,3,0,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.025641,3,S2-022 arithmetic 27/4/A-583
+s2-022,s2-022-r3-p1,3,1,Minimal Cue,non_leaking_candidate,6,False,0.093023,0.0,2,"card 022: 27+4, A-583"
+s2-023,s2-023-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,43,True,1.0,1.0,39,"Reproduce this text exactly:
+
+S2-023 letter lattice
+A. Aster halts the olive harbor at 82.
+B. Beryl arcs the amber atom at 91.
+C. Cato bends the blue binary at 11.
+D. Dessa clicks the copper cipher at 20.
+checksum: L-069"
+s2-023,s2-023-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,39,"Copy the target verbatim with no extra words:
+
+S2-023 letter lattice
+A. Aster halts the olive harbor at 82.
+B. Beryl arcs the amber atom at 91.
+C. Cato bends the blue binary at 11.
+D. Dessa clicks the copper cipher at 20.
+checksum: L-069"
+s2-023,s2-023-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,55,False,0.641026,0.081081,4,"Create S2-023 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:olive:harbor:halts:82; Beryl:amber:atom:arcs:91; Cato:blue:binary:bends:11; Dessa:copper:cipher:clicks:20. End with checksum L-069."
+s2-023,s2-023-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,46,False,0.615385,0.108108,5,Render a letter lattice titled S2-023 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:olive:harbor:halts:82; Beryl:amber:atom:arcs:91; Cato:blue:binary:bends:11; Dessa:copper:cipher:clicks:20 and final checksum L-069.
+s2-023,s2-023-r2-p0,2,0,Concept Prompt,non_leaking_candidate,31,False,0.615385,0.135135,5,S2-023 letter lattice; A-D lattice; tuples Aster:olive:harbor:halts:82 | Beryl:amber:atom:arcs:91 | Cato:blue:binary:bends:11 | Dessa:copper:cipher:clicks:20; checksum L-069.
+s2-023,s2-023-r2-p1,2,1,Concept Prompt,non_leaking_candidate,31,False,0.512821,0.0,2,Lattice S2-023: Aster/Beryl/Cato/Dessa tuple list Aster:olive:harbor:halts:82 | Beryl:amber:atom:arcs:91 | Cato:blue:binary:bends:11 | Dessa:copper:cipher:clicks:20; L-069.
+s2-023,s2-023-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.128205,0.0,2,S2-023 lattice L-069
+s2-023,s2-023-r3-p1,3,1,Minimal Cue,non_leaking_candidate,9,False,0.179487,0.0,2,lattice 023: Aster:olive:harbor:halts:82 ... L-069
+s2-024,s2-024-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-024 route receipt
+leg 1: go north for 4; mark=R3
+leg 2: go east for 5; mark=K7
+leg 3: go south for 6; mark=M2
+leg 4: go west for 7; mark=Q5
+total: 22; parity: even; code: R-538"
+s2-024,s2-024-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-024 route receipt
+leg 1: go north for 4; mark=R3
+leg 2: go east for 5; mark=K7
+leg 3: go south for 6; mark=M2
+leg 4: go west for 7; mark=Q5
+total: 22; parity: even; code: R-538"
+s2-024,s2-024-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,41,False,0.581395,0.170732,7,"Create S2-024 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples north:4:R3; east:5:K7; south:6:M2; west:7:Q5. Then print total 22, parity even, code R-538."
+s2-024,s2-024-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,35,False,0.534884,0.121951,4,"Render a route receipt named S2-024 route receipt; four legs from triples north:4:R3; east:5:K7; south:6:M2; west:7:Q5; finish with total 22, parity even, and code R-538."
+s2-024,s2-024-r2-p0,2,0,Concept Prompt,non_leaking_candidate,24,False,0.488372,0.073171,4,S2-024 route receipt; route schema; legs north:4:R3 | east:5:K7 | south:6:M2 | west:7:Q5; total 22; even; R-538.
+s2-024,s2-024-r2-p1,2,1,Concept Prompt,non_leaking_candidate,19,False,0.418605,0.0,2,Route S2-024: north:4:R3 | east:5:K7 | south:6:M2 | west:7:Q5 -> 22/even/R-538.
+s2-024,s2-024-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.116279,0.02439,3,S2-024 route R-538
+s2-024,s2-024-r3-p1,3,1,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.0,2,route 024: north:4:R3 ... R-538
+s2-025,s2-025-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-025 arithmetic card
+row 1: n=30; n+step=32; n*step=60; glyph=blue
+row 2: n=32; n+step=34; n*step=64; glyph=copper
+row 3: n=34; n+step=36; n*step=68; glyph=jade
+checksum: A-572"
+s2-025,s2-025-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-025 arithmetic card
+row 1: n=30; n+step=32; n*step=60; glyph=blue
+row 2: n=32; n+step=34; n*step=64; glyph=copper
+row 3: n=34; n+step=36; n*step=68; glyph=jade
+checksum: A-572"
+s2-025,s2-025-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,37,False,0.418605,0.076923,4,"Create S2-025 arithmetic card. Use start 30, step 2, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence blue, copper, jade. End with checksum A-572."
+s2-025,s2-025-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,34,False,0.418605,0.076923,4,"Render an arithmetic card named S2-025 arithmetic card: three numbered rows from start 30 with step 2; include fields n, n+step, n*step, glyph using blue, copper, jade; final checksum A-572."
+s2-025,s2-025-r2-p0,2,0,Concept Prompt,non_leaking_candidate,17,False,0.27907,0.102564,4,"S2-025 arithmetic card; arithmetic schema; start 30; step 2; glyphs blue, copper, jade; checksum A-572."
+s2-025,s2-025-r2-p1,2,1,Concept Prompt,non_leaking_candidate,16,False,0.255814,0.051282,4,"Arithmetic card S2-025: start 30, step 2, glyph cycle blue/copper/jade, checksum A-572."
+s2-025,s2-025-r3-p0,3,0,Minimal Cue,non_leaking_candidate,7,False,0.162791,0.025641,3,S2-025 arithmetic 30/2/A-572
+s2-025,s2-025-r3-p1,3,1,Minimal Cue,non_leaking_candidate,6,False,0.116279,0.0,2,"card 025: 30+2, A-572"
+s2-026,s2-026-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,43,True,1.0,1.0,39,"Reproduce this text exactly:
+
+S2-026 letter lattice
+A. Aster clicks the copper cipher at 14.
+B. Beryl drifts the jade delta at 23.
+C. Cato echoes the violet ember at 32.
+D. Dessa folds the silver fable at 41.
+checksum: L-143"
+s2-026,s2-026-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,39,"Copy the target verbatim with no extra words:
+
+S2-026 letter lattice
+A. Aster clicks the copper cipher at 14.
+B. Beryl drifts the jade delta at 23.
+C. Cato echoes the violet ember at 32.
+D. Dessa folds the silver fable at 41.
+checksum: L-143"
+s2-026,s2-026-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,55,False,0.641026,0.081081,4,"Create S2-026 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:copper:cipher:clicks:14; Beryl:jade:delta:drifts:23; Cato:violet:ember:echoes:32; Dessa:silver:fable:folds:41. End with checksum L-143."
+s2-026,s2-026-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,46,False,0.615385,0.108108,5,Render a letter lattice titled S2-026 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:copper:cipher:clicks:14; Beryl:jade:delta:drifts:23; Cato:violet:ember:echoes:32; Dessa:silver:fable:folds:41 and final checksum L-143.
+s2-026,s2-026-r2-p0,2,0,Concept Prompt,non_leaking_candidate,31,False,0.615385,0.135135,5,S2-026 letter lattice; A-D lattice; tuples Aster:copper:cipher:clicks:14 | Beryl:jade:delta:drifts:23 | Cato:violet:ember:echoes:32 | Dessa:silver:fable:folds:41; checksum L-143.
+s2-026,s2-026-r2-p1,2,1,Concept Prompt,non_leaking_candidate,31,False,0.512821,0.0,2,Lattice S2-026: Aster/Beryl/Cato/Dessa tuple list Aster:copper:cipher:clicks:14 | Beryl:jade:delta:drifts:23 | Cato:violet:ember:echoes:32 | Dessa:silver:fable:folds:41; L-143.
+s2-026,s2-026-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.128205,0.0,2,S2-026 lattice L-143
+s2-026,s2-026-r3-p1,3,1,Minimal Cue,non_leaking_candidate,9,False,0.179487,0.0,2,lattice 026: Aster:copper:cipher:clicks:14 ... L-143
+s2-027,s2-027-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-027 route receipt
+leg 1: go west for 10; mark=Q5
+leg 2: go north for 14; mark=T8
+leg 3: go east for 5; mark=N4
+leg 4: go south for 9; mark=V6
+total: 38; parity: even; code: R-857"
+s2-027,s2-027-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-027 route receipt
+leg 1: go west for 10; mark=Q5
+leg 2: go north for 14; mark=T8
+leg 3: go east for 5; mark=N4
+leg 4: go south for 9; mark=V6
+total: 38; parity: even; code: R-857"
+s2-027,s2-027-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,41,False,0.581395,0.170732,7,"Create S2-027 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples west:10:Q5; north:14:T8; east:5:N4; south:9:V6. Then print total 38, parity even, code R-857."
+s2-027,s2-027-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,35,False,0.534884,0.121951,4,"Render a route receipt named S2-027 route receipt; four legs from triples west:10:Q5; north:14:T8; east:5:N4; south:9:V6; finish with total 38, parity even, and code R-857."
+s2-027,s2-027-r2-p0,2,0,Concept Prompt,non_leaking_candidate,24,False,0.488372,0.073171,4,S2-027 route receipt; route schema; legs west:10:Q5 | north:14:T8 | east:5:N4 | south:9:V6; total 38; even; R-857.
+s2-027,s2-027-r2-p1,2,1,Concept Prompt,non_leaking_candidate,19,False,0.418605,0.0,2,Route S2-027: west:10:Q5 | north:14:T8 | east:5:N4 | south:9:V6 -> 38/even/R-857.
+s2-027,s2-027-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.116279,0.02439,3,S2-027 route R-857
+s2-027,s2-027-r3-p1,3,1,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.0,2,route 027: west:10:Q5 ... R-857
+s2-028,s2-028-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-028 arithmetic card
+row 1: n=33; n+step=38; n*step=165; glyph=violet
+row 2: n=38; n+step=43; n*step=190; glyph=silver
+row 3: n=43; n+step=48; n*step=215; glyph=crimson
+checksum: A-716"
+s2-028,s2-028-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-028 arithmetic card
+row 1: n=33; n+step=38; n*step=165; glyph=violet
+row 2: n=38; n+step=43; n*step=190; glyph=silver
+row 3: n=43; n+step=48; n*step=215; glyph=crimson
+checksum: A-716"
+s2-028,s2-028-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,37,False,0.418605,0.076923,4,"Create S2-028 arithmetic card. Use start 33, step 5, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence violet, silver, crimson. End with checksum A-716."
+s2-028,s2-028-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,34,False,0.395349,0.076923,4,"Render an arithmetic card named S2-028 arithmetic card: three numbered rows from start 33 with step 5; include fields n, n+step, n*step, glyph using violet, silver, crimson; final checksum A-716."
+s2-028,s2-028-r2-p0,2,0,Concept Prompt,non_leaking_candidate,17,False,0.27907,0.102564,4,"S2-028 arithmetic card; arithmetic schema; start 33; step 5; glyphs violet, silver, crimson; checksum A-716."
+s2-028,s2-028-r2-p1,2,1,Concept Prompt,non_leaking_candidate,16,False,0.255814,0.051282,4,"Arithmetic card S2-028: start 33, step 5, glyph cycle violet/silver/crimson, checksum A-716."
+s2-028,s2-028-r3-p0,3,0,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.025641,3,S2-028 arithmetic 33/5/A-716
+s2-028,s2-028-r3-p1,3,1,Minimal Cue,non_leaking_candidate,6,False,0.093023,0.0,2,"card 028: 33+5, A-716"
+s2-029,s2-029-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,43,True,1.0,1.0,39,"Reproduce this text exactly:
+
+S2-029 letter lattice
+A. Aster folds the silver fable at 35.
+B. Beryl glows the crimson glyph at 44.
+C. Cato halts the olive harbor at 53.
+D. Dessa arcs the amber atom at 62.
+checksum: L-305"
+s2-029,s2-029-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,39,"Copy the target verbatim with no extra words:
+
+S2-029 letter lattice
+A. Aster folds the silver fable at 35.
+B. Beryl glows the crimson glyph at 44.
+C. Cato halts the olive harbor at 53.
+D. Dessa arcs the amber atom at 62.
+checksum: L-305"
+s2-029,s2-029-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,55,False,0.641026,0.081081,4,"Create S2-029 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:silver:fable:folds:35; Beryl:crimson:glyph:glows:44; Cato:olive:harbor:halts:53; Dessa:amber:atom:arcs:62. End with checksum L-305."
+s2-029,s2-029-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,46,False,0.615385,0.108108,5,Render a letter lattice titled S2-029 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:silver:fable:folds:35; Beryl:crimson:glyph:glows:44; Cato:olive:harbor:halts:53; Dessa:amber:atom:arcs:62 and final checksum L-305.
+s2-029,s2-029-r2-p0,2,0,Concept Prompt,non_leaking_candidate,31,False,0.615385,0.135135,5,S2-029 letter lattice; A-D lattice; tuples Aster:silver:fable:folds:35 | Beryl:crimson:glyph:glows:44 | Cato:olive:harbor:halts:53 | Dessa:amber:atom:arcs:62; checksum L-305.
+s2-029,s2-029-r2-p1,2,1,Concept Prompt,non_leaking_candidate,31,False,0.512821,0.0,2,Lattice S2-029: Aster/Beryl/Cato/Dessa tuple list Aster:silver:fable:folds:35 | Beryl:crimson:glyph:glows:44 | Cato:olive:harbor:halts:53 | Dessa:amber:atom:arcs:62; L-305.
+s2-029,s2-029-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.128205,0.0,2,S2-029 lattice L-305
+s2-029,s2-029-r3-p1,3,1,Minimal Cue,non_leaking_candidate,9,False,0.179487,0.0,2,lattice 029: Aster:silver:fable:folds:35 ... L-305
+s2-030,s2-030-r0-p0,0,0,Explicit Reconstruction,leaky_anchor,47,True,1.0,1.0,43,"Reproduce this text exactly:
+
+S2-030 route receipt
+leg 1: go south for 3; mark=V6
+leg 2: go west for 10; mark=P9
+leg 3: go north for 4; mark=R3
+leg 4: go east for 11; mark=K7
+total: 28; parity: even; code: R-682"
+s2-030,s2-030-r0-p1,0,1,Explicit Reconstruction,leaky_anchor,51,True,1.0,1.0,43,"Copy the target verbatim with no extra words:
+
+S2-030 route receipt
+leg 1: go south for 3; mark=V6
+leg 2: go west for 10; mark=P9
+leg 3: go north for 4; mark=R3
+leg 4: go east for 11; mark=K7
+total: 28; parity: even; code: R-682"
+s2-030,s2-030-r1-p0,1,0,Descriptive Rule,non_leaking_candidate,41,False,0.581395,0.170732,7,"Create S2-030 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples south:3:V6; west:10:P9; north:4:R3; east:11:K7. Then print total 28, parity even, code R-682."
+s2-030,s2-030-r1-p1,1,1,Descriptive Rule,non_leaking_candidate,35,False,0.534884,0.121951,4,"Render a route receipt named S2-030 route receipt; four legs from triples south:3:V6; west:10:P9; north:4:R3; east:11:K7; finish with total 28, parity even, and code R-682."
+s2-030,s2-030-r2-p0,2,0,Concept Prompt,non_leaking_candidate,24,False,0.488372,0.073171,4,S2-030 route receipt; route schema; legs south:3:V6 | west:10:P9 | north:4:R3 | east:11:K7; total 28; even; R-682.
+s2-030,s2-030-r2-p1,2,1,Concept Prompt,non_leaking_candidate,19,False,0.418605,0.0,2,Route S2-030: south:3:V6 | west:10:P9 | north:4:R3 | east:11:K7 -> 28/even/R-682.
+s2-030,s2-030-r3-p0,3,0,Minimal Cue,non_leaking_candidate,5,False,0.116279,0.02439,3,S2-030 route R-682
+s2-030,s2-030-r3-p1,3,1,Minimal Cue,non_leaking_candidate,7,False,0.139535,0.0,2,route 030: south:3:V6 ... R-682

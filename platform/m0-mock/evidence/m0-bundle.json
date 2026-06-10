@@ -1,0 +1,63 @@
+{
+  "artifacts": [
+    {
+      "bytes": 1495191,
+      "evidenceMode": "mock",
+      "note": "Deterministic three-model mock BenchResult.",
+      "path": "bench/results/m0-first-run.json",
+      "role": "result",
+      "schemaPath": "schemas/aleph-bench-result.schema.json",
+      "sha256": "af2869f7c3da70c1484fd583905f4a119c8f4bddba6341801cb73e07525cf985"
+    },
+    {
+      "bytes": 148252,
+      "evidenceMode": "mock",
+      "note": "No-call prompt manifest for the checked-in mock result.",
+      "path": "bench/results/m0-call-manifest.json",
+      "role": "manifest",
+      "schemaPath": "schemas/aleph-bench-manifest.schema.json",
+      "sha256": "840d72ed6a238d62ee7c72a379667fd96220640da4d6afb92409afc590561e74"
+    },
+    {
+      "bytes": 2191,
+      "evidenceMode": "mock",
+      "note": "Generated M0 acceptance-gate receipt.",
+      "path": "bench/results/m0-audit.json",
+      "role": "audit",
+      "schemaPath": "schemas/aleph-bench-audit.schema.json",
+      "sha256": "0ea2afc0484d62d1809752cf757cbbb87978a066a94b57f6cb067a83118b70c0"
+    },
+    {
+      "bytes": 2330,
+      "evidenceMode": "mock",
+      "note": "Markdown tables rendered from the mock result JSON.",
+      "path": "bench/results/m0-report.md",
+      "role": "report",
+      "schemaPath": null,
+      "sha256": "b8f0bd43f283d4648232431923bc46c25f7213e1a52f858ab176c9e26564b5ce"
+    },
+    {
+      "bytes": 9281,
+      "evidenceMode": "none",
+      "note": "Interpretive evidence note; not model evidence by itself.",
+      "path": "docs/benchmark/m0-evidence.md",
+      "role": "evidence_note",
+      "schemaPath": null,
+      "sha256": "b4d9b20cbfc35316fc987edcf05dd3c956ea9881cde03ca90a2df190b0b9d5a4"
+    }
+  ],
+  "createdAt": "2026-06-03T00:00:00Z",
+  "evidenceMode": "mock",
+  "id": "aleph-bench-m0-mock-bundle",
+  "notes": [
+    "This bundle is a file-integrity index for the checked-in deterministic mock M0 evidence.",
+    "It is not a real model leaderboard and does not add evidence beyond the referenced artifacts.",
+    "Hosted black-box runs should produce their own result, manifest, and report rather than reusing this mock bundle."
+  ],
+  "status": "ok",
+  "validationCommands": [
+    "./aleph-bench verify --audit bench/results/m0-audit.json --bundle bench/results/m0-bundle.json",
+    "./aleph-bench audit",
+    "./aleph-bench bundle --check bench/results/m0-bundle.json"
+  ]
+}

@@ -1,0 +1,567 @@
+{
+  "@context": {
+    "@language": "en",
+    "@vocab": "https://schema.org/",
+    "citeAs": "cr:citeAs",
+    "column": "cr:column",
+    "conformsTo": "dct:conformsTo",
+    "cr": "http://mlcommons.org/croissant/",
+    "data": {
+      "@id": "cr:data",
+      "@type": "@json"
+    },
+    "dataType": {
+      "@id": "cr:dataType",
+      "@type": "@vocab"
+    },
+    "dct": "http://purl.org/dc/terms/",
+    "examples": {
+      "@id": "cr:examples",
+      "@type": "@json"
+    },
+    "extract": "cr:extract",
+    "field": "cr:field",
+    "fileObject": "cr:fileObject",
+    "fileProperty": "cr:fileProperty",
+    "fileSet": "cr:fileSet",
+    "format": "cr:format",
+    "includes": "cr:includes",
+    "isLiveDataset": "cr:isLiveDataset",
+    "jsonPath": "cr:jsonPath",
+    "key": "cr:key",
+    "md5": "cr:md5",
+    "parentField": "cr:parentField",
+    "path": "cr:path",
+    "rai": "http://mlcommons.org/croissant/RAI/",
+    "recordSet": "cr:recordSet",
+    "references": "cr:references",
+    "regex": "cr:regex",
+    "repeated": "cr:repeated",
+    "replace": "cr:replace",
+    "sc": "https://schema.org/",
+    "separator": "cr:separator",
+    "source": "cr:source",
+    "subField": "cr:subField",
+    "transform": "cr:transform"
+  },
+  "@type": "sc:Dataset",
+  "citeAs": "AlephBench Maintainers (2026). AlephBench Frozen Ladder: A Frozen-Ladder Prompt-Compression Benchmark (Procedure Release). https://huggingface.co/datasets/p-to-q/aleph-bench",
+  "conformsTo": "http://mlcommons.org/croissant/1.1",
+  "creator": {
+    "@type": "sc:Organization",
+    "name": "p-to-q"
+  },
+  "dateCreated": "2026-06-03",
+  "datePublished": "2026-06-03",
+  "description": "A frozen-ladder prompt-compression benchmark seed package with 30 S2 synthetic targets, schemas, and deterministic mock pipeline evidence.",
+  "distribution": [
+    {
+      "@id": "data/public_s2_items.csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "data/public_s2_items.csv",
+      "encodingFormat": "text/csv",
+      "name": "data/public_s2_items.csv",
+      "sha256": "d23615372ddbe8749621e612f0cd1e18025de8bb0150419926b805591cf18900"
+    },
+    {
+      "@id": "data/public_s2_items.jsonl",
+      "@type": "cr:FileObject",
+      "contentUrl": "data/public_s2_items.jsonl",
+      "encodingFormat": "application/jsonlines",
+      "name": "data/public_s2_items.jsonl",
+      "sha256": "f6a8fc84861259ece233a2c883ca5cdc6eebe45c2f699a0898c790653f2b870a"
+    },
+    {
+      "@id": "data/public_s2_prompts.csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "data/public_s2_prompts.csv",
+      "encodingFormat": "text/csv",
+      "name": "data/public_s2_prompts.csv",
+      "sha256": "ab71399b7b8e5c543dccb1493fcb6df5b3f687c30c8a01666b48404ee2af8034"
+    },
+    {
+      "@id": "data/public_s2_prompts.jsonl",
+      "@type": "cr:FileObject",
+      "contentUrl": "data/public_s2_prompts.jsonl",
+      "encodingFormat": "application/jsonlines",
+      "name": "data/public_s2_prompts.jsonl",
+      "sha256": "32cb5757463ce8d520f24888009c272c022b9d95f9bf59a6bf7ff8b15fd281cc"
+    },
+    {
+      "@id": "data/submission_format.csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "data/submission_format.csv",
+      "encodingFormat": "text/csv",
+      "name": "data/submission_format.csv",
+      "sha256": "617849929146fb8e5c2b95bcd91f49d3c84fea4ff4d008741680a761901e6e34"
+    },
+    {
+      "@id": "evidence/m0-audit.json",
+      "@type": "cr:FileObject",
+      "contentUrl": "evidence/m0-audit.json",
+      "encodingFormat": "application/json",
+      "name": "evidence/m0-audit.json",
+      "sha256": "0ea2afc0484d62d1809752cf757cbbb87978a066a94b57f6cb067a83118b70c0"
+    },
+    {
+      "@id": "evidence/m0-bundle.json",
+      "@type": "cr:FileObject",
+      "contentUrl": "evidence/m0-bundle.json",
+      "encodingFormat": "application/json",
+      "name": "evidence/m0-bundle.json",
+      "sha256": "80c6fd9ede41d127abfdd60e8197cd6c64b2aa68f659c28558cf423700b63206"
+    },
+    {
+      "@id": "evidence/m0-call-manifest.json",
+      "@type": "cr:FileObject",
+      "contentUrl": "evidence/m0-call-manifest.json",
+      "encodingFormat": "application/json",
+      "name": "evidence/m0-call-manifest.json",
+      "sha256": "840d72ed6a238d62ee7c72a379667fd96220640da4d6afb92409afc590561e74"
+    },
+    {
+      "@id": "evidence/m0-evidence.md",
+      "@type": "cr:FileObject",
+      "contentUrl": "evidence/m0-evidence.md",
+      "encodingFormat": "text/markdown",
+      "name": "evidence/m0-evidence.md",
+      "sha256": "71c7c2bf5395ac48e659dced28d4381f7ee902fc235a0fa30ff74351eaba8ee8"
+    },
+    {
+      "@id": "evidence/m0-first-run.json",
+      "@type": "cr:FileObject",
+      "contentUrl": "evidence/m0-first-run.json",
+      "encodingFormat": "application/json",
+      "name": "evidence/m0-first-run.json",
+      "sha256": "af2869f7c3da70c1484fd583905f4a119c8f4bddba6341801cb73e07525cf985"
+    },
+    {
+      "@id": "evidence/m0-report.md",
+      "@type": "cr:FileObject",
+      "contentUrl": "evidence/m0-report.md",
+      "encodingFormat": "text/markdown",
+      "name": "evidence/m0-report.md",
+      "sha256": "b8f0bd43f283d4648232431923bc46c25f7213e1a52f858ab176c9e26564b5ce"
+    },
+    {
+      "@id": "evidence/mock_item_metrics.csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "evidence/mock_item_metrics.csv",
+      "encodingFormat": "text/csv",
+      "name": "evidence/mock_item_metrics.csv",
+      "sha256": "4d2f51b93e97d5a8be998a67880ff179b619cafdec58b66b6ade3beacfc0b4e8"
+    },
+    {
+      "@id": "evidence/mock_model_summary.csv",
+      "@type": "cr:FileObject",
+      "contentUrl": "evidence/mock_model_summary.csv",
+      "encodingFormat": "text/csv",
+      "name": "evidence/mock_model_summary.csv",
+      "sha256": "9d23ddbe9d06b012741b9185352a8aac6175d45bd7169422a0ab73e847025ba4"
+    },
+    {
+      "@id": "schemas/aleph-bench-audit.schema.json",
+      "@type": "cr:FileObject",
+      "contentUrl": "schemas/aleph-bench-audit.schema.json",
+      "encodingFormat": "application/json",
+      "name": "schemas/aleph-bench-audit.schema.json",
+      "sha256": "09c20f86f1a034ff6c2224b59f5f803f41b8caf10b0e588be4ff268052055671"
+    },
+    {
+      "@id": "schemas/aleph-bench-bundle.schema.json",
+      "@type": "cr:FileObject",
+      "contentUrl": "schemas/aleph-bench-bundle.schema.json",
+      "encodingFormat": "application/json",
+      "name": "schemas/aleph-bench-bundle.schema.json",
+      "sha256": "01cad1f7144fd0edf842fca556e402c1514ed97261284f62568154996f3f6e5e"
+    },
+    {
+      "@id": "schemas/aleph-bench-item.schema.json",
+      "@type": "cr:FileObject",
+      "contentUrl": "schemas/aleph-bench-item.schema.json",
+      "encodingFormat": "application/json",
+      "name": "schemas/aleph-bench-item.schema.json",
+      "sha256": "f7a2de686713e0b98921bd124ccf2cb83aa6682a476e11bd0938db7f5175e1b8"
+    },
+    {
+      "@id": "schemas/aleph-bench-manifest.schema.json",
+      "@type": "cr:FileObject",
+      "contentUrl": "schemas/aleph-bench-manifest.schema.json",
+      "encodingFormat": "application/json",
+      "name": "schemas/aleph-bench-manifest.schema.json",
+      "sha256": "2709b0b7e133e6c1bcb7b70b35906b023e85f0cc0129dc6d0fe28a0b632f2fa0"
+    },
+    {
+      "@id": "schemas/aleph-bench-platform-package.schema.json",
+      "@type": "cr:FileObject",
+      "contentUrl": "schemas/aleph-bench-platform-package.schema.json",
+      "encodingFormat": "application/json",
+      "name": "schemas/aleph-bench-platform-package.schema.json",
+      "sha256": "87f86c7290670033ba6ecf8f9080f79f10593859d39ad652c5d70274ce79aff5"
+    },
+    {
+      "@id": "schemas/aleph-bench-result.schema.json",
+      "@type": "cr:FileObject",
+      "contentUrl": "schemas/aleph-bench-result.schema.json",
+      "encodingFormat": "application/json",
+      "name": "schemas/aleph-bench-result.schema.json",
+      "sha256": "4ecc511c021ac5642279fb709e905d83c4853e9f89a3be3fd9139e82eaa69891"
+    }
+  ],
+  "inLanguage": [
+    "en"
+  ],
+  "isLiveDataset": false,
+  "keywords": [
+    "benchmark",
+    "prompt compression",
+    "reverse prompt search",
+    "synthetic data",
+    "LLM evaluation"
+  ],
+  "license": "https://spdx.org/licenses/CC0-1.0.html",
+  "name": "AlephBench Frozen Ladder",
+  "publisher": {
+    "@type": "sc:Organization",
+    "name": "p-to-q"
+  },
+  "recordSet": [
+    {
+      "@id": "public_s2_items",
+      "@type": "cr:RecordSet",
+      "description": "Thirty public S2 compositional BenchItems.",
+      "field": [
+        {
+          "@id": "public_s2_items/item_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Bench item id.",
+          "name": "item_id",
+          "source": {
+            "extract": {
+              "column": "item_id"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_items.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_items/stratum",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Benchmark stratum (S1..S5).",
+          "name": "stratum",
+          "source": {
+            "extract": {
+              "column": "stratum"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_items.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_items/language",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "ISO 639-1 language code.",
+          "name": "language",
+          "source": {
+            "extract": {
+              "column": "language"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_items.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_items/metric_class",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Primary fidelity metric class.",
+          "name": "metric_class",
+          "source": {
+            "extract": {
+              "column": "metric_class"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_items.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_items/target_label",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Short target label for cold reading.",
+          "name": "target_label",
+          "source": {
+            "extract": {
+              "column": "target_label"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_items.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_items/target_text",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Target output text.",
+          "name": "target_text",
+          "source": {
+            "extract": {
+              "column": "target_text"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_items.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_items/family",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Synthetic family (alpha/beta/gamma).",
+          "name": "family",
+          "source": {
+            "extract": {
+              "column": "family"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_items.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_items/canary_guid",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Dataset-level contamination canary GUID.",
+          "name": "canary_guid",
+          "source": {
+            "extract": {
+              "column": "canary_guid"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_items.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_items/license",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Item license.",
+          "name": "license",
+          "source": {
+            "extract": {
+              "column": "license"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_items.csv"
+            }
+          }
+        }
+      ],
+      "name": "public_s2_items"
+    },
+    {
+      "@id": "public_s2_prompts",
+      "@type": "cr:RecordSet",
+      "description": "Frozen-ladder prompt rows and leakage-gate measurements.",
+      "field": [
+        {
+          "@id": "public_s2_prompts/item_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Bench item id.",
+          "name": "item_id",
+          "source": {
+            "extract": {
+              "column": "item_id"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/prompt_id",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Frozen ladder prompt id.",
+          "name": "prompt_id",
+          "source": {
+            "extract": {
+              "column": "prompt_id"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/rung",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Frozen ladder rung (0..3).",
+          "name": "rung",
+          "source": {
+            "extract": {
+              "column": "rung"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/paraphrase",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Paraphrase index within rung.",
+          "name": "paraphrase",
+          "source": {
+            "extract": {
+              "column": "paraphrase"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/label",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Human-readable rung label.",
+          "name": "label",
+          "source": {
+            "extract": {
+              "column": "label"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/expected_leakage",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Expected leakage class.",
+          "name": "expected_leakage",
+          "source": {
+            "extract": {
+              "column": "expected_leakage"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/tokens",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Regex token count of the prompt.",
+          "name": "tokens",
+          "source": {
+            "extract": {
+              "column": "tokens"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/disqualified",
+          "@type": "cr:Field",
+          "dataType": "sc:Boolean",
+          "description": "Whether the leakage gate disqualifies the prompt.",
+          "name": "disqualified",
+          "source": {
+            "extract": {
+              "column": "disqualified"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/lcs_ratio",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Prompt-target LCS ratio.",
+          "name": "lcs_ratio",
+          "source": {
+            "extract": {
+              "column": "lcs_ratio"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/trigram_overlap",
+          "@type": "cr:Field",
+          "dataType": "sc:Float",
+          "description": "Target trigram overlap.",
+          "name": "trigram_overlap",
+          "source": {
+            "extract": {
+              "column": "trigram_overlap"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/verbatim_span_tokens",
+          "@type": "cr:Field",
+          "dataType": "sc:Integer",
+          "description": "Longest verbatim token span.",
+          "name": "verbatim_span_tokens",
+          "source": {
+            "extract": {
+              "column": "verbatim_span_tokens"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        },
+        {
+          "@id": "public_s2_prompts/prompt",
+          "@type": "cr:Field",
+          "dataType": "sc:Text",
+          "description": "Prompt text.",
+          "name": "prompt",
+          "source": {
+            "extract": {
+              "column": "prompt"
+            },
+            "fileObject": {
+              "@id": "data/public_s2_prompts.csv"
+            }
+          }
+        }
+      ],
+      "name": "public_s2_prompts"
+    }
+  ],
+  "sameAs": [
+    "https://www.kaggle.com/datasets/p-to-q/aleph-bench"
+  ],
+  "sdLicense": "https://spdx.org/licenses/CC0-1.0.html",
+  "url": "https://huggingface.co/datasets/p-to-q/aleph-bench",
+  "version": "0.1.0"
+}

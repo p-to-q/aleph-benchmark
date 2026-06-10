@@ -1,0 +1,4 @@
+model,evidence_mode,item_count,aurc,aurc_ci95_low,aurc_ci95_high,ecl_at_tau,coverage_at_tau,elicit_at_k,leakage_hit_rate
+mock-frontier,mock,30,0.047515,0.043485,0.051577,5.333333,1.0,1.0,0.25
+mock-mid,mock,30,0.197422,0.182687,0.210575,38.333333,1.0,0.0,0.25
+mock-small,mock,30,0.404643,0.381256,0.430169,38.433333,1.0,0.0,0.25

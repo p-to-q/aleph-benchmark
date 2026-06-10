@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BenchBundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["id", "createdAt", "status", "evidenceMode", "artifacts", "validationCommands", "notes"],
+  "properties": {
+    "id": { "type": "string" },
+    "createdAt": { "type": "string" },
+    "status": { "enum": ["ok", "failed"] },
+    "evidenceMode": { "enum": ["fixture", "mock", "black_box", "white_box", "simulated", "none"] },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/artifact" }
+    },
+    "validationCommands": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "path", "sha256", "bytes", "evidenceMode", "schemaPath", "note"],
+      "properties": {
+        "role": { "enum": ["result", "manifest", "audit", "report", "evidence_note"] },
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "evidenceMode": { "enum": ["fixture", "mock", "black_box", "white_box", "simulated", "none"] },
+        "schemaPath": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}
