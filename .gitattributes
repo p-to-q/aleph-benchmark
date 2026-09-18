@@ -1,0 +1,13 @@
+* text=auto
+
+# Governance identities are byte-stable across contributor platforms.
+LICENSE text eol=lf
+CITATION.cff text eol=lf
+*.md text eol=lf
+*.py text eol=lf
+*.json text eol=lf
+*.jsonl text eol=lf
+*.csv text eol=lf
+*.sha256 text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf

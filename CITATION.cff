@@ -1,0 +1,13 @@
+cff-version: 1.2.0
+message: "If you use Aleph-Bench, cite this software record and the exact release tag."
+title: "Aleph-Bench"
+type: software
+authors:
+  - name: "p-to-q contributors"
+repository-code: "https://github.com/p-to-q/aleph-benchmark"
+url: "https://github.com/p-to-q/aleph-benchmark"
+license: Apache-2.0
+abstract: >-
+  An artifact-first benchmark for measuring how little prompt information a
+  model needs to reconstruct a target while keeping leakage, fidelity, cost,
+  and evidence provenance distinct.

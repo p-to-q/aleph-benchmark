@@ -1,8 +1,19 @@
 # kaggle-benchmarks Task Syntax Reference
 
+<!-- SPDX-License-Identifier: Apache-2.0 -->
+
+> This maintainer-edited summary is derived from Kaggle Benchmarks'
+> [`quick_start.md`](https://github.com/Kaggle/kaggle-benchmarks/blob/ecf1a830319276871f90b574dd7d46de042f2584/quick_start.md)
+> and
+> [`cookbook.md`](https://github.com/Kaggle/kaggle-benchmarks/blob/ecf1a830319276871f90b574dd7d46de042f2584/cookbook.md)
+> at commit `ecf1a830319276871f90b574dd7d46de042f2584`.
+> Copyright 2025 Kaggle Inc.; licensed under Apache-2.0. It is a historical,
+> non-normative integration note and may not describe the current hosted
+> service.
+
 - Installation: `pip install kaggle-benchmarks`
-- [Quick Start](https://github.com/Kaggle/kaggle-benchmarks/blob/ci/quick_start.md)
-- [Cookbook](https://github.com/Kaggle/kaggle-benchmarks/blob/ci/cookbook.md)
+- [Pinned Quick Start](https://github.com/Kaggle/kaggle-benchmarks/blob/ecf1a830319276871f90b574dd7d46de042f2584/quick_start.md)
+- [Pinned Cookbook](https://github.com/Kaggle/kaggle-benchmarks/blob/ecf1a830319276871f90b574dd7d46de042f2584/cookbook.md)
 
 ## Decorator & Signature
 
