@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the content-addressed Aleph Bench E2 source import.
+"""Verify the content-addressed Aleph Bench E2 + E3a source import.
 
 The default gate is offline. ``--source-git`` adds provenance verification
 against an already-fetched Git object database. This program never fetches and
@@ -41,6 +41,16 @@ INVENTORY_SEMANTIC_SHA256 = (
 )
 COPY_TREE_SHA256 = "097b6de4ce08e6bd792043a4263097990bb37c561ac6b822e879f7d77722316d"
 
+E3A_RECEIPT_PATH = "provenance/aleph/e3a.metrics-and-protocol.json"
+E3A_RECEIPT_BYTES = 1_834
+E3A_RECEIPT_GIT_BLOB_SHA1 = "76b43fe936d68a610cecec1ab523706a6d0a45b8"
+E3A_RECEIPT_SHA256 = (
+    "57755779b0ce8b8f29b8fc7f78b4b0600b020b857222184519d83a15bb824955"
+)
+E3A_SOURCE_PATHS = ("bench/engine/metrics.py", "bench/README.md")
+METRICS_OLD_DOC_PATH = b"docs/benchmark/02-design-spec.md"
+METRICS_NEW_DOC_PATH = b"docs/protocol-v0.2.md"
+
 SOURCE_NOTICE_GIT_BLOB_SHA1 = "be3b6c048fee80545b99e83e0a3e089be1a3ee09"
 SOURCE_NOTICE_SHA256 = "c6fefd8d70b629b2fd61ea481793dc227d5e59cf8ba7e44e92fa3eef8fab886f"
 REVIEWED_NOTICE_SHA256 = (
@@ -67,7 +77,8 @@ HEX40 = re.compile(r"[0-9a-f]{40}\Z")
 HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 SAFE_PATH = re.compile(r"[A-Za-z0-9._/-]+\Z")
 MAX_INVENTORY_BYTES = 4 * 1024 * 1024
-MANAGED_PREFIXES = ("bench/", "schemas/")
+MAX_RECEIPT_BYTES = 64 * 1024
+MANAGED_PREFIXES = ("bench/", "docs/", "schemas/")
 
 
 class ImportCheckError(RuntimeError):
@@ -388,6 +399,139 @@ def _parse_inventory_bytes(
     return manifest, copy_rows
 
 
+def _parse_e3a_receipt_bytes(
+    raw: bytes,
+    manifest: dict[str, Any],
+    *,
+    expected_raw_sha256: str | None = E3A_RECEIPT_SHA256,
+) -> list[dict[str, Any]]:
+    if len(raw) > MAX_RECEIPT_BYTES:
+        raise ImportCheckError("E3a receipt is unreasonably large")
+    try:
+        receipt = json.loads(
+            raw.decode("ascii"),
+            object_pairs_hook=_reject_duplicate_pairs,
+            parse_constant=_reject_json_constant,
+        )
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise ImportCheckError(f"invalid E3a receipt JSON: {exc}") from exc
+    if raw != _canonical_file_json(receipt):
+        raise ImportCheckError(
+            "E3a receipt must be canonical sorted, indented ASCII JSON with one trailing newline"
+        )
+    if expected_raw_sha256 is not None and _sha256(raw) != expected_raw_sha256:
+        raise ImportCheckError("raw E3a receipt SHA-256 differs from the reviewed artifact")
+    expected_top_level = {
+        "artifactKind",
+        "formatVersion",
+        "inventoryCommit",
+        "slice",
+        "sourceCommit",
+        "transformations",
+    }
+    if not isinstance(receipt, dict) or set(receipt) != expected_top_level:
+        raise ImportCheckError("E3a receipt top-level keys differ")
+    if receipt["artifactKind"] != "aleph_bench_source_migration_receipt":
+        raise ImportCheckError("unexpected E3a receipt artifactKind")
+    if type(receipt["formatVersion"]) is not int or receipt["formatVersion"] != 1:
+        raise ImportCheckError("E3a receipt formatVersion must be the integer 1")
+    if receipt["slice"] != "E3a":
+        raise ImportCheckError("unexpected migration slice in E3a receipt")
+    if receipt["sourceCommit"] != SOURCE_COMMIT:
+        raise ImportCheckError("E3a receipt source commit differs")
+    if receipt["inventoryCommit"] != INVENTORY_COMMIT:
+        raise ImportCheckError("E3a receipt inventory commit differs")
+
+    transformations = receipt["transformations"]
+    if not isinstance(transformations, list) or len(transformations) != 2:
+        raise ImportCheckError("E3a receipt must contain exactly two transformations")
+    inventory_by_source = {row["source"]: row for row in manifest["files"]}
+    observed_sources: list[str] = []
+    observed_destinations: list[str] = []
+    for index, entry in enumerate(transformations):
+        if not isinstance(entry, dict) or set(entry) != {
+            "destination",
+            "output",
+            "source",
+            "transformation",
+        }:
+            raise ImportCheckError(f"E3a transformations[{index}] keys differ")
+        destination = _validate_repository_path(
+            entry["destination"], role="E3a destination"
+        )
+        source = entry["source"]
+        expected_source_keys = {
+            "bytes",
+            "disposition",
+            "gitBlobSha1",
+            "mode",
+            "path",
+            "sha256",
+        }
+        if not isinstance(source, dict) or set(source) != expected_source_keys:
+            raise ImportCheckError(f"E3a transformations[{index}].source keys differ")
+        source_path = _validate_repository_path(source["path"], role="E3a source")
+        inventory_row = inventory_by_source.get(source_path)
+        if inventory_row is None:
+            raise ImportCheckError(f"E3a source is absent from inventory: {source_path}")
+        expected_source = {
+            "bytes": inventory_row["bytes"],
+            "disposition": inventory_row["disposition"],
+            "gitBlobSha1": inventory_row["gitBlobSha1"],
+            "mode": inventory_row["mode"],
+            "path": inventory_row["source"],
+            "sha256": inventory_row["sha256"],
+        }
+        if source != expected_source or destination != inventory_row["destination"]:
+            raise ImportCheckError(
+                f"E3a transformation differs from inventory row: {source_path}"
+            )
+        output = entry["output"]
+        if not isinstance(output, dict) or set(output) != {
+            "bytes",
+            "gitBlobSha1",
+            "mode",
+            "sha256",
+        }:
+            raise ImportCheckError(f"E3a transformations[{index}].output keys differ")
+        _exact_int(output["bytes"], field=f"transformations[{index}].output.bytes")
+        if output["mode"] != "100644":
+            raise ImportCheckError("E3a outputs must use Git mode 100644")
+        if not isinstance(output["sha256"], str) or HEX64.fullmatch(output["sha256"]) is None:
+            raise ImportCheckError("E3a output has invalid SHA-256")
+        if (
+            not isinstance(output["gitBlobSha1"], str)
+            or HEX40.fullmatch(output["gitBlobSha1"]) is None
+        ):
+            raise ImportCheckError("E3a output has invalid Git blob SHA-1")
+        observed_sources.append(source_path)
+        observed_destinations.append(destination)
+
+    if tuple(observed_sources) != E3A_SOURCE_PATHS:
+        raise ImportCheckError("E3a source selection or order differs")
+    if observed_destinations != ["bench/engine/metrics.py", "docs/protocol-v0.2.md"]:
+        raise ImportCheckError("E3a destination selection or order differs")
+
+    metrics_transform = transformations[0]["transformation"]
+    if metrics_transform != {
+        "algorithm": "utf8-replace-once-v1",
+        "replacements": [
+            {
+                "from": METRICS_OLD_DOC_PATH.decode("ascii"),
+                "to": METRICS_NEW_DOC_PATH.decode("ascii"),
+            }
+        ],
+    }:
+        raise ImportCheckError("E3a metrics transformation contract differs")
+    protocol_transform = transformations[1]["transformation"]
+    if protocol_transform != {
+        "algorithm": "reviewed-standalone-rewrite-v1",
+        "reviewIssue": "https://github.com/p-to-q/aleph-benchmark/issues/4",
+    }:
+        raise ImportCheckError("E3a protocol rewrite contract differs")
+    return transformations
+
+
 def _require_secure_io() -> None:
     if (
         os.name != "posix"
@@ -596,13 +740,18 @@ def _expected_directories(paths: Iterable[str], *, prefix: str) -> set[str]:
 
 
 def _verify_installed(
-    root: Path, manifest: dict[str, Any], copy_rows: list[dict[str, Any]]
+    root: Path,
+    manifest: dict[str, Any],
+    copy_rows: list[dict[str, Any]],
+    transformations: list[dict[str, Any]],
 ) -> None:
     expected_copy_paths = {row["destination"] for row in copy_rows}
+    transformed_paths = {entry["destination"] for entry in transformations}
+    expected_managed_paths = expected_copy_paths | transformed_paths
     for prefix in MANAGED_PREFIXES:
         actual_files, actual_directories = _scan_closed_tree(root, prefix)
         expected_files = {
-            path for path in expected_copy_paths if path.startswith(prefix)
+            path for path in expected_managed_paths if path.startswith(prefix)
         }
         expected_directories = _expected_directories(expected_files, prefix=prefix)
         if actual_files != expected_files:
@@ -623,6 +772,7 @@ def _verify_installed(
         for row in manifest["files"]
         if row["disposition"] in {"port", "regenerate", "rewrite"}
         and row["destination"] != "NOTICE"
+        and row["destination"] not in transformed_paths
     }
     for path in sorted(forbidden):
         if _path_or_parent_exists(root, path):
@@ -646,6 +796,26 @@ def _verify_installed(
             raise ImportCheckError(
                 f"installed Git mode differs at {path}: "
                 f"{observed_mode} != {row['mode']}"
+            )
+
+    for entry in transformations:
+        path = entry["destination"]
+        output = entry["output"]
+        payload, status = _read_regular_path(
+            root,
+            path,
+            expected_bytes=output["bytes"],
+            max_bytes=output["bytes"],
+        )
+        if _sha256(payload) != output["sha256"]:
+            raise ImportCheckError(f"installed E3a SHA-256 differs: {path}")
+        if _git_blob_sha1(payload) != output["gitBlobSha1"]:
+            raise ImportCheckError(f"installed E3a Git blob SHA-1 differs: {path}")
+        observed_mode = _git_mode_from_stat(status, path=path)
+        if observed_mode != output["mode"]:
+            raise ImportCheckError(
+                f"installed E3a Git mode differs at {path}: "
+                f"{observed_mode} != {output['mode']}"
             )
 
     notice, notice_status = _read_regular_path(
@@ -835,10 +1005,42 @@ def _validate_source_root(repository: Path) -> Path:
     return repository
 
 
+def _verify_e3a_transformations_at_source(
+    source_payloads: dict[str, bytes],
+    root: Path,
+    transformations: list[dict[str, Any]],
+) -> None:
+    metrics_source = source_payloads["bench/engine/metrics.py"]
+    if metrics_source.count(METRICS_OLD_DOC_PATH) != 1:
+        raise ImportCheckError(
+            "pinned metrics source must contain the old documentation path exactly once"
+        )
+    if METRICS_NEW_DOC_PATH in metrics_source:
+        raise ImportCheckError(
+            "pinned metrics source already contains the standalone documentation path"
+        )
+    expected_metrics = metrics_source.replace(
+        METRICS_OLD_DOC_PATH, METRICS_NEW_DOC_PATH, 1
+    )
+    metrics_entry = transformations[0]
+    installed_metrics, _ = _read_regular_path(
+        root,
+        metrics_entry["destination"],
+        expected_bytes=metrics_entry["output"]["bytes"],
+        max_bytes=metrics_entry["output"]["bytes"],
+    )
+    if installed_metrics != expected_metrics:
+        raise ImportCheckError(
+            "installed metrics port differs from the one reviewed path replacement"
+        )
+
+
 def _verify_source(
     repository: Path,
+    root: Path,
     manifest: dict[str, Any],
     copy_rows: list[dict[str, Any]],
+    transformations: list[dict[str, Any]],
     installed_inventory_raw: bytes,
 ) -> None:
     repository = _validate_source_root(repository)
@@ -853,6 +1055,18 @@ def _verify_source(
     _verify_commit(repository, INVENTORY_COMMIT)
     _verify_inventory_object(repository, installed_inventory_raw)
     _verify_rows_at_commit(repository, SOURCE_COMMIT, copy_rows)
+
+    inventory_by_source = {row["source"]: row for row in manifest["files"]}
+    transformation_rows = [
+        inventory_by_source[entry["source"]["path"]]
+        for entry in transformations
+    ]
+    source_payloads = _verify_rows_at_commit(
+        repository, SOURCE_COMMIT, transformation_rows
+    )
+    _verify_e3a_transformations_at_source(
+        source_payloads, root, transformations
+    )
 
     notice_rows = [
         row
@@ -891,20 +1105,39 @@ def verify_repository(
     if _git_blob_sha1(inventory_raw) != INVENTORY_GIT_BLOB_SHA1:
         raise ImportCheckError("installed inventory Git blob SHA-1 differs from E1")
     manifest, copy_rows = _parse_inventory_bytes(inventory_raw)
-    _verify_installed(root, manifest, copy_rows)
+    receipt_raw, receipt_status = _read_regular_path(
+        root,
+        E3A_RECEIPT_PATH,
+        expected_bytes=E3A_RECEIPT_BYTES,
+        max_bytes=MAX_RECEIPT_BYTES,
+    )
+    if _git_mode_from_stat(receipt_status, path=E3A_RECEIPT_PATH) != "100644":
+        raise ImportCheckError("installed E3a receipt must have Git mode 100644")
+    if _git_blob_sha1(receipt_raw) != E3A_RECEIPT_GIT_BLOB_SHA1:
+        raise ImportCheckError("installed E3a receipt Git blob SHA-1 differs")
+    transformations = _parse_e3a_receipt_bytes(receipt_raw, manifest)
+    _verify_installed(root, manifest, copy_rows, transformations)
     if source_git is not None:
-        _verify_source(source_git, manifest, copy_rows, inventory_raw)
+        _verify_source(
+            source_git,
+            root,
+            manifest,
+            copy_rows,
+            transformations,
+            inventory_raw,
+        )
     return {
         "copyBytes": sum(row["bytes"] for row in copy_rows),
         "copyFiles": len(copy_rows),
         "copyTreeSha256": COPY_TREE_SHA256,
+        "e3aFiles": len(transformations),
         "sourceVerified": source_git is not None,
     }
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Verify the pinned Aleph Bench E2 source import."
+        description="Verify the pinned Aleph Bench E2 + E3a source import."
     )
     parser.add_argument(
         "--source-git",
@@ -921,6 +1154,7 @@ def main(argv: list[str] | None = None) -> int:
         "source import ok: "
         f"mode={mode} commit={SOURCE_COMMIT} files={result['copyFiles']} "
         f"bytes={result['copyBytes']} "
+        f"e3aFiles={result['e3aFiles']} "
         f"copyTreeSha256={result['copyTreeSha256']}"
     )
     return 0

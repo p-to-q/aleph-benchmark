@@ -30,8 +30,10 @@ jobs:
         uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
         with:
           python-version: ${{ matrix.python }}
-      - name: Run import contract tests
+      - name: Run migration contract tests in isolated mode
         run: python -I -B -m unittest discover -s tests -p 'test_source_v0_2_import.py' -v
+      - name: Run metrics and protocol-document tests
+        run: python -B -m unittest discover -s tests -p 'test_metrics_v0_2.py' -v
       - name: Verify installed import offline
         run: python -I -B scripts/check-source-v0.2-import.py
       - name: Verify frozen S2 data
@@ -44,6 +46,7 @@ jobs:
           bench.tests.test_kaggle_capture
           bench.tests.test_kaggle_creation_output
           bench.tests.test_replay_adapter
+          bench.tests.test_scorer_conformance
 
   pinned-source-provenance:
     runs-on: ubuntu-24.04
