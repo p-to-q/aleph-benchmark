@@ -38,6 +38,19 @@ jobs:
         run: python -B -m unittest -v tests.test_metrics_v0_2
       - name: Run v0.2 report tests
         run: python -B -m unittest -v tests.test_report_v0_2
+      - name: Run E3c cross-version package tests
+        run: >-
+          python -B -m unittest -v
+          bench.tests.test_protocol_v0_2 -k package
+      - name: Assert the canonical v0.2 scoring runtime
+        if: matrix.python == '3.13'
+        run: >-
+          python -B -c
+          'from bench.engine.scoring_core import validate_scoring_runtime;
+          validate_scoring_runtime()'
+      - name: Run the complete E3c protocol suite
+        if: matrix.python == '3.13'
+        run: python -B -m unittest -v bench.tests.test_protocol_v0_2
       - name: Verify frozen S2 data
         if: matrix.python == '3.13'
         run: python -I -B bench/data/generate_s2.py --check
@@ -49,6 +62,30 @@ jobs:
           bench.tests.test_kaggle_creation_output
           bench.tests.test_replay_adapter
           bench.tests.test_scorer_conformance
+
+  macos-destination-safety:
+    name: Destination safety (macOS 15 / Python ${{ matrix.python }})
+    runs-on: macos-15
+    timeout-minutes: 8
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.13"]
+    steps:
+      - name: Check out standalone repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+      - name: Verify installed import offline
+        run: python -I -B scripts/check-source-v0.2-import.py
+      - name: Exercise Darwin package publication and safety gates
+        run: >-
+          python -B -m unittest -v
+          bench.tests.test_protocol_v0_2 -k package
 
   pinned-source-provenance:
     runs-on: ubuntu-24.04
