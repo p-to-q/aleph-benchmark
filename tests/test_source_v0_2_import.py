@@ -65,6 +65,12 @@ class InventoryContractTests(unittest.TestCase):
         cls.e3d_transformations = checker._parse_e3d_receipt_bytes(
             cls.e3d_receipt_raw, cls.manifest
         )
+        cls.e3e_receipt_raw = (
+            REPOSITORY_ROOT / checker.E3E_RECEIPT_PATH
+        ).read_bytes()
+        cls.e3e_transformations = checker._parse_e3e_receipt_bytes(
+            cls.e3e_receipt_raw, cls.manifest
+        )
 
     def test_reviewed_inventory_and_copy_selection(self) -> None:
         self.assertEqual(len(self.copy_rows), 78)
@@ -216,6 +222,56 @@ class InventoryContractTests(unittest.TestCase):
                 expected_raw_sha256=None,
             )
 
+    def test_reviewed_e3e_receipt_and_transformation(self) -> None:
+        self.assertEqual(
+            [entry["destination"] for entry in self.e3e_transformations],
+            [checker.E3E_SOURCE_PATH],
+        )
+        entry = self.e3e_transformations[0]
+        self.assertEqual(
+            entry["transformation"]["algorithm"],
+            checker.E3C_TRANSFORMATION_ALGORITHM,
+        )
+        self.assertEqual(entry["source"]["bytes"], 16_766)
+        self.assertEqual(
+            entry["source"]["sha256"],
+            "5a4a67bd9979d84c2ca6e402df55967c0c86186e246bdde056d517af9ccd9c51",
+        )
+
+    def test_e3e_receipt_tamper_is_rejected(self) -> None:
+        value = json.loads(self.e3e_receipt_raw)
+        value["transformations"][0]["output"]["bytes"] += 1
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "raw E3e receipt"):
+            checker._parse_e3e_receipt_bytes(tampered, self.manifest)
+
+    def test_e3e_source_metadata_tamper_is_rejected_without_digest_pin(self) -> None:
+        value = json.loads(self.e3e_receipt_raw)
+        value["transformations"][0]["source"]["gitBlobSha1"] = "0" * 40
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(
+            checker.ImportCheckError, "runner transformation differs from inventory"
+        ):
+            checker._parse_e3e_receipt_bytes(
+                tampered,
+                self.manifest,
+                expected_raw_sha256=None,
+            )
+
+    def test_e3e_splice_contract_tamper_is_rejected_without_digest_pin(self) -> None:
+        value = json.loads(self.e3e_receipt_raw)
+        edit = value["transformations"][0]["transformation"]["edits"][0]
+        edit["outputCharOffset"] += 1
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(
+            checker.ImportCheckError, "source/output offsets are inconsistent"
+        ):
+            checker._parse_e3e_receipt_bytes(
+                tampered,
+                self.manifest,
+                expected_raw_sha256=None,
+            )
+
     def test_path_attacks_are_rejected(self) -> None:
         attacks = (
             "/absolute",
@@ -315,11 +371,18 @@ class InstalledTreeTests(unittest.TestCase):
         e3d_transformations = checker._parse_e3d_receipt_bytes(
             e3d_receipt_raw, cls.manifest
         )
+        e3e_receipt_raw = (
+            REPOSITORY_ROOT / checker.E3E_RECEIPT_PATH
+        ).read_bytes()
+        e3e_transformations = checker._parse_e3e_receipt_bytes(
+            e3e_receipt_raw, cls.manifest
+        )
         cls.transformations = (
             e3a_transformations
             + e3b_transformations
             + e3c_transformations
             + e3d_transformations
+            + e3e_transformations
         )
 
     def materialize(self) -> tuple[tempfile.TemporaryDirectory[str], Path]:
@@ -395,6 +458,14 @@ class InstalledTreeTests(unittest.TestCase):
             ).chmod(0o655)
         )
 
+    def test_execute_bits_on_runner_output_are_rejected(self) -> None:
+        self.assert_rejected(lambda root: (root / checker.E3E_SOURCE_PATH).chmod(0o755))
+
+    def test_missing_runner_test_is_rejected_by_managed_tree(self) -> None:
+        self.assert_rejected(
+            lambda root: (root / "tests/test_run_v0_2_port.py").unlink()
+        )
+
     def test_symlink_is_rejected(self) -> None:
         def mutate(root: Path) -> None:
             path = root / "bench/__init__.py"
@@ -460,6 +531,21 @@ class InstalledTreeTests(unittest.TestCase):
                     path.symlink_to("__init__.py")
 
                 self.assert_rejected(mutate)
+
+    def test_e3e_output_tamper_is_rejected(self) -> None:
+        self.assert_rejected(
+            lambda root: (root / checker.E3E_SOURCE_PATH).write_text(
+                "not the reviewed E3e port\n"
+            )
+        )
+
+    def test_e3e_output_symlink_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            path = root / checker.E3E_SOURCE_PATH
+            path.unlink()
+            path.symlink_to("engine/__init__.py")
+
+        self.assert_rejected(mutate)
 
     def test_missing_protocol_document_is_rejected(self) -> None:
         self.assert_rejected(
@@ -723,6 +809,43 @@ class GitObjectVerificationTests(unittest.TestCase):
             ):
                 checker._reconstruct_e3d_source(root, transformations)
 
+    def test_e3e_runner_round_trips_to_its_reviewed_source(self) -> None:
+        manifest_raw = (REPOSITORY_ROOT / checker.INVENTORY_PATH).read_bytes()
+        manifest, _ = checker._parse_inventory_bytes(manifest_raw)
+        receipt_raw = (REPOSITORY_ROOT / checker.E3E_RECEIPT_PATH).read_bytes()
+        transformations = checker._parse_e3e_receipt_bytes(
+            receipt_raw, manifest
+        )
+        reconstructed = checker._reconstruct_e3e_source(
+            REPOSITORY_ROOT, transformations
+        )
+        checker._verify_e3e_transformation_at_source(
+            {checker.E3E_SOURCE_PATH: reconstructed},
+            REPOSITORY_ROOT,
+            transformations,
+        )
+        with self.assertRaisesRegex(
+            checker.ImportCheckError, "does not reconstruct its pinned source"
+        ):
+            checker._verify_e3e_transformation_at_source(
+                {checker.E3E_SOURCE_PATH: b"X" + reconstructed[1:]},
+                REPOSITORY_ROOT,
+                transformations,
+            )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            destination = root / checker.E3E_SOURCE_PATH
+            destination.parent.mkdir(parents=True)
+            installed = (REPOSITORY_ROOT / checker.E3E_SOURCE_PATH).read_bytes()
+            destination.write_bytes(
+                installed.replace(b"_safe_write_text", b"_safe_write_taxt", 1)
+            )
+            with self.assertRaisesRegex(
+                checker.ImportCheckError, "installed runner output metadata differs"
+            ):
+                checker._reconstruct_e3e_source(root, transformations)
+
 
 class LiveGateTests(unittest.TestCase):
     def test_repository_gate_passes(self) -> None:
@@ -732,6 +855,7 @@ class LiveGateTests(unittest.TestCase):
         self.assertEqual(result["e3bFiles"], 1)
         self.assertEqual(result["e3cFiles"], 2)
         self.assertEqual(result["e3dFiles"], 1)
+        self.assertEqual(result["e3eFiles"], 1)
         self.assertEqual(
             result["e3cPackageTreeSha256"],
             checker.E3C_PACKAGE_TREE_SHA256,
