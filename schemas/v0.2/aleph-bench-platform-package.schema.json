@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BenchPlatformPackageV0.2",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersion",
+    "packageVersion",
+    "id",
+    "createdAt",
+    "datasetId",
+    "datasetItemCount",
+    "datasetSha256",
+    "datasetHashAlgorithm",
+    "packageKind",
+    "evidenceMode",
+    "targetPlatforms",
+    "scoringProfile",
+    "artifacts",
+    "validationCommands",
+    "notes"
+  ],
+  "properties": {
+    "protocolVersion": { "enum": ["0.2.0"] },
+    "packageVersion": { "enum": ["0.2.0"] },
+    "id": { "enum": ["aleph-bench-v0.2-scorer-conformance"] },
+    "createdAt": { "type": "string" },
+    "datasetId": { "enum": ["aleph-bench-v0.2-public-s2"] },
+    "datasetItemCount": { "enum": [30] },
+    "datasetSha256": {
+      "enum": ["6f3a03400ec16405414afb94c7c639f2df07f7f0797c3b58ad1c4229e52f2041"]
+    },
+    "datasetHashAlgorithm": {
+      "enum": ["sha256-length-framed-filename-and-content-v1"]
+    },
+    "packageKind": { "enum": ["scorer_conformance"] },
+    "evidenceMode": { "enum": ["none"] },
+    "targetPlatforms": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 1,
+      "items": { "enum": ["kaggle_community_benchmark"] }
+    },
+    "scoringProfile": { "$ref": "#/$defs/scoringProfile" },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/artifact" }
+    },
+    "validationCommands": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "notes": {
+      "type": "array",
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "scoringProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scorerId",
+        "scorerVersion",
+        "schemaVersion",
+        "normalizationProfile",
+        "lexicalProfile",
+        "leakageUnit",
+        "leakageFailClosedPolicy",
+        "responseCaptureVersion",
+        "unicodeDatabaseVersion",
+        "pythonVersion",
+        "maxScoringTextCharacters",
+        "maxNormalizedTextCharacters",
+        "maxQuadraticCells"
+      ],
+      "properties": {
+        "scorerId": { "enum": ["aleph-unicode"] },
+        "scorerVersion": { "enum": ["0.2.0"] },
+        "schemaVersion": { "enum": ["0.2.0"] },
+        "normalizationProfile": { "enum": ["unicode_nfc_newline_v1"] },
+        "lexicalProfile": {
+          "enum": ["unicode_nfc_casefold_whitespace_char3_multiset_jaccard_v1"]
+        },
+        "leakageUnit": { "enum": ["unicode_dual_channel_v1"] },
+        "leakageFailClosedPolicy": {
+          "enum": ["bidi_controls_and_cjk_compatibility_ideographs_v1"]
+        },
+        "responseCaptureVersion": { "enum": ["raw-v1"] },
+        "unicodeDatabaseVersion": { "enum": ["15.1.0"] },
+        "pythonVersion": { "enum": ["3.13"] },
+        "maxScoringTextCharacters": { "enum": [16384] },
+        "maxNormalizedTextCharacters": { "enum": [32768] },
+        "maxQuadraticCells": { "enum": [1000000] }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["role", "path", "sha256", "bytes", "encodingFormat"],
+      "properties": {
+        "role": { "enum": ["conformance", "data", "docs", "kaggle", "schemas"] },
+        "path": { "type": "string" },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "bytes": { "type": "integer", "minimum": 0 },
+        "encodingFormat": { "type": "string" }
+      }
+    }
+  }
+}

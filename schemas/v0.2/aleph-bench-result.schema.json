@@ -1,0 +1,624 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BenchResult",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersion",
+    "evaluationScope",
+    "requestedItemLimit",
+    "evaluatedItemCount",
+    "id",
+    "createdAt",
+    "track",
+    "split",
+    "seed",
+    "stratum",
+    "metricClasses",
+    "tau",
+    "k",
+    "canaryGuid",
+    "config",
+    "models",
+    "itemRuns",
+    "notes"
+  ],
+  "properties": {
+    "protocolVersion": { "enum": ["0.2.0"] },
+    "evaluationScope": { "enum": ["canonical", "smoke"] },
+    "requestedItemLimit": {
+      "anyOf": [
+        { "type": "integer", "minimum": 1, "maximum": 30 },
+        { "type": "null" }
+      ]
+    },
+    "evaluatedItemCount": { "type": "integer", "minimum": 1, "maximum": 30 },
+    "id": {
+      "type": "string",
+      "pattern": "^aleph-bench-v0\\.2-(m0|smoke-[1-9][0-9]*)-seed--?[0-9]+-artifact-[0-9a-f]{64}$"
+    },
+    "createdAt": {
+      "type": "string",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?Z$"
+    },
+    "track": { "enum": ["F"] },
+    "split": { "enum": ["public"] },
+    "seed": { "type": "integer" },
+    "stratum": { "enum": ["S2"] },
+    "metricClasses": { "const": ["normalized_edit_similarity"] },
+    "tau": { "enum": [0.95] },
+    "k": { "enum": [16] },
+    "canaryGuid": { "type": "string" },
+    "config": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "datasetPath",
+        "datasetId",
+        "datasetItemCount",
+        "datasetSha256",
+        "datasetHashAlgorithm",
+        "decoding",
+        "evidenceModes",
+        "leakageThresholds",
+        "scoring",
+        "bootstrapSamples",
+        "reruns"
+      ],
+      "properties": {
+        "datasetPath": { "type": "string" },
+        "datasetId": { "enum": ["aleph-bench-v0.2-public-s2"] },
+        "datasetItemCount": { "enum": [30] },
+        "datasetSha256": { "enum": ["6f3a03400ec16405414afb94c7c639f2df07f7f0797c3b58ad1c4229e52f2041"] },
+        "datasetHashAlgorithm": { "enum": ["sha256-length-framed-filename-and-content-v1"] },
+        "decoding": {
+          "const": {
+            "mock": "temperature=0",
+            "hosted": "temperature=0; max_tokens=512"
+          }
+        },
+        "evidenceModes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["fixture", "mock", "black_box", "white_box", "simulated"] }
+        },
+        "leakageThresholds": { "$ref": "#/$defs/leakageThresholds" },
+        "scoring": { "$ref": "#/$defs/scoringProfile" },
+        "bootstrapSamples": { "enum": [500] },
+        "reruns": { "enum": [5] }
+      }
+    },
+    "models": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/modelSummary" }
+    },
+    "itemRuns": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/itemRun" }
+    },
+    "notes": {
+      "type": "array",
+      "minItems": 5,
+      "uniqueItems": true,
+      "items": { "type": "string" }
+    }
+  },
+  "if": {
+    "type": "object",
+    "properties": { "evaluationScope": { "const": "canonical" } }
+  },
+  "then": {
+    "type": "object",
+    "properties": {
+      "requestedItemLimit": { "type": "null" },
+      "evaluatedItemCount": { "const": 30 },
+      "id": { "pattern": "^aleph-bench-v0\\.2-m0-" }
+    }
+  },
+  "else": {
+    "type": "object",
+    "properties": {
+      "requestedItemLimit": { "type": "integer", "minimum": 1, "maximum": 30 },
+      "id": { "pattern": "^aleph-bench-v0\\.2-smoke-" }
+    }
+  },
+  "$defs": {
+    "confidenceInterval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["low", "high"],
+      "properties": {
+        "low": { "type": "number" },
+        "high": { "type": "number" }
+      }
+    },
+    "leakageThresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lcsRatio",
+        "targetTrigramRecall",
+        "verbatimSpanUnits",
+        "skeletonLcsRatio",
+        "skeletonTargetTrigramRecall",
+        "skeletonVerbatimSpanUnits"
+      ],
+      "properties": {
+        "lcsRatio": { "enum": [0.65] },
+        "targetTrigramRecall": { "enum": [0.5] },
+        "verbatimSpanUnits": { "enum": [16] },
+        "skeletonLcsRatio": { "enum": [0.8] },
+        "skeletonTargetTrigramRecall": { "enum": [0.8] },
+        "skeletonVerbatimSpanUnits": { "enum": [32] }
+      }
+    },
+    "scoringProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scorerId",
+        "scorerVersion",
+        "schemaVersion",
+        "normalizationProfile",
+        "lexicalProfile",
+        "leakageUnit",
+        "leakageFailClosedPolicy",
+        "responseCaptureVersion",
+        "unicodeDatabaseVersion",
+        "pythonVersion",
+        "maxScoringTextCharacters",
+        "maxNormalizedTextCharacters",
+        "maxQuadraticCells"
+      ],
+      "properties": {
+        "scorerId": { "enum": ["aleph-unicode"] },
+        "scorerVersion": { "enum": ["0.2.0"] },
+        "schemaVersion": { "enum": ["0.2.0"] },
+        "normalizationProfile": { "enum": ["unicode_nfc_newline_v1"] },
+        "lexicalProfile": { "enum": ["unicode_nfc_casefold_whitespace_char3_multiset_jaccard_v1"] },
+        "leakageUnit": { "enum": ["unicode_dual_channel_v1"] },
+        "leakageFailClosedPolicy": {
+          "enum": ["bidi_controls_and_cjk_compatibility_ideographs_v1"]
+        },
+        "responseCaptureVersion": { "enum": ["raw-v1"] },
+        "unicodeDatabaseVersion": { "enum": ["15.1.0"] },
+        "pythonVersion": { "enum": ["3.13"] },
+        "maxScoringTextCharacters": { "enum": [16384] },
+        "maxNormalizedTextCharacters": { "enum": [32768] },
+        "maxQuadraticCells": { "enum": [1000000] }
+      }
+    },
+    "leakageGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disqualified",
+        "unit",
+        "failClosedReason",
+        "lcsRatio",
+        "targetTrigramRecall",
+        "verbatimSpanUnits",
+        "skeletonLcsRatio",
+        "skeletonTargetTrigramRecall",
+        "skeletonVerbatimSpanUnits",
+        "thresholds"
+      ],
+      "properties": {
+        "disqualified": { "type": "boolean" },
+        "unit": { "enum": ["unicode_dual_channel_v1"] },
+        "failClosedReason": {
+          "anyOf": [
+            { "enum": ["bidi_control", "cjk_compatibility_ideograph"] },
+            { "type": "null" }
+          ]
+        },
+        "lcsRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "targetTrigramRecall": { "type": "number", "minimum": 0, "maximum": 1 },
+        "verbatimSpanUnits": { "type": "integer", "minimum": 0 },
+        "skeletonLcsRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "skeletonTargetTrigramRecall": { "type": "number", "minimum": 0, "maximum": 1 },
+        "skeletonVerbatimSpanUnits": { "type": "integer", "minimum": 0 },
+        "thresholds": { "$ref": "#/$defs/leakageThresholds" }
+      }
+    },
+    "modelSummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "required": ["evidenceMode"],
+            "properties": {
+              "evidenceMode": { "const": "black_box" }
+            }
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "adapterIdentity": { "$ref": "#/$defs/hostedAdapterIdentity" },
+              "responseCapture": { "$ref": "#/$defs/responseCapture" }
+            }
+          },
+          "else": {
+            "type": "object",
+            "properties": {
+              "responseCapture": { "type": "null" }
+            }
+          }
+        }
+      ],
+      "required": [
+        "model",
+        "evidenceMode",
+        "itemCount",
+        "aurc",
+        "aurcCi95",
+        "eclAtTau",
+        "eclAtTauCi95",
+        "coverageAtTau",
+        "elicitAtK",
+        "elicitAtKCi95",
+        "leakageHitRate",
+        "adapterIdentity",
+        "responseCapture"
+      ],
+      "properties": {
+        "model": { "type": "string" },
+        "evidenceMode": { "enum": ["fixture", "mock", "black_box", "white_box", "simulated"] },
+        "itemCount": { "type": "integer", "minimum": 1 },
+        "aurc": { "type": "number", "minimum": 0, "maximum": 1 },
+        "aurcCi95": { "$ref": "#/$defs/confidenceInterval" },
+        "eclAtTau": {
+          "anyOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "null" }
+          ]
+        },
+        "eclAtTauCi95": {
+          "anyOf": [
+            { "$ref": "#/$defs/confidenceInterval" },
+            { "type": "null" }
+          ]
+        },
+        "coverageAtTau": { "type": "number", "minimum": 0, "maximum": 1 },
+        "elicitAtK": { "type": "number", "minimum": 0, "maximum": 1 },
+        "elicitAtKCi95": { "$ref": "#/$defs/confidenceInterval" },
+        "leakageHitRate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "adapterIdentity": { "$ref": "#/$defs/adapterIdentity" },
+        "responseCapture": {
+          "anyOf": [
+            { "$ref": "#/$defs/responseCapture" },
+            { "type": "null" }
+          ]
+        }
+      }
+    },
+    "itemRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["itemId", "model", "alephRun", "measurements", "frontier", "metrics"],
+      "properties": {
+        "itemId": { "type": "string" },
+        "model": { "type": "string" },
+        "alephRun": { "$ref": "#/$defs/alephRun" },
+        "measurements": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/promptMeasurement" }
+        },
+        "frontier": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/frontierPoint" }
+        },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["aurc", "eclAtTau", "elicitAtK", "leakageHitRate"],
+          "properties": {
+            "aurc": { "type": "number", "minimum": 0, "maximum": 1 },
+            "eclAtTau": {
+              "anyOf": [
+                { "type": "number", "minimum": 0 },
+                { "type": "null" }
+              ]
+            },
+            "elicitAtK": { "type": "boolean" },
+            "leakageHitRate": { "type": "number", "minimum": 0, "maximum": 1 }
+          }
+        }
+      }
+    },
+    "alephRun": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "createdAt", "target", "config", "candidates", "selectedCandidateId", "observations"],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^aleph-run-v0\\.2-s2-[0-9]{3}-seed--?[0-9]+-artifact-[0-9a-f]{64}$"
+        },
+        "createdAt": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?Z$"
+        },
+        "target": { "$ref": "#/$defs/target" },
+        "config": { "$ref": "#/$defs/searchConfig" },
+        "candidates": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/candidate" }
+        },
+        "selectedCandidateId": { "type": "string" },
+        "observations": { "$ref": "#/$defs/observations" }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "maxLength": 16384 },
+        "label": { "type": "string" }
+      }
+    },
+    "searchConfig": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["model", "decoding", "metric", "budget", "mode"],
+      "properties": {
+        "model": { "type": "string" },
+        "decoding": { "type": "string" },
+        "metric": {
+          "enum": ["exact", "normalized_edit_similarity", "unicode_char_ngram"]
+        },
+        "mode": { "enum": ["unrestricted", "non_leaking"] },
+        "budget": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["candidates", "maxPromptTokens", "repeatedSamples"],
+          "properties": {
+            "candidates": { "type": "integer", "minimum": 0 },
+            "maxPromptTokens": { "type": "integer", "minimum": 0 },
+            "repeatedSamples": { "type": "integer", "minimum": 0 },
+            "timeLimitSeconds": { "type": "number", "minimum": 0 }
+          }
+        }
+      }
+    },
+    "candidate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "prompt", "output", "tokens", "fit", "stability", "compression", "leakage"],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "prompt": { "type": "string", "minLength": 1, "maxLength": 16384 },
+        "output": { "type": "string", "maxLength": 16384 },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "fit": { "type": "number", "minimum": 0, "maximum": 1 },
+        "stability": { "type": "number", "minimum": 0, "maximum": 1 },
+        "compression": { "type": "number", "minimum": 0, "maximum": 1 },
+        "leakage": { "type": "number", "minimum": 0, "maximum": 1 },
+        "nll": { "type": "number", "minimum": 0 },
+        "frontierRank": { "type": "integer", "minimum": 1 },
+        "note": { "type": "string" }
+      }
+    },
+    "frontierPoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "label",
+        "prompt",
+        "output",
+        "tokens",
+        "fit",
+        "stability",
+        "compression",
+        "leakage",
+        "itemId",
+        "model",
+        "rung",
+        "paraphrase",
+        "distortion",
+        "fidelity",
+        "rerunCount",
+        "fidelityVariance",
+        "fidelityStdDev",
+        "disqualified",
+        "leakageGate",
+        "evidenceMode"
+      ],
+      "properties": {
+        "id": { "type": "string" },
+        "label": { "type": "string" },
+        "prompt": { "type": "string", "minLength": 1, "maxLength": 16384 },
+        "output": { "type": "string", "maxLength": 16384 },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "fit": { "type": "number", "minimum": 0, "maximum": 1 },
+        "stability": { "type": "number", "minimum": 0, "maximum": 1 },
+        "compression": { "type": "number", "minimum": 0, "maximum": 1 },
+        "leakage": { "type": "number", "minimum": 0, "maximum": 1 },
+        "nll": { "type": "number", "minimum": 0 },
+        "frontierRank": { "type": "integer", "minimum": 1 },
+        "note": { "type": "string" },
+        "itemId": { "type": "string" },
+        "model": { "type": "string" },
+        "rung": { "enum": [0, 1, 2, 3] },
+        "paraphrase": { "enum": [0, 1] },
+        "distortion": { "type": "number", "minimum": 0, "maximum": 1 },
+        "fidelity": { "type": "number", "minimum": 0, "maximum": 1 },
+        "rerunCount": { "type": "integer", "minimum": 0 },
+        "fidelityVariance": { "type": "number", "minimum": 0 },
+        "fidelityStdDev": { "type": "number", "minimum": 0 },
+        "disqualified": { "type": "boolean" },
+        "leakageGate": { "$ref": "#/$defs/leakageGate" },
+        "evidenceMode": { "enum": ["fixture", "mock", "black_box", "white_box", "simulated"] }
+      }
+    },
+    "promptMeasurement": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "promptId",
+        "rung",
+        "paraphrase",
+        "tokens",
+        "outputs",
+        "responseReceipts",
+        "rerunCount",
+        "fidelityMean",
+        "fidelityVariance",
+        "fidelityStdDev",
+        "disqualified",
+        "leakageGate"
+      ],
+      "properties": {
+        "promptId": { "type": "string" },
+        "rung": { "enum": [0, 1, 2, 3] },
+        "paraphrase": { "enum": [0, 1] },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "outputs": {
+          "type": "array",
+          "items": { "type": "string", "maxLength": 16384 }
+        },
+        "responseReceipts": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/responseReceipt" }
+        },
+        "rerunCount": { "type": "integer", "minimum": 0 },
+        "fidelityMean": {
+          "anyOf": [
+            { "type": "number", "minimum": 0, "maximum": 1 },
+            { "type": "null" }
+          ]
+        },
+        "fidelityVariance": {
+          "anyOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "null" }
+          ]
+        },
+        "fidelityStdDev": {
+          "anyOf": [
+            { "type": "number", "minimum": 0 },
+            { "type": "null" }
+          ]
+        },
+        "disqualified": { "type": "boolean" },
+        "leakageGate": { "$ref": "#/$defs/leakageGate" }
+      }
+    },
+    "responseReceipt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["capturedAt", "source"],
+      "properties": {
+        "capturedAt": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?Z$"
+        },
+        "source": { "enum": ["provider", "cache"] }
+      }
+    },
+    "adapterIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapterId",
+        "adapterVersion",
+        "model",
+        "observationMode",
+        "temperature"
+      ],
+      "properties": {
+        "adapterId": { "type": "string", "minLength": 1 },
+        "adapterVersion": { "type": "string", "minLength": 1 },
+        "model": { "type": "string", "minLength": 1 },
+        "observationMode": { "enum": ["fixture", "mock", "black_box", "white_box", "simulated"] },
+        "temperature": { "type": "number" },
+        "wireProtocol": { "type": "string", "minLength": 1 },
+        "requestPayloadVersion": { "type": "string", "minLength": 1 },
+        "endpointSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "maxTokens": { "type": "integer", "minimum": 1 },
+        "providerModel": { "type": "string", "minLength": 1 },
+        "deploymentId": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "timeoutSeconds": { "type": "integer", "minimum": 1 },
+        "maxRetries": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "retryDelaySeconds": { "type": "number", "minimum": 0, "maximum": 60 }
+      }
+    },
+    "hostedAdapterIdentity": {
+      "allOf": [
+        { "$ref": "#/$defs/adapterIdentity" },
+        {
+          "type": "object",
+          "required": [
+            "wireProtocol",
+            "requestPayloadVersion",
+            "endpointSha256",
+            "maxTokens",
+            "providerModel",
+            "deploymentId",
+            "timeoutSeconds",
+            "maxRetries",
+            "retryDelaySeconds"
+          ],
+          "properties": {
+            "observationMode": { "const": "black_box" }
+          }
+        }
+      ]
+    },
+    "responseCapture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "responseCount",
+        "providerResponseCount",
+        "cacheHitCount",
+        "capturedAtMin",
+        "capturedAtMax"
+      ],
+      "properties": {
+        "responseCount": { "type": "integer", "minimum": 1 },
+        "providerResponseCount": { "type": "integer", "minimum": 0 },
+        "cacheHitCount": { "type": "integer", "minimum": 0 },
+        "capturedAtMin": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?Z$"
+        },
+        "capturedAtMax": {
+          "type": "string",
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?Z$"
+        }
+      }
+    },
+    "observations": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": { "enum": ["fixture", "mock", "black_box", "white_box", "simulated"] },
+        "evalSuite": { "type": "array", "items": { "$ref": "#/$defs/eval" } }
+      }
+    },
+    "eval": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "passed"],
+      "properties": {
+        "name": { "type": "string" },
+        "passed": { "type": "boolean" },
+        "score": { "type": "number" },
+        "note": { "type": "string" }
+      }
+    }
+  }
+}

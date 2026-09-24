@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BenchItem",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersion",
+    "id",
+    "stratum",
+    "language",
+    "target",
+    "metricClass",
+    "frozenLadder",
+    "canaryGuid",
+    "provenance",
+    "license"
+  ],
+  "properties": {
+    "protocolVersion": { "enum": ["0.2.0"] },
+    "id": { "type": "string" },
+    "stratum": { "enum": ["S2"] },
+    "language": { "type": "string" },
+    "target": { "$ref": "#/$defs/target" },
+    "metricClass": {
+      "enum": [
+        "exact",
+        "normalized_edit_similarity",
+        "unicode_char_ngram"
+      ]
+    },
+    "frozenLadder": {
+      "type": "array",
+      "minItems": 8,
+      "maxItems": 8,
+      "items": { "$ref": "#/$defs/frozenLadderPrompt" }
+    },
+    "canaryGuid": { "type": "string" },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["createdBy", "generatedAt", "method", "seed"],
+      "properties": {
+        "createdBy": { "type": "string" },
+        "generatedAt": { "type": "string" },
+        "method": { "type": "string" },
+        "seed": { "type": "integer" },
+        "parameters": {
+          "type": "object",
+          "additionalProperties": {
+            "anyOf": [
+              { "type": "string" },
+              { "type": "number" },
+              { "type": "boolean" },
+              { "type": "array", "items": { "type": "string" } },
+              { "type": "array", "items": { "type": "number" } }
+            ]
+          }
+        }
+      }
+    },
+    "license": { "type": "string" }
+  },
+  "$defs": {
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1, "maxLength": 16384 },
+        "label": { "type": "string" }
+      }
+    },
+    "frozenLadderPrompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "rung", "paraphrase", "label", "prompt", "expectedLeakage"],
+      "properties": {
+        "id": { "type": "string" },
+        "rung": { "enum": [0, 1, 2, 3] },
+        "paraphrase": { "enum": [0, 1] },
+        "label": { "type": "string" },
+        "prompt": { "type": "string", "minLength": 1, "maxLength": 16384 },
+        "expectedLeakage": { "enum": ["leaky_anchor", "non_leaking_candidate"] }
+      }
+    }
+  }
+}

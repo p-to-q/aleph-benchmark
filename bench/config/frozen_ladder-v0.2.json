@@ -1,0 +1,26 @@
+{
+  "protocolVersion": "0.2.0",
+  "track": "F",
+  "split": "public",
+  "stratum": "S2",
+  "datasetId": "aleph-bench-v0.2-public-s2",
+  "datasetItemCount": 30,
+  "datasetSha256": "6f3a03400ec16405414afb94c7c639f2df07f7f0797c3b58ad1c4229e52f2041",
+  "datasetHashAlgorithm": "sha256-length-framed-filename-and-content-v1",
+  "tau": 0.95,
+  "k": 16,
+  "reruns": 5,
+  "bootstrapSamples": 500,
+  "leakageThresholds": {
+    "lcsRatio": 0.65,
+    "targetTrigramRecall": 0.5,
+    "verbatimSpanUnits": 16,
+    "skeletonLcsRatio": 0.8,
+    "skeletonTargetTrigramRecall": 0.8,
+    "skeletonVerbatimSpanUnits": 32
+  },
+  "decoding": {
+    "mock": "temperature=0",
+    "hosted": "temperature=0; max_tokens=512"
+  }
+}

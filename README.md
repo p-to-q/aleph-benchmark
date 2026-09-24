@@ -1,40 +1,73 @@
-# aleph-benchmark
+# Aleph Bench
 
-> **Historical generated mirror — not the protocol authority.**
+> **Source migration staging — not yet the protocol authority.**
 
-This repository preserves a public snapshot of earlier Aleph Bench packaging. It is useful for
-auditing that snapshot, but it is not independently maintained and must not be used to decide the
-current protocol, measurement contract, or release process.
+This repository is receiving the standalone Aleph Bench source in small,
+content-addressed slices. The current slice preserves 78 byte-identical files
+from pinned Aleph commit
+`10abdc1368439d1ab454ee3862a59e14b67a9530`, together with the reviewed E1
+inventory that defines the migration boundary.
+
+The sole source-parity gate for this slice is:
+
+```bash
+python3 -I -B scripts/check-source-v0.2-import.py
+```
+
+That gate verifies the checked-in inventory, copied bytes, Git modes, paths,
+closed source tree, and reviewed standalone notice. Passing it does not make the
+CLI, full benchmark test suite, packaging, or authority transition complete.
+The migration checker is tested with Python 3.10 through 3.13 on POSIX systems
+with no-follow file APIs. This tooling range does not relax the separate v0.2
+scoring contract, which remains pinned to Python 3.13 and Unicode 15.1.0.
 
 ## Current authority and public entrypoints
 
-- **Canonical source and protocol authority:** [p-to-q/aleph](https://github.com/p-to-q/aleph).
-  Active v0.2 development currently lives on that repository's
-  [`benchmark/source-v0.2`](https://github.com/p-to-q/aleph/tree/benchmark/source-v0.2) branch;
-  this statement does not imply that v0.2 is already present on its `main` branch.
+- **Interim source and protocol authority:** [p-to-q/aleph](https://github.com/p-to-q/aleph),
+  pinned by commit rather than by a mutable branch for this import.
 - **Sole public dataset entry:** [p-to-q/aleph-bench on Hugging Face](https://huggingface.co/datasets/p-to-q/aleph-bench).
 - **Long-lived Kaggle benchmark entry:** [jahyee/aleph-bench](https://www.kaggle.com/benchmarks/jahyee/aleph-bench).
 
-Generated platform artifacts should flow from the canonical source and retain their source commit,
-protocol/config digest, dataset digest, and generator version. Visibility on this mirror, Hugging
-Face, or Kaggle does not by itself make an artifact a current protocol release or admissible model
-result. The authority transition is tracked in
+Generated platform artifacts must retain their source commit, protocol/config
+digest, dataset digest, and generator version. Visibility here, on Hugging
+Face, or on Kaggle does not by itself make an artifact a current protocol
+release or an admissible model result. The authority transition is tracked in
 [p-to-q/aleph#29](https://github.com/p-to-q/aleph/issues/29).
 
 ## What is here
 
-- `platform/m0-mock/`: a historical AlephBench Frozen Ladder M0 platform package snapshot.
+- `bench/`, `schemas/v0.2/`, `LICENSE`, and `aleph-bench`: the E2 byte-copy
+  slice. The launcher intentionally remains unavailable until its separately
+  reviewed `bench/run.py` port lands.
+- `provenance/aleph/source-v0.2.inventory.json`: the byte-identical reviewed E1
+  extraction inventory.
+- `platform/m0-mock/`: a historical Aleph Bench Frozen Ladder M0 platform
+  package snapshot.
 - `references/kaggle-bench/`: local Kaggle Benchmarks syntax notes and a minimal example task.
 
 ## Evidence boundary: mock data is not a score
 
-The `platform/m0-mock/evidence/` directory contains deterministic mock pipeline artifacts. They document the benchmark package and scoring flow, but they are not real cross-model leaderboard results.
+The `platform/m0-mock/evidence/` directory contains deterministic mock pipeline
+artifacts. They document an earlier package and scoring flow; they are not real
+cross-model leaderboard results.
 
 Do not cite the mock evidence as a benchmark score, a real model ranking, or a current protocol
 release. Preserve the `mock` / `evidenceMode = mock` label in every downstream use.
 
-## Immediate entrypoints
+## Current limitations
 
-- Start with [platform/m0-mock/README.md](platform/m0-mock/README.md) for the historical package overview.
-- Read [platform/m0-mock/EVALUATION.md](platform/m0-mock/EVALUATION.md) for that snapshot's evaluation contract.
-- Read [platform/m0-mock/PLATFORM_LAUNCH_CHECKLIST.md](platform/m0-mock/PLATFORM_LAUNCH_CHECKLIST.md) for its recorded launch status and remaining gates.
+- The six files classified as `port`, the two generated Kaggle tasks, and five
+  remaining documentation rewrites are deliberately absent.
+- `aleph-bench` therefore must not be presented as a working installed CLI.
+- The copied benchmark tests are provenance material in this slice; the full
+  suite is not runnable until the port closure lands. Across all copied Python
+  files, seven production/support modules and eight test modules currently have
+  unresolved imports.
+- CI runs only the 62 tests in `test_kaggle_capture`,
+  `test_kaggle_creation_output`, and `test_replay_adapter` that are independent
+  of those ports; this is a bounded migration smoke check, not the full suite.
+  Positive archive cases in `test_kaggle_creation_output` mock the diagnostic
+  receipt parser, so this smoke does not prove real receipt parsing or E2E
+  Kaggle execution.
+- No wheel or other release package is produced here yet.
+- Historical mock evidence remains clearly separated from model scores.

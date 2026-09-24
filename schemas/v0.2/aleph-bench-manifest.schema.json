@@ -1,0 +1,352 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "BenchManifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocolVersion",
+    "id",
+    "createdAt",
+    "track",
+    "split",
+    "seed",
+    "datasetPath",
+    "datasetId",
+    "datasetItemCount",
+    "datasetSha256",
+    "datasetHashAlgorithm",
+    "itemCount",
+    "modelCount",
+    "models",
+    "configuredReruns",
+    "promptCount",
+    "nonLeakingPromptCount",
+    "gatedPromptCount",
+    "estimatedGenerations",
+    "hostedMaxRetries",
+    "hostedRetryDelaySeconds",
+    "estimatedMaxHttpAttempts",
+    "leakageThresholds",
+    "scoring",
+    "prompts",
+    "gatedPrompts",
+    "notes"
+  ],
+  "properties": {
+    "protocolVersion": { "enum": ["0.2.0"] },
+    "id": {
+      "type": "string",
+      "pattern": "^aleph-bench-v0\\.2-m0-manifest-seed--?[0-9]+-artifact-[0-9a-f]{64}$"
+    },
+    "createdAt": { "const": "2026-09-17T00:00:00Z" },
+    "track": { "enum": ["F"] },
+    "split": { "enum": ["public"] },
+    "seed": { "type": "integer" },
+    "datasetPath": { "type": "string" },
+    "datasetId": { "enum": ["aleph-bench-v0.2-public-s2"] },
+    "datasetItemCount": { "enum": [30] },
+    "datasetSha256": { "enum": ["6f3a03400ec16405414afb94c7c639f2df07f7f0797c3b58ad1c4229e52f2041"] },
+    "datasetHashAlgorithm": { "enum": ["sha256-length-framed-filename-and-content-v1"] },
+    "itemCount": { "type": "integer", "minimum": 1 },
+    "modelCount": { "type": "integer", "minimum": 1 },
+    "models": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/model" }
+    },
+    "configuredReruns": { "enum": [5] },
+    "promptCount": { "type": "integer", "minimum": 1 },
+    "nonLeakingPromptCount": { "type": "integer", "minimum": 1 },
+    "gatedPromptCount": { "type": "integer", "minimum": 0 },
+    "estimatedGenerations": { "type": "integer", "minimum": 1 },
+    "hostedMaxRetries": { "type": "integer", "minimum": 0, "maximum": 5 },
+    "hostedRetryDelaySeconds": { "type": "number", "minimum": 0, "maximum": 60 },
+    "estimatedMaxHttpAttempts": { "type": "integer", "minimum": 0 },
+    "leakageThresholds": { "$ref": "#/$defs/leakageThresholds" },
+    "scoring": { "$ref": "#/$defs/scoringProfile" },
+    "prompts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/prompt" }
+    },
+    "gatedPrompts": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/gatedPrompt" }
+    },
+    "notes": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": { "type": "string" }
+    }
+  },
+  "$defs": {
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "type": "object",
+            "required": ["status"],
+            "properties": {
+              "status": { "const": "ready" }
+            }
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "adapterIdentity": { "$ref": "#/$defs/adapterIdentity" }
+            }
+          }
+        },
+        {
+          "if": {
+            "type": "object",
+            "required": ["evidenceMode", "status"],
+            "properties": {
+              "evidenceMode": { "const": "black_box" },
+              "status": { "const": "ready" }
+            }
+          },
+          "then": {
+            "type": "object",
+            "properties": {
+              "adapterIdentity": { "$ref": "#/$defs/hostedAdapterIdentity" }
+            }
+          }
+        }
+      ],
+      "required": ["model", "evidenceMode", "status", "missingEnv", "effectiveReruns", "adapterIdentity"],
+      "properties": {
+        "model": { "type": "string" },
+        "evidenceMode": { "enum": ["fixture", "mock", "black_box", "white_box", "simulated", "unknown"] },
+        "status": { "enum": ["ready", "blocked"] },
+        "missingEnv": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "effectiveReruns": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "adapterIdentity": {
+          "anyOf": [
+            { "$ref": "#/$defs/adapterIdentity" },
+            { "type": "null" }
+          ]
+        },
+        "error": { "type": "string" }
+      }
+    },
+    "adapterIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "adapterId",
+        "adapterVersion",
+        "model",
+        "observationMode",
+        "temperature"
+      ],
+      "properties": {
+        "adapterId": { "type": "string", "minLength": 1 },
+        "adapterVersion": { "type": "string", "minLength": 1 },
+        "model": { "type": "string", "minLength": 1 },
+        "observationMode": { "enum": ["fixture", "mock", "black_box", "white_box", "simulated"] },
+        "temperature": { "type": "number" },
+        "wireProtocol": { "type": "string", "minLength": 1 },
+        "requestPayloadVersion": { "type": "string", "minLength": 1 },
+        "endpointSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "maxTokens": { "type": "integer", "minimum": 1 },
+        "providerModel": { "type": "string", "minLength": 1 },
+        "deploymentId": { "type": "string", "minLength": 1, "maxLength": 256 },
+        "timeoutSeconds": { "type": "integer", "minimum": 1 },
+        "maxRetries": { "type": "integer", "minimum": 0, "maximum": 5 },
+        "retryDelaySeconds": { "type": "number", "minimum": 0, "maximum": 60 }
+      }
+    },
+    "hostedAdapterIdentity": {
+      "allOf": [
+        { "$ref": "#/$defs/adapterIdentity" },
+        {
+          "type": "object",
+          "required": [
+            "wireProtocol",
+            "requestPayloadVersion",
+            "endpointSha256",
+            "maxTokens",
+            "providerModel",
+            "deploymentId",
+            "timeoutSeconds",
+            "maxRetries",
+            "retryDelaySeconds"
+          ],
+          "properties": {
+            "observationMode": { "const": "black_box" }
+          }
+        }
+      ]
+    },
+    "leakageThresholds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lcsRatio",
+        "targetTrigramRecall",
+        "verbatimSpanUnits",
+        "skeletonLcsRatio",
+        "skeletonTargetTrigramRecall",
+        "skeletonVerbatimSpanUnits"
+      ],
+      "properties": {
+        "lcsRatio": { "enum": [0.65] },
+        "targetTrigramRecall": { "enum": [0.5] },
+        "verbatimSpanUnits": { "enum": [16] },
+        "skeletonLcsRatio": { "enum": [0.8] },
+        "skeletonTargetTrigramRecall": { "enum": [0.8] },
+        "skeletonVerbatimSpanUnits": { "enum": [32] }
+      }
+    },
+    "scoringProfile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scorerId",
+        "scorerVersion",
+        "schemaVersion",
+        "normalizationProfile",
+        "lexicalProfile",
+        "leakageUnit",
+        "leakageFailClosedPolicy",
+        "responseCaptureVersion",
+        "unicodeDatabaseVersion",
+        "pythonVersion",
+        "maxScoringTextCharacters",
+        "maxNormalizedTextCharacters",
+        "maxQuadraticCells"
+      ],
+      "properties": {
+        "scorerId": { "enum": ["aleph-unicode"] },
+        "scorerVersion": { "enum": ["0.2.0"] },
+        "schemaVersion": { "enum": ["0.2.0"] },
+        "normalizationProfile": { "enum": ["unicode_nfc_newline_v1"] },
+        "lexicalProfile": { "enum": ["unicode_nfc_casefold_whitespace_char3_multiset_jaccard_v1"] },
+        "leakageUnit": { "enum": ["unicode_dual_channel_v1"] },
+        "leakageFailClosedPolicy": {
+          "enum": ["bidi_controls_and_cjk_compatibility_ideographs_v1"]
+        },
+        "responseCaptureVersion": { "enum": ["raw-v1"] },
+        "unicodeDatabaseVersion": { "enum": ["15.1.0"] },
+        "pythonVersion": { "enum": ["3.13"] },
+        "maxScoringTextCharacters": { "enum": [16384] },
+        "maxNormalizedTextCharacters": { "enum": [32768] },
+        "maxQuadraticCells": { "enum": [1000000] }
+      }
+    },
+    "leakageGate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "disqualified",
+        "unit",
+        "failClosedReason",
+        "lcsRatio",
+        "targetTrigramRecall",
+        "verbatimSpanUnits",
+        "skeletonLcsRatio",
+        "skeletonTargetTrigramRecall",
+        "skeletonVerbatimSpanUnits",
+        "thresholds"
+      ],
+      "properties": {
+        "disqualified": { "type": "boolean" },
+        "unit": { "enum": ["unicode_dual_channel_v1"] },
+        "failClosedReason": {
+          "anyOf": [
+            { "enum": ["bidi_control", "cjk_compatibility_ideograph"] },
+            { "type": "null" }
+          ]
+        },
+        "lcsRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "targetTrigramRecall": { "type": "number", "minimum": 0, "maximum": 1 },
+        "verbatimSpanUnits": { "type": "integer", "minimum": 0 },
+        "skeletonLcsRatio": { "type": "number", "minimum": 0, "maximum": 1 },
+        "skeletonTargetTrigramRecall": { "type": "number", "minimum": 0, "maximum": 1 },
+        "skeletonVerbatimSpanUnits": { "type": "integer", "minimum": 0 },
+        "thresholds": { "$ref": "#/$defs/leakageThresholds" }
+      }
+    },
+    "promptBase": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["itemId", "targetLabel", "promptId", "rung", "paraphrase", "label", "tokens", "leakageGate"],
+      "properties": {
+        "itemId": { "type": "string" },
+        "targetLabel": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "promptId": { "type": "string" },
+        "rung": { "enum": [0, 1, 2, 3] },
+        "paraphrase": { "enum": [0, 1] },
+        "label": { "type": "string" },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "leakageGate": { "$ref": "#/$defs/leakageGate" }
+      }
+    },
+    "prompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "itemId",
+        "targetLabel",
+        "promptId",
+        "rung",
+        "paraphrase",
+        "label",
+        "tokens",
+        "leakageGate",
+        "prompt"
+      ],
+      "properties": {
+        "itemId": { "type": "string" },
+        "targetLabel": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "promptId": { "type": "string" },
+        "rung": { "enum": [0, 1, 2, 3] },
+        "paraphrase": { "enum": [0, 1] },
+        "label": { "type": "string" },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "leakageGate": { "$ref": "#/$defs/leakageGate" },
+        "prompt": { "type": "string", "minLength": 1, "maxLength": 16384 }
+      }
+    },
+    "gatedPrompt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["itemId", "targetLabel", "promptId", "rung", "paraphrase", "label", "tokens", "leakageGate"],
+      "properties": {
+        "itemId": { "type": "string" },
+        "targetLabel": {
+          "anyOf": [
+            { "type": "string" },
+            { "type": "null" }
+          ]
+        },
+        "promptId": { "type": "string" },
+        "rung": { "enum": [0, 1, 2, 3] },
+        "paraphrase": { "enum": [0, 1] },
+        "label": { "type": "string" },
+        "tokens": { "type": "integer", "minimum": 0 },
+        "leakageGate": { "$ref": "#/$defs/leakageGate" }
+      }
+    }
+  }
+}
