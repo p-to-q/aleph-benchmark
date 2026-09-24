@@ -6,11 +6,13 @@ This repository is receiving the standalone Aleph Bench source in small,
 content-addressed slices. The current closure preserves 78 byte-identical files
 from pinned Aleph commit
 `10abdc1368439d1ab454ee3862a59e14b67a9530`, together with the reviewed E1
-inventory, one behavior-preserving metrics port, and one standalone protocol
-rewrite. E3b also adds the v0.2-only report renderer with a fail-closed protocol
+inventory. E3a adds a behavior-preserving metrics port and standalone protocol
+rewrite. E3b adds the v0.2-only report renderer with a fail-closed protocol
 boundary. E3c adds runtime-neutral deterministic scorer-conformance package
 assembly and the ported protocol/package regression suite; scorer execution
-itself remains frozen to Python 3.13 and Unicode database 15.1.0.
+itself remains frozen to Python 3.13 and Unicode database 15.1.0. E3d adds the
+v0.2-only artifact verifier with bounded snapshot reads, final path binding,
+and retained-output replay.
 
 The sole source-parity gate for this slice is:
 
@@ -23,7 +25,8 @@ closed managed source trees, the top-level import surface, the reviewed
 standalone notice, the two E3a transformations, and the E3b report transform.
 It also verifies the two E3c output digests, exact modes, package-tree contract,
 and mechanically replays the declared UTF-8/code-point splice sequences in both
-directions. With `--source-git`, it proves that every reconstructed port input
+directions, including the E3d verifier transformation. With `--source-git`, it
+proves that every reconstructed port input
 matches the exact pinned Git object. Passing the gate does not make the CLI,
 full benchmark test suite, release packaging, or authority transition complete.
 The migration checker is tested with Python 3.10 through 3.13 on POSIX systems
@@ -46,8 +49,9 @@ release or an admissible model result. The authority transition is tracked in
 ## What is here
 
 - `bench/`, `schemas/v0.2/`, `LICENSE`, and `aleph-bench`: the E2 byte-copy
-  slice; E3a metrics; E3b report rendering; and E3c deterministic
-  scorer-conformance package assembly, checking, and protocol tests. The
+  slice; E3a metrics; E3b report rendering; E3c deterministic
+  scorer-conformance package assembly, checking, and protocol tests; and the
+  E3d v0.2 artifact verifier. The
   launcher intentionally remains unavailable until its separately reviewed
   `bench/run.py` port lands. Direct and file-backed reports are schema checked;
   smoke reports identify themselves as non-canonical and non-leaderboard output.
@@ -73,6 +77,8 @@ release or an admissible model result. The authority transition is tracked in
   source/output identities and reversible splice contracts for both E3c ports,
   plus the ten-file package-tree digest
   `be213ca07782f108815bf94264b4d87f48570c29cbe8511f6346e31296bf0cd8`.
+- `provenance/aleph/e3d.verifier.json`: exact source/output identities and a
+  reversible splice contract for the standalone v0.2 verifier.
 - `platform/m0-mock/`: a historical Aleph Bench Frozen Ladder M0 platform
   package snapshot.
 - `references/kaggle-bench/`: local Kaggle Benchmarks syntax notes and a minimal example task.
@@ -88,13 +94,16 @@ release. Preserve the `mock` / `evidenceMode = mock` label in every downstream u
 
 ## Current limitations
 
-- Two files classified as `port`, the two generated Kaggle tasks, and four
+- One file classified as `port`, the two generated Kaggle tasks, and four
   remaining documentation rewrites are deliberately absent.
 - `aleph-bench` therefore must not be presented as a working installed CLI.
 - The copied benchmark tests remain provenance material until the port closure
-  lands. On Python 3.13, all 17 checked-in engine modules import; 11 of 12
-  checked-in benchmark test modules import. `test_v0_2_verify` remains blocked
-  by the absent `bench/engine/verify.py` port.
+  lands. E3d unlocks the copied `test_v0_2_verify` receipt-replay suite. The
+  verifier rejects missing or unknown protocol identities, legacy audit/bundle
+  inputs, non-regular and oversized files, and paths or dataset entries that
+  change after their byte snapshots are read. Its report binds the dataset,
+  result, and manifest by SHA-256. A non-canonical Python or Unicode runtime
+  produces a failed replay report rather than a score.
 - Among the copied benchmark suite, Python 3.13 CI retains the 62 tests in
   `test_kaggle_capture`,
   `test_kaggle_creation_output`, and `test_replay_adapter`, plus the seven
@@ -103,8 +112,8 @@ release. Preserve the `mock` / `evidenceMode = mock` label in every downstream u
   incompatible-runtime-branch skip). Each Python 3.10–3.12 matrix job runs the
   17 package-focused cases (16 pass plus the expected canonical-runtime skip).
   Hosted Linux and macOS 15 jobs are the publication gate for the two
-  no-replace syscall paths. These are bounded migration checks, not the full
-  benchmark suite or a model score.
+  no-replace syscall paths and the verifier's POSIX input boundaries. These are
+  bounded migration checks, not the full benchmark suite or a model score.
   Positive archive cases in `test_kaggle_creation_output` mock the diagnostic
   receipt parser, so this smoke does not prove real receipt parsing or E2E
   Kaggle execution.
