@@ -44,8 +44,14 @@ class InventoryContractTests(unittest.TestCase):
         cls.raw = (REPOSITORY_ROOT / checker.INVENTORY_PATH).read_bytes()
         cls.manifest, cls.copy_rows = checker._parse_inventory_bytes(cls.raw)
         cls.receipt_raw = (REPOSITORY_ROOT / checker.E3A_RECEIPT_PATH).read_bytes()
-        cls.transformations = checker._parse_e3a_receipt_bytes(
+        cls.e3a_transformations = checker._parse_e3a_receipt_bytes(
             cls.receipt_raw, cls.manifest
+        )
+        cls.e3b_receipt_raw = (
+            REPOSITORY_ROOT / checker.E3B_RECEIPT_PATH
+        ).read_bytes()
+        cls.e3b_transformations = checker._parse_e3b_receipt_bytes(
+            cls.e3b_receipt_raw, cls.manifest
         )
 
     def test_reviewed_inventory_and_copy_selection(self) -> None:
@@ -79,11 +85,11 @@ class InventoryContractTests(unittest.TestCase):
 
     def test_reviewed_e3a_receipt_and_transformations(self) -> None:
         self.assertEqual(
-            [entry["destination"] for entry in self.transformations],
+            [entry["destination"] for entry in self.e3a_transformations],
             ["bench/engine/metrics.py", "docs/protocol-v0.2.md"],
         )
         self.assertEqual(
-            self.transformations[0]["transformation"]["algorithm"],
+            self.e3a_transformations[0]["transformation"]["algorithm"],
             "utf8-replace-once-v1",
         )
 
@@ -93,6 +99,36 @@ class InventoryContractTests(unittest.TestCase):
         tampered = checker._canonical_file_json(value)
         with self.assertRaisesRegex(checker.ImportCheckError, "raw E3a receipt"):
             checker._parse_e3a_receipt_bytes(tampered, self.manifest)
+
+    def test_reviewed_e3b_receipt_and_transformation(self) -> None:
+        self.assertEqual(
+            [entry["destination"] for entry in self.e3b_transformations],
+            ["bench/engine/report.py"],
+        )
+        transformation = self.e3b_transformations[0]["transformation"]
+        self.assertEqual(
+            transformation["algorithm"],
+            "utf8-replace-once-sequence-v1",
+        )
+        self.assertEqual(len(transformation["replacements"]), 5)
+
+    def test_e3b_receipt_tamper_is_rejected(self) -> None:
+        value = json.loads(self.e3b_receipt_raw)
+        value["standaloneBaseCommit"] = "0" * 40
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "raw E3b receipt"):
+            checker._parse_e3b_receipt_bytes(tampered, self.manifest)
+
+    def test_e3b_replacement_contract_tamper_is_rejected_without_digest_pin(self) -> None:
+        value = json.loads(self.e3b_receipt_raw)
+        value["transformations"][0]["transformation"]["replacements"].pop()
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "five replacements"):
+            checker._parse_e3b_receipt_bytes(
+                tampered,
+                self.manifest,
+                expected_raw_sha256=None,
+            )
 
     def test_path_attacks_are_rejected(self) -> None:
         attacks = (
@@ -172,9 +208,16 @@ class InstalledTreeTests(unittest.TestCase):
         raw = (REPOSITORY_ROOT / checker.INVENTORY_PATH).read_bytes()
         cls.manifest, cls.copy_rows = checker._parse_inventory_bytes(raw)
         receipt_raw = (REPOSITORY_ROOT / checker.E3A_RECEIPT_PATH).read_bytes()
-        cls.transformations = checker._parse_e3a_receipt_bytes(
+        e3a_transformations = checker._parse_e3a_receipt_bytes(
             receipt_raw, cls.manifest
         )
+        e3b_receipt_raw = (
+            REPOSITORY_ROOT / checker.E3B_RECEIPT_PATH
+        ).read_bytes()
+        e3b_transformations = checker._parse_e3b_receipt_bytes(
+            e3b_receipt_raw, cls.manifest
+        )
+        cls.transformations = e3a_transformations + e3b_transformations
 
     def materialize(self) -> tuple[tempfile.TemporaryDirectory[str], Path]:
         temporary = tempfile.TemporaryDirectory()
@@ -261,7 +304,7 @@ class InstalledTreeTests(unittest.TestCase):
 
     def test_non_copy_destination_is_rejected(self) -> None:
         def mutate(root: Path) -> None:
-            path = root / "bench/engine/report.py"
+            path = root / "bench/engine/verify.py"
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text("not reviewed\n")
 
@@ -273,6 +316,21 @@ class InstalledTreeTests(unittest.TestCase):
                 "not the reviewed port\n"
             )
         )
+
+    def test_e3b_output_tamper_is_rejected(self) -> None:
+        self.assert_rejected(
+            lambda root: (root / "bench/engine/report.py").write_text(
+                "not the reviewed port\n"
+            )
+        )
+
+    def test_e3b_output_symlink_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            path = root / "bench/engine/report.py"
+            path.unlink()
+            path.symlink_to("metrics.py")
+
+        self.assert_rejected(mutate)
 
     def test_missing_protocol_document_is_rejected(self) -> None:
         self.assert_rejected(
@@ -414,12 +472,51 @@ class GitObjectVerificationTests(unittest.TestCase):
                     transformations,
                 )
 
+    def test_report_port_allows_only_the_reviewed_replacement_sequence(self) -> None:
+        installed = (REPOSITORY_ROOT / checker.E3B_SOURCE_PATH).read_bytes()
+        manifest_raw = (REPOSITORY_ROOT / checker.INVENTORY_PATH).read_bytes()
+        manifest, _ = checker._parse_inventory_bytes(manifest_raw)
+        receipt_raw = (REPOSITORY_ROOT / checker.E3B_RECEIPT_PATH).read_bytes()
+        transformations = checker._parse_e3b_receipt_bytes(receipt_raw, manifest)
+        replacements = transformations[0]["transformation"]["replacements"]
+        source = installed
+        for replacement in reversed(replacements):
+            before = replacement["to"].encode("utf-8")
+            after = replacement["from"].encode("utf-8")
+            self.assertEqual(source.count(before), 1)
+            source = source.replace(before, after, 1)
+
+        checker._verify_e3b_transformations_at_source(
+            {checker.E3B_SOURCE_PATH: source},
+            REPOSITORY_ROOT,
+            transformations,
+        )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            destination = root / checker.E3B_SOURCE_PATH
+            destination.parent.mkdir(parents=True)
+            drifted = installed.replace(b"Result Report", b"Result Retort", 1)
+            self.assertNotEqual(drifted, installed)
+            self.assertEqual(len(drifted), len(installed))
+            destination.write_bytes(drifted)
+            with self.assertRaisesRegex(
+                checker.ImportCheckError,
+                "reviewed replacement sequence",
+            ):
+                checker._verify_e3b_transformations_at_source(
+                    {checker.E3B_SOURCE_PATH: source},
+                    root,
+                    transformations,
+                )
+
 
 class LiveGateTests(unittest.TestCase):
     def test_repository_gate_passes(self) -> None:
         result = checker.verify_repository(REPOSITORY_ROOT)
         self.assertEqual(result["copyFiles"], 78)
         self.assertEqual(result["e3aFiles"], 2)
+        self.assertEqual(result["e3bFiles"], 1)
         self.assertFalse(result["sourceVerified"])
 
 

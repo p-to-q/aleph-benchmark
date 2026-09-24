@@ -7,7 +7,8 @@ content-addressed slices. The current closure preserves 78 byte-identical files
 from pinned Aleph commit
 `10abdc1368439d1ab454ee3862a59e14b67a9530`, together with the reviewed E1
 inventory, one behavior-preserving metrics port, and one standalone protocol
-rewrite.
+rewrite. E3b also adds the v0.2-only report renderer with a fail-closed protocol
+boundary.
 
 The sole source-parity gate for this slice is:
 
@@ -17,9 +18,10 @@ python3 -I -B scripts/check-source-v0.2-import.py
 
 That gate verifies the checked-in inventory, copied bytes, Git modes, paths,
 closed managed source trees, the top-level import surface, the reviewed
-standalone notice, and the two E3a transformations.
+standalone notice, the two E3a transformations, and the E3b report transform.
 With `--source-git`, it also proves that the metrics port differs from the pinned
-source by exactly one documentation-path replacement. Passing the gate does not
+source by exactly one documentation-path replacement and reconstructs the
+report port from its declared replacement sequence. Passing the gate does not
 make the CLI, full benchmark test suite, packaging, or authority transition
 complete.
 The migration checker is tested with Python 3.10 through 3.13 on POSIX systems
@@ -42,14 +44,19 @@ release or an admissible model result. The authority transition is tracked in
 ## What is here
 
 - `bench/`, `schemas/v0.2/`, `LICENSE`, and `aleph-bench`: the E2 byte-copy
-  slice plus the E3a metrics port. The launcher intentionally remains
-  unavailable until its separately reviewed `bench/run.py` port lands.
+  slice, the E3a metrics port, and the E3b v0.2 report renderer. The launcher
+  intentionally remains unavailable until its separately reviewed
+  `bench/run.py` port lands. Direct and file-backed reports are schema checked;
+  smoke reports identify themselves as non-canonical and non-leaderboard output.
 - [`docs/protocol-v0.2.md`](docs/protocol-v0.2.md): the standalone protocol and
-  claim-boundary record; it labels components that have not migrated yet.
+  claim-boundary record. Its combined report/verification/package orchestration
+  surface remains incomplete until the other runtime ports and CLI path land.
 - `provenance/aleph/source-v0.2.inventory.json`: the byte-identical reviewed E1
   extraction inventory.
 - `provenance/aleph/e3a.metrics-and-protocol.json`: source/output digests and
   transformation contracts for the E3a port and rewrite.
+- `provenance/aleph/e3b.report.json`: the content-addressed, mechanically
+  replayable report-port receipt.
 - `platform/m0-mock/`: a historical Aleph Bench Frozen Ladder M0 platform
   package snapshot.
 - `references/kaggle-bench/`: local Kaggle Benchmarks syntax notes and a minimal example task.
@@ -65,7 +72,7 @@ release. Preserve the `mock` / `evidenceMode = mock` label in every downstream u
 
 ## Current limitations
 
-- Five files classified as `port`, the two generated Kaggle tasks, and four
+- Four files classified as `port`, the two generated Kaggle tasks, and four
   remaining documentation rewrites are deliberately absent.
 - `aleph-bench` therefore must not be presented as a working installed CLI.
 - The copied benchmark tests are provenance material in this slice; the full

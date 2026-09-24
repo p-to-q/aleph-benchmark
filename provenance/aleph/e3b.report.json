@@ -1,0 +1,53 @@
+{
+  "artifactKind": "aleph_bench_source_migration_receipt",
+  "formatVersion": 1,
+  "inventoryCommit": "d76206bdaf9ba72730b066560862a3d00cac9699",
+  "slice": "E3b",
+  "sourceCommit": "10abdc1368439d1ab454ee3862a59e14b67a9530",
+  "standaloneBaseCommit": "698fdd26e98544816fc25c220def542bc4750a68",
+  "transformations": [
+    {
+      "destination": "bench/engine/report.py",
+      "output": {
+        "bytes": 7291,
+        "gitBlobSha1": "cef051294ed0180eb1f5bc947f43a45586b6d75a",
+        "mode": "100644",
+        "sha256": "1ad7de913976a1d84e443bd46de212f98b71d58332e40ea5ededba8081551988"
+      },
+      "source": {
+        "bytes": 6143,
+        "disposition": "port",
+        "gitBlobSha1": "ead52e385abd5fe1ba1d89e4114d156cce442b6b",
+        "mode": "100644",
+        "path": "bench/engine/report.py",
+        "sha256": "7755a4f43ca75ec19680b8e1493b016385bdbf21fc86762b6b1b8b08902e4ac9"
+      },
+      "transformation": {
+        "algorithm": "utf8-replace-once-sequence-v1",
+        "replacements": [
+          {
+            "from": "REPO_ROOT = Path(__file__).resolve().parents[2]\n",
+            "to": "REPO_ROOT = Path(__file__).resolve().parents[2]\nRESULT_PROTOCOL_VERSION = \"0.2.0\"\nRESULT_SCHEMA_PATH = REPO_ROOT / \"schemas/v0.2/aleph-bench-result.schema.json\"\n"
+          },
+          {
+            "from": "def load_result(result_path: Path) -> dict[str, Any]:\n    result = json.loads(result_path.read_text(encoding=\"utf-8\"))\n    schema_path = (\n        REPO_ROOT / \"schemas/v0.2/aleph-bench-result.schema.json\"\n        if result.get(\"protocolVersion\") == \"0.2.0\"\n        else REPO_ROOT / \"schemas/aleph-bench-result.schema.json\"\n    )\n    validate(result, load_schema(schema_path))\n    return result\n",
+            "to": "def _require_v0_2_result(value: Any) -> dict[str, Any]:\n    \"\"\"Reject non-v0.2 inputs before selecting a result schema or rendering.\"\"\"\n\n    if not isinstance(value, dict):\n        raise ValueError(\"Aleph-Bench result must be a JSON object\")\n    protocol_version = value.get(\"protocolVersion\")\n    if protocol_version != RESULT_PROTOCOL_VERSION:\n        raise ValueError(\n            \"unsupported Aleph-Bench result protocolVersion: \"\n            f\"expected {RESULT_PROTOCOL_VERSION!r}, found {protocol_version!r}\"\n        )\n    return value\n\n\ndef _validate_v0_2_result(value: Any) -> dict[str, Any]:\n    result = _require_v0_2_result(value)\n    validate(result, load_schema(RESULT_SCHEMA_PATH))\n    return result\n\n\ndef load_result(result_path: Path) -> dict[str, Any]:\n    parsed = json.loads(result_path.read_text(encoding=\"utf-8\"))\n    return _validate_v0_2_result(parsed)\n"
+          },
+          {
+            "from": "def render_markdown_report(result: dict[str, Any]) -> str:\n    evidence_modes = sorted({model[\"evidenceMode\"] for model in result[\"models\"]})\n    protocol_version = result.get(\"protocolVersion\", \"0.1-legacy\")\n",
+            "to": "def render_markdown_report(result: dict[str, Any]) -> str:\n    result = _validate_v0_2_result(result)\n    evidence_modes = sorted({model[\"evidenceMode\"] for model in result[\"models\"]})\n    protocol_version = result[\"protocolVersion\"]\n"
+          },
+          {
+            "from": "        f\"- Result id: `{result['id']}`\",\n        f\"- Protocol: `{protocol_version}`\",\n        f\"- Track: `{result['track']}`\",\n",
+            "to": "        f\"- Result id: `{result['id']}`\",\n        f\"- Protocol: `{protocol_version}`\",\n        f\"- Evaluation scope: `{result['evaluationScope']}`\",\n        f\"- Evaluated items: `{result['evaluatedItemCount']} / {result['config']['datasetItemCount']}`\",\n        f\"- Track: `{result['track']}`\",\n"
+          },
+          {
+            "from": "    lines.extend(\n        [\n            \"\",\n            \"Lower AURC and ECL are better. This report is generated from the result JSON; it does not add evidence beyond that file.\",\n        ]\n    )\n    if set(evidence_modes) <= {\"mock\", \"fixture\", \"simulated\"}:\n",
+            "to": "    lines.extend(\n        [\n            \"\",\n            \"Lower AURC and ECL are better. This report is generated from the result JSON; it does not add evidence beyond that file.\",\n        ]\n    )\n    if result[\"evaluationScope\"] == \"smoke\":\n        lines.extend(\n            [\n                \"\",\n                \"This is a diagnostic smoke run over \"\n                f\"{result['evaluatedItemCount']} / {result['config']['datasetItemCount']} items. \"\n                \"It is not a canonical benchmark result or a leaderboard score.\",\n            ]\n        )\n    if set(evidence_modes) <= {\"mock\", \"fixture\", \"simulated\"}:\n"
+          }
+        ],
+        "reviewIssue": "https://github.com/p-to-q/aleph-benchmark/issues/6"
+      }
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the content-addressed Aleph Bench E2 + E3a source import.
+"""Verify the content-addressed Aleph Bench E2 + E3a + E3b source import.
 
 The default gate is offline. ``--source-git`` adds provenance verification
 against an already-fetched Git object database. This program never fetches and
@@ -51,6 +51,15 @@ E3A_SOURCE_PATHS = ("bench/engine/metrics.py", "bench/README.md")
 METRICS_OLD_DOC_PATH = b"docs/benchmark/02-design-spec.md"
 METRICS_NEW_DOC_PATH = b"docs/protocol-v0.2.md"
 
+E3B_RECEIPT_PATH = "provenance/aleph/e3b.report.json"
+E3B_RECEIPT_BYTES = 4_856
+E3B_RECEIPT_GIT_BLOB_SHA1 = "22d6c01d1c3938c194c032ffedd79fc3114fcd0c"
+E3B_RECEIPT_SHA256 = (
+    "2b915eb7b6a967de8b8f5a80bfe8091c1a6bf0d161cdb7386266b0e6602620df"
+)
+E3B_SOURCE_PATH = "bench/engine/report.py"
+E3B_STANDALONE_BASE_COMMIT = "698fdd26e98544816fc25c220def542bc4750a68"
+
 SOURCE_NOTICE_GIT_BLOB_SHA1 = "be3b6c048fee80545b99e83e0a3e089be1a3ee09"
 SOURCE_NOTICE_SHA256 = "c6fefd8d70b629b2fd61ea481793dc227d5e59cf8ba7e44e92fa3eef8fab886f"
 REVIEWED_NOTICE_SHA256 = (
@@ -82,6 +91,7 @@ MANAGED_PREFIXES = ("bench/", "docs/", "schemas/", "tests/")
 SUPPORT_MANAGED_PATHS = {
     "tests/__init__.py",
     "tests/test_metrics_v0_2.py",
+    "tests/test_report_v0_2.py",
     "tests/test_source_v0_2_import.py",
 }
 EXPECTED_ROOT_FILES = {
@@ -558,6 +568,156 @@ def _parse_e3a_receipt_bytes(
     return transformations
 
 
+def _parse_e3b_receipt_bytes(
+    raw: bytes,
+    manifest: dict[str, Any],
+    *,
+    expected_raw_sha256: str | None = E3B_RECEIPT_SHA256,
+) -> list[dict[str, Any]]:
+    if len(raw) > MAX_RECEIPT_BYTES:
+        raise ImportCheckError("E3b receipt is unreasonably large")
+    try:
+        receipt = json.loads(
+            raw.decode("ascii"),
+            object_pairs_hook=_reject_duplicate_pairs,
+            parse_constant=_reject_json_constant,
+        )
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise ImportCheckError(f"invalid E3b receipt JSON: {exc}") from exc
+    if raw != _canonical_file_json(receipt):
+        raise ImportCheckError(
+            "E3b receipt must be canonical sorted, indented ASCII JSON with one trailing newline"
+        )
+    if expected_raw_sha256 is not None and _sha256(raw) != expected_raw_sha256:
+        raise ImportCheckError("raw E3b receipt SHA-256 differs from the reviewed artifact")
+
+    expected_top_level = {
+        "artifactKind",
+        "formatVersion",
+        "inventoryCommit",
+        "slice",
+        "sourceCommit",
+        "standaloneBaseCommit",
+        "transformations",
+    }
+    if not isinstance(receipt, dict) or set(receipt) != expected_top_level:
+        raise ImportCheckError("E3b receipt top-level keys differ")
+    if receipt["artifactKind"] != "aleph_bench_source_migration_receipt":
+        raise ImportCheckError("unexpected E3b receipt artifactKind")
+    if type(receipt["formatVersion"]) is not int or receipt["formatVersion"] != 1:
+        raise ImportCheckError("E3b receipt formatVersion must be the integer 1")
+    if receipt["slice"] != "E3b":
+        raise ImportCheckError("unexpected migration slice in E3b receipt")
+    if receipt["sourceCommit"] != SOURCE_COMMIT:
+        raise ImportCheckError("E3b receipt source commit differs")
+    if receipt["inventoryCommit"] != INVENTORY_COMMIT:
+        raise ImportCheckError("E3b receipt inventory commit differs")
+    if receipt["standaloneBaseCommit"] != E3B_STANDALONE_BASE_COMMIT:
+        raise ImportCheckError("E3b receipt standalone base commit differs")
+
+    transformations = receipt["transformations"]
+    if not isinstance(transformations, list) or len(transformations) != 1:
+        raise ImportCheckError("E3b receipt must contain exactly one transformation")
+    entry = transformations[0]
+    if not isinstance(entry, dict) or set(entry) != {
+        "destination",
+        "output",
+        "source",
+        "transformation",
+    }:
+        raise ImportCheckError("E3b transformation keys differ")
+    destination = _validate_repository_path(
+        entry["destination"], role="E3b destination"
+    )
+    source = entry["source"]
+    expected_source_keys = {
+        "bytes",
+        "disposition",
+        "gitBlobSha1",
+        "mode",
+        "path",
+        "sha256",
+    }
+    if not isinstance(source, dict) or set(source) != expected_source_keys:
+        raise ImportCheckError("E3b transformation source keys differ")
+    source_path = _validate_repository_path(source["path"], role="E3b source")
+    inventory_by_source = {row["source"]: row for row in manifest["files"]}
+    inventory_row = inventory_by_source.get(source_path)
+    if inventory_row is None:
+        raise ImportCheckError(f"E3b source is absent from inventory: {source_path}")
+    expected_source = {
+        "bytes": inventory_row["bytes"],
+        "disposition": inventory_row["disposition"],
+        "gitBlobSha1": inventory_row["gitBlobSha1"],
+        "mode": inventory_row["mode"],
+        "path": inventory_row["source"],
+        "sha256": inventory_row["sha256"],
+    }
+    if (
+        source_path != E3B_SOURCE_PATH
+        or source != expected_source
+        or destination != inventory_row["destination"]
+        or destination != E3B_SOURCE_PATH
+    ):
+        raise ImportCheckError("E3b report transformation differs from inventory")
+
+    output = entry["output"]
+    if not isinstance(output, dict) or set(output) != {
+        "bytes",
+        "gitBlobSha1",
+        "mode",
+        "sha256",
+    }:
+        raise ImportCheckError("E3b transformation output keys differ")
+    _exact_int(output["bytes"], field="E3b transformation output.bytes")
+    if output["mode"] != "100644":
+        raise ImportCheckError("E3b output must use Git mode 100644")
+    if not isinstance(output["sha256"], str) or HEX64.fullmatch(output["sha256"]) is None:
+        raise ImportCheckError("E3b output has invalid SHA-256")
+    if (
+        not isinstance(output["gitBlobSha1"], str)
+        or HEX40.fullmatch(output["gitBlobSha1"]) is None
+    ):
+        raise ImportCheckError("E3b output has invalid Git blob SHA-1")
+
+    transformation = entry["transformation"]
+    if not isinstance(transformation, dict) or set(transformation) != {
+        "algorithm",
+        "replacements",
+        "reviewIssue",
+    }:
+        raise ImportCheckError("E3b report transformation contract keys differ")
+    if transformation["algorithm"] != "utf8-replace-once-sequence-v1":
+        raise ImportCheckError("E3b report transformation algorithm differs")
+    if transformation["reviewIssue"] != (
+        "https://github.com/p-to-q/aleph-benchmark/issues/6"
+    ):
+        raise ImportCheckError("E3b report review issue differs")
+    replacements = transformation["replacements"]
+    if not isinstance(replacements, list) or len(replacements) != 5:
+        raise ImportCheckError("E3b report must declare exactly five replacements")
+    for index, replacement in enumerate(replacements):
+        if not isinstance(replacement, dict) or set(replacement) != {"from", "to"}:
+            raise ImportCheckError(f"E3b replacement[{index}] keys differ")
+        before = replacement["from"]
+        after = replacement["to"]
+        if (
+            not isinstance(before, str)
+            or not isinstance(after, str)
+            or not before
+            or before == after
+        ):
+            raise ImportCheckError(f"E3b replacement[{index}] is invalid")
+        try:
+            before.encode("utf-8")
+            after.encode("utf-8")
+        except UnicodeError as exc:
+            raise ImportCheckError(
+                f"E3b replacement[{index}] is not valid UTF-8"
+            ) from exc
+    return transformations
+
+
 def _require_secure_io() -> None:
     if (
         os.name != "posix"
@@ -878,13 +1038,15 @@ def _verify_installed(
             max_bytes=output["bytes"],
         )
         if _sha256(payload) != output["sha256"]:
-            raise ImportCheckError(f"installed E3a SHA-256 differs: {path}")
+            raise ImportCheckError(f"installed transformed SHA-256 differs: {path}")
         if _git_blob_sha1(payload) != output["gitBlobSha1"]:
-            raise ImportCheckError(f"installed E3a Git blob SHA-1 differs: {path}")
+            raise ImportCheckError(
+                f"installed transformed Git blob SHA-1 differs: {path}"
+            )
         observed_mode = _git_mode_from_stat(status, path=path)
         if observed_mode != output["mode"]:
             raise ImportCheckError(
-                f"installed E3a Git mode differs at {path}: "
+                f"installed transformed Git mode differs at {path}: "
                 f"{observed_mode} != {output['mode']}"
             )
 
@@ -1105,12 +1267,43 @@ def _verify_e3a_transformations_at_source(
         )
 
 
+def _verify_e3b_transformations_at_source(
+    source_payloads: dict[str, bytes],
+    root: Path,
+    transformations: list[dict[str, Any]],
+) -> None:
+    entry = transformations[0]
+    expected = source_payloads[E3B_SOURCE_PATH]
+    for index, replacement in enumerate(
+        entry["transformation"]["replacements"]
+    ):
+        before = replacement["from"].encode("utf-8")
+        after = replacement["to"].encode("utf-8")
+        if expected.count(before) != 1:
+            raise ImportCheckError(
+                f"pinned report source does not match E3b replacement[{index}] exactly once"
+            )
+        expected = expected.replace(before, after, 1)
+
+    installed, _ = _read_regular_path(
+        root,
+        entry["destination"],
+        expected_bytes=entry["output"]["bytes"],
+        max_bytes=entry["output"]["bytes"],
+    )
+    if installed != expected:
+        raise ImportCheckError(
+            "installed report port differs from the reviewed replacement sequence"
+        )
+
+
 def _verify_source(
     repository: Path,
     root: Path,
     manifest: dict[str, Any],
     copy_rows: list[dict[str, Any]],
-    transformations: list[dict[str, Any]],
+    e3a_transformations: list[dict[str, Any]],
+    e3b_transformations: list[dict[str, Any]],
     installed_inventory_raw: bytes,
 ) -> None:
     repository = _validate_source_root(repository)
@@ -1127,15 +1320,19 @@ def _verify_source(
     _verify_rows_at_commit(repository, SOURCE_COMMIT, copy_rows)
 
     inventory_by_source = {row["source"]: row for row in manifest["files"]}
+    all_transformations = e3a_transformations + e3b_transformations
     transformation_rows = [
         inventory_by_source[entry["source"]["path"]]
-        for entry in transformations
+        for entry in all_transformations
     ]
     source_payloads = _verify_rows_at_commit(
         repository, SOURCE_COMMIT, transformation_rows
     )
     _verify_e3a_transformations_at_source(
-        source_payloads, root, transformations
+        source_payloads, root, e3a_transformations
+    )
+    _verify_e3b_transformations_at_source(
+        source_payloads, root, e3b_transformations
     )
 
     notice_rows = [
@@ -1186,29 +1383,46 @@ def verify_repository(
         raise ImportCheckError("installed E3a receipt must have Git mode 100644")
     if _git_blob_sha1(receipt_raw) != E3A_RECEIPT_GIT_BLOB_SHA1:
         raise ImportCheckError("installed E3a receipt Git blob SHA-1 differs")
-    transformations = _parse_e3a_receipt_bytes(receipt_raw, manifest)
-    _verify_installed(root, manifest, copy_rows, transformations)
+    e3a_transformations = _parse_e3a_receipt_bytes(receipt_raw, manifest)
+    e3b_receipt_raw, e3b_receipt_status = _read_regular_path(
+        root,
+        E3B_RECEIPT_PATH,
+        expected_bytes=E3B_RECEIPT_BYTES,
+        max_bytes=MAX_RECEIPT_BYTES,
+    )
+    if (
+        _git_mode_from_stat(e3b_receipt_status, path=E3B_RECEIPT_PATH)
+        != "100644"
+    ):
+        raise ImportCheckError("installed E3b receipt must have Git mode 100644")
+    if _git_blob_sha1(e3b_receipt_raw) != E3B_RECEIPT_GIT_BLOB_SHA1:
+        raise ImportCheckError("installed E3b receipt Git blob SHA-1 differs")
+    e3b_transformations = _parse_e3b_receipt_bytes(e3b_receipt_raw, manifest)
+    all_transformations = e3a_transformations + e3b_transformations
+    _verify_installed(root, manifest, copy_rows, all_transformations)
     if source_git is not None:
         _verify_source(
             source_git,
             root,
             manifest,
             copy_rows,
-            transformations,
+            e3a_transformations,
+            e3b_transformations,
             inventory_raw,
         )
     return {
         "copyBytes": sum(row["bytes"] for row in copy_rows),
         "copyFiles": len(copy_rows),
         "copyTreeSha256": COPY_TREE_SHA256,
-        "e3aFiles": len(transformations),
+        "e3aFiles": len(e3a_transformations),
+        "e3bFiles": len(e3b_transformations),
         "sourceVerified": source_git is not None,
     }
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Verify the pinned Aleph Bench E2 + E3a source import."
+        description="Verify the pinned Aleph Bench E2 + E3a + E3b source import."
     )
     parser.add_argument(
         "--source-git",
@@ -1226,6 +1440,7 @@ def main(argv: list[str] | None = None) -> int:
         f"mode={mode} commit={SOURCE_COMMIT} files={result['copyFiles']} "
         f"bytes={result['copyBytes']} "
         f"e3aFiles={result['e3aFiles']} "
+        f"e3bFiles={result['e3bFiles']} "
         f"copyTreeSha256={result['copyTreeSha256']}"
     )
     return 0
