@@ -1,0 +1,291 @@
+{
+  "artifactKind": "aleph_bench_source_migration_receipt",
+  "formatVersion": 1,
+  "inventoryCommit": "d76206bdaf9ba72730b066560862a3d00cac9699",
+  "slice": "E3d",
+  "sourceCommit": "10abdc1368439d1ab454ee3862a59e14b67a9530",
+  "standaloneBaseCommit": "4b224a6fe66743b62439004d8bd03b83f0b18f9a",
+  "transformations": [
+    {
+      "destination": "bench/engine/verify.py",
+      "output": {
+        "bytes": 46469,
+        "gitBlobSha1": "14b8d0f20dda9432fba7354e975b4a604002585f",
+        "mode": "100644",
+        "sha256": "84d5f8de961e90f2423f3d85beb42e0f03af05a4cb41e7b9cc325b45aa097b67"
+      },
+      "source": {
+        "bytes": 39060,
+        "disposition": "port",
+        "gitBlobSha1": "335e8a15f6ea93471edff9c5a9a25caee093962c",
+        "mode": "100644",
+        "path": "bench/engine/verify.py",
+        "sha256": "a9b4676709b36ff1927c559ffb980b9bf38e7a99804921e5aa1bd1b26fdef9a2"
+      },
+      "transformation": {
+        "algorithm": "utf8-codepoint-offset-splice-sequence-v1",
+        "edits": [
+          {
+            "from": "",
+            "outputCharOffset": 36,
+            "sourceCharOffset": 36,
+            "to": "import hashlib\n"
+          },
+          {
+            "from": "",
+            "outputCharOffset": 63,
+            "sourceCharOffset": 48,
+            "to": "import os\nimport stat\n"
+          },
+          {
+            "from": "from .bundle import build_m0_bundle, compare_bundle\n",
+            "outputCharOffset": 554,
+            "sourceCharOffset": 517,
+            "to": ""
+          },
+          {
+            "from": "    load_items,\n",
+            "outputCharOffset": 651,
+            "sourceCharOffset": 666,
+            "to": ""
+          },
+          {
+            "from": "from .legacy_v0_1 import verify_v0_1_repository_receipt\n",
+            "outputCharOffset": 846,
+            "sourceCharOffset": 877,
+            "to": ""
+          },
+          {
+            "from": "from .scoring_core import PROTOCOL_VERSION\n",
+            "outputCharOffset": 1224,
+            "sourceCharOffset": 1311,
+            "to": "from .scoring_core import PROTOCOL_VERSION, validate_scoring_runtime\n"
+          },
+          {
+            "from": "LEGACY_DATA_DIR = REPO_ROOT / \"bench/data/public/s2\"\nLEGACY_RESULT_PATH = REPO_ROOT / \"bench/results/m0-first-run.json\"\nLEGACY_MANIFEST_PATH = REPO_ROOT / \"bench/results/m0-call-manifest.json\"\nLEGACY_AUDIT_PATH = REPO_ROOT / \"bench/results/m0-audit.json\"\nLEGACY_BUNDLE_PATH = REPO_ROOT / \"bench/results/m0-bundle.json\"\n",
+            "outputCharOffset": 1343,
+            "sourceCharOffset": 1404,
+            "to": "MAX_DATASET_ITEM_BYTES = 1024 * 1024\nMAX_RESULT_BYTES = 128 * 1024 * 1024\nMAX_MANIFEST_BYTES = 16 * 1024 * 1024\n_READ_FLAGS = (\n    os.O_RDONLY\n    | getattr(os, \"O_CLOEXEC\", 0)\n    | getattr(os, \"O_NOFOLLOW\", 0)\n    | getattr(os, \"O_NONBLOCK\", 0)\n)\n_DIRECTORY_FLAGS = (\n    os.O_RDONLY\n    | getattr(os, \"O_CLOEXEC\", 0)\n    | getattr(os, \"O_NOFOLLOW\", 0)\n    | getattr(os, \"O_DIRECTORY\", 0)\n)\n"
+          },
+          {
+            "from": "def _load_json(path: Path) -> Any:\n    return json.loads(path.read_text(encoding=\"utf-8\"))\n",
+            "outputCharOffset": 1739,
+            "sourceCharOffset": 1725,
+            "to": "def _reject_json_constant(value: str) -> None:\n    raise ValueError(f\"non-finite JSON constant is forbidden: {value}\")\n"
+          },
+          {
+            "from": "LEGACY_PROTOCOL = \"0.1-legacy\"\n",
+            "outputCharOffset": 1860,
+            "sourceCharOffset": 1818,
+            "to": "def _reject_duplicate_pairs(pairs: list[tuple[str, Any]]) -> dict[str, Any]:\n    value: dict[str, Any] = {}\n    for key, item in pairs:\n        if key in value:\n            raise ValueError(f\"duplicate JSON key is forbidden: {key!r}\")\n        value[key] = item\n    return value\n\n\ndef _reject_json_surrogates(value: Any, *, role: str) -> None:\n    \"\"\"Reject strings that cannot be encoded as portable UTF-8.\n\n    JSON permits escaped UTF-16 surrogate code points, but Aleph artifacts are\n    hashed and replayed as UTF-8.  Walking iteratively also keeps this boundary\n    check independent of Python's recursion limit.\n    \"\"\"\n\n    pending = [value]\n    while pending:\n        current = pending.pop()\n        if isinstance(current, str):\n            if any(0xD800 <= ord(character) <= 0xDFFF for character in current):\n                raise ValueError(\n                    f\"invalid {role} JSON: Unicode surrogate code points are forbidden\"\n                )\n        elif isinstance(current, dict):\n            pending.extend(current.keys())\n            pending.extend(current.values())\n        elif isinstance(current, list):\n            pending.extend(current)\n\n\ndef _decode_json(raw: bytes, *, role: str) -> Any:\n    try:\n        value = json.loads(\n            raw.decode(\"utf-8\"),\n            object_pairs_hook=_reject_duplicate_pairs,\n            parse_constant=_reject_json_constant,\n        )\n    except (UnicodeError, json.JSONDecodeError, RecursionError, ValueError) as exc:\n        raise ValueError(f\"invalid {role} JSON: {exc}\") from exc\n    _reject_json_surrogates(value, role=role)\n    return value\n\n\ndef _stat_snapshot(value: os.stat_result) -> tuple[int, ...]:\n    return (\n        value.st_dev,\n        value.st_ino,\n        value.st_mode,\n        value.st_nlink,\n        value.st_size,\n        value.st_mtime_ns,\n        value.st_ctime_ns,\n    )\n\n\ndef _read_regular_fd(\n    fd: int, *, role: str, max_bytes: int\n) -> tuple[bytes, tuple[int, ...]]:\n    before = os.fstat(fd)\n    if not stat.S_ISREG(before.st_mode):\n        raise ValueError(f\"{role} must be a regular file\")\n    if before.st_nlink != 1:\n        raise ValueError(f\"{role} must have exactly one hard link\")\n    if before.st_size > max_bytes:\n        raise ValueError(\n            f\"{role} exceeds the {max_bytes}-byte verification limit\"\n        )\n    chunks: list[bytes] = []\n    remaining = max_bytes + 1\n    while remaining:\n        chunk = os.read(fd, min(1024 * 1024, remaining))\n        if not chunk:\n            break\n        chunks.append(chunk)\n        remaining -= len(chunk)\n    raw = b\"\".join(chunks)\n    if len(raw) > max_bytes:\n        raise ValueError(f\"{role} exceeds the {max_bytes}-byte verification limit\")\n    after = os.fstat(fd)\n    if _stat_snapshot(before) != _stat_snapshot(after) or len(raw) != after.st_size:\n        raise ValueError(f\"{role} changed while it was being read\")\n    return raw, _stat_snapshot(after)\n\n\ndef _read_regular_path_snapshot(\n    path: Path, *, role: str, max_bytes: int\n) -> tuple[bytes, dict[str, Any]]:\n    try:\n        fd = os.open(path, _READ_FLAGS)\n    except OSError as exc:\n        raise ValueError(f\"could not open {role}: {exc}\") from exc\n    try:\n        raw, snapshot = _read_regular_fd(fd, role=role, max_bytes=max_bytes)\n        return raw, {\n            \"path\": Path(path),\n            \"role\": role,\n            \"sha256\": hashlib.sha256(raw).hexdigest(),\n            \"stat\": snapshot,\n        }\n    except OSError as exc:\n        raise ValueError(f\"could not read {role}: {exc}\") from exc\n    finally:\n        os.close(fd)\n\n\ndef _read_regular_path(path: Path, *, role: str, max_bytes: int) -> bytes:\n    raw, _ = _read_regular_path_snapshot(path, role=role, max_bytes=max_bytes)\n    return raw\n\n\ndef _recheck_file_binding(binding: dict[str, Any], errors: list[str]) -> None:\n    path = binding[\"path\"]\n    try:\n        fd = os.open(path, _READ_FLAGS)\n    except OSError as exc:\n        errors.append(f\"{path}: {binding['role']} path changed after reading: {exc}\")\n        return\n    try:\n        current = os.fstat(fd)\n        if _stat_snapshot(current) != binding[\"stat\"]:\n            errors.append(f\"{path}: {binding['role']} path changed after reading\")\n    except OSError as exc:\n        errors.append(f\"{path}: could not recheck {binding['role']}: {exc}\")\n    finally:\n        os.close(fd)\n\n\ndef _dataset_sha256(snapshots: list[tuple[str, bytes]]) -> str:\n    digest = hashlib.sha256()\n    for filename, content in snapshots:\n        encoded = filename.encode(\"utf-8\")\n        digest.update(len(encoded).to_bytes(4, \"big\"))\n        digest.update(encoded)\n        digest.update(len(content).to_bytes(8, \"big\"))\n        digest.update(content)\n    return digest.hexdigest()\n"
+          },
+          {
+            "from": "def _load_dataset(data_dir: Path, errors: list[str]) -> list[dict[str, Any]]:\n",
+            "outputCharOffset": 8883,
+            "sourceCharOffset": 4149,
+            "to": "def _load_dataset(\n    data_dir: Path, errors: list[str]\n) -> tuple[list[dict[str, Any]], str | None, dict[str, Any] | None]:\n    try:\n        directory_fd = os.open(data_dir, _DIRECTORY_FLAGS)\n    except OSError as exc:\n        errors.append(f\"{data_dir}: could not open dataset directory: {exc}\")\n        return [], None, None\n    snapshots: list[tuple[str, bytes]] = []\n    entry_bindings: dict[str, tuple[int, ...]] = {}\n    try:\n        directory_snapshot = _stat_snapshot(os.fstat(directory_fd))\n    except OSError as exc:\n        os.close(directory_fd)\n        errors.append(f\"{data_dir}: could not inspect dataset directory: {exc}\")\n        return [], None, None\n    try:\n        try:\n            with os.scandir(directory_fd) as iterator:\n                entries = []\n                for entry in iterator:\n                    entries.append(entry)\n                    if len(entries) > FROZEN_DATASET_ITEM_COUNT:\n                        break\n                entries.sort(key=lambda entry: entry.name)\n        except OSError as exc:\n            errors.append(f\"{data_dir}: could not enumerate dataset directory: {exc}\")\n            return [], None, None\n        if len(entries) != FROZEN_DATASET_ITEM_COUNT:\n            relation = \"more than\" if len(entries) > FROZEN_DATASET_ITEM_COUNT else str(len(entries))\n            errors.append(\n                f\"{data_dir}: expected exactly {FROZEN_DATASET_ITEM_COUNT} dataset entries, \"\n                f\"found {relation}\"\n            )\n        if len(entries) > FROZEN_DATASET_ITEM_COUNT:\n            return [], None, None\n        for entry in entries:\n            name = entry.name\n            if not isinstance(name, str) or not name.endswith(\".json\"):\n                errors.append(\n                    f\"{data_dir}: dataset contains an unexpected entry {name!r}\"\n                )\n                continue\n            try:\n                name.encode(\"utf-8\")\n            except UnicodeError:\n                errors.append(\n                    f\"{data_dir}: dataset entry name is not valid UTF-8: {name!r}\"\n                )\n                continue\n            try:\n                fd = os.open(name, _READ_FLAGS, dir_fd=directory_fd)\n            except OSError as exc:\n                errors.append(f\"{data_dir / name}: could not open dataset item: {exc}\")\n                continue\n            try:\n                raw, snapshot = _read_regular_fd(\n                    fd,\n                    role=f\"dataset item {name}\",\n                    max_bytes=MAX_DATASET_ITEM_BYTES,\n                )\n                snapshots.append((name, raw))\n                entry_bindings[name] = snapshot\n            except (OSError, ValueError) as exc:\n                errors.append(f\"{data_dir / name}: {exc}\")\n            finally:\n                os.close(fd)\n        try:\n            directory_after = _stat_snapshot(os.fstat(directory_fd))\n        except OSError as exc:\n            errors.append(f\"{data_dir}: could not recheck dataset directory: {exc}\")\n        else:\n            if directory_after != directory_snapshot:\n                errors.append(f\"{data_dir}: dataset directory changed while it was read\")\n    finally:\n        os.close(directory_fd)\n\n"
+          },
+          {
+            "from": "    for path in sorted(data_dir.glob(\"*.json\")):\n",
+            "outputCharOffset": 12128,
+            "sourceCharOffset": 4264,
+            "to": "    for name, raw in snapshots:\n"
+          },
+          {
+            "from": "            item = _load_json(path)\n",
+            "outputCharOffset": 12173,
+            "sourceCharOffset": 4326,
+            "to": "            item = _decode_json(raw, role=f\"dataset item {name}\")\n"
+          },
+          {
+            "from": "        except (json.JSONDecodeError, OSError, TypeError) as exc:\n            errors.append(f\"{path}: {exc}\")\n    if not items:\n",
+            "outputCharOffset": 12380,
+            "sourceCharOffset": 4503,
+            "to": "        except (TypeError, ValueError) as exc:\n            errors.append(f\"{data_dir / name}: {exc}\")\n    if not snapshots:\n"
+          },
+          {
+            "from": "    return items\n",
+            "outputCharOffset": 12562,
+            "sourceCharOffset": 4689,
+            "to": "        return items, None, None\n    binding = {\n        \"entries\": entry_bindings,\n        \"path\": Path(data_dir),\n        \"stat\": directory_snapshot,\n    }\n    return items, _dataset_sha256(snapshots), binding\n"
+          },
+          {
+            "from": "def _load_object(path: Path, role: str, errors: list[str]) -> dict[str, Any] | None:\n",
+            "outputCharOffset": 12776,
+            "sourceCharOffset": 4708,
+            "to": "def _recheck_dataset_binding(binding: dict[str, Any], errors: list[str]) -> None:\n    data_dir = binding[\"path\"]\n"
+          },
+          {
+            "from": "        value = _load_json(path)\n    except (json.JSONDecodeError, OSError) as exc:\n",
+            "outputCharOffset": 12898,
+            "sourceCharOffset": 4802,
+            "to": "        directory_fd = os.open(data_dir, _DIRECTORY_FLAGS)\n    except OSError as exc:\n        errors.append(f\"{data_dir}: dataset path changed after reading: {exc}\")\n        return\n    try:\n        try:\n            current_directory = _stat_snapshot(os.fstat(directory_fd))\n        except OSError as exc:\n            errors.append(f\"{data_dir}: could not recheck dataset directory: {exc}\")\n            return\n        if current_directory != binding[\"stat\"]:\n            errors.append(f\"{data_dir}: dataset directory changed after reading\")\n            return\n        try:\n            with os.scandir(directory_fd) as iterator:\n                names = []\n                for entry in iterator:\n                    names.append(entry.name)\n                    if len(names) > FROZEN_DATASET_ITEM_COUNT:\n                        break\n        except OSError as exc:\n            errors.append(f\"{data_dir}: could not recheck dataset directory: {exc}\")\n            return\n        if set(names) != set(binding[\"entries\"]):\n            errors.append(f\"{data_dir}: dataset entry set changed after reading\")\n            return\n        for name, expected in binding[\"entries\"].items():\n            try:\n                current = os.stat(name, dir_fd=directory_fd, follow_symlinks=False)\n            except OSError as exc:\n                errors.append(f\"{data_dir / name}: dataset item changed after reading: {exc}\")\n                continue\n            if _stat_snapshot(current) != expected:\n                errors.append(f\"{data_dir / name}: dataset item changed after reading\")\n    finally:\n        os.close(directory_fd)\n\n\ndef _load_object(\n    path: Path,\n    role: str,\n    errors: list[str],\n    *,\n    max_bytes: int,\n) -> tuple[dict[str, Any] | None, dict[str, Any] | None]:\n    try:\n        raw, binding = _read_regular_path_snapshot(\n            path, role=role, max_bytes=max_bytes\n        )\n        value = _decode_json(raw, role=role)\n    except ValueError as exc:\n"
+          },
+          {
+            "from": "        return None\n",
+            "outputCharOffset": 14907,
+            "sourceCharOffset": 4926,
+            "to": "        return None, None\n"
+          },
+          {
+            "from": "        return None\n    return value\n",
+            "outputCharOffset": 15032,
+            "sourceCharOffset": 5045,
+            "to": "        return None, binding\n    return value, binding\n"
+          },
+          {
+            "from": "    if version is None:\n        return LEGACY_PROTOCOL\n",
+            "outputCharOffset": 15183,
+            "sourceCharOffset": 5178,
+            "to": ""
+          },
+          {
+            "from": "\n\ndef _require_canonical_legacy_path(\n    role: str,\n    observed: Path,\n    expected: Path,\n    errors: list[str],\n) -> None:\n    if Path(observed).resolve(strict=False) != expected.resolve(strict=False):\n        errors.append(\n            f\"immutable v0.1 verification requires canonical {role} path \"\n            f\"{stable_dataset_path(expected)}\"\n        )\n",
+            "outputCharOffset": 15617,
+            "sourceCharOffset": 5667,
+            "to": ""
+          },
+          {
+            "from": "",
+            "outputCharOffset": 20516,
+            "sourceCharOffset": 10927,
+            "to": "\n    try:\n        validate_scoring_runtime()\n    except RuntimeError as exc:\n        errors.append(f\"result receipt replay runtime incompatible: {exc}\")\n        return\n"
+          },
+          {
+            "from": "        except (KeyError, TypeError, ValueError) as exc:\n",
+            "outputCharOffset": 31039,
+            "sourceCharOffset": 21282,
+            "to": "        except (KeyError, RuntimeError, TypeError, ValueError) as exc:\n"
+          },
+          {
+            "from": "    items = _load_dataset(data_dir, errors)\n    result = _load_object(result_path, \"BenchResult\", errors)\n    manifest = _load_object(manifest_path, \"BenchManifest\", errors)\n",
+            "outputCharOffset": 31408,
+            "sourceCharOffset": 21637,
+            "to": "    items, dataset_digest, dataset_binding = _load_dataset(data_dir, errors)\n    result, result_binding = _load_object(\n        result_path,\n        \"BenchResult\",\n        errors,\n        max_bytes=MAX_RESULT_BYTES,\n    )\n    manifest, manifest_binding = _load_object(\n        manifest_path,\n        \"BenchManifest\",\n        errors,\n        max_bytes=MAX_MANIFEST_BYTES,\n    )\n"
+          },
+          {
+            "from": "    schema_dir = (\n        REPO_ROOT / \"schemas/v0.2\"\n        if protocol_version == PROTOCOL_VERSION\n        else REPO_ROOT / \"schemas\"\n    )\n",
+            "outputCharOffset": 32446,
+            "sourceCharOffset": 22472,
+            "to": "    schema_dir = REPO_ROOT / \"schemas/v0.2\"\n"
+          },
+          {
+            "from": "    aleph_run_schema = load_schema(REPO_ROOT / \"schemas/aleph-run.schema.json\")\n",
+            "outputCharOffset": 32565,
+            "sourceCharOffset": 22690,
+            "to": ""
+          },
+          {
+            "from": "",
+            "outputCharOffset": 32644,
+            "sourceCharOffset": 22849,
+            "to": "    aleph_run_schema = result_schema[\"$defs\"][\"alephRun\"]\n"
+          },
+          {
+            "from": "    if protocol_version == LEGACY_PROTOCOL:\n        _require_canonical_legacy_path(\"dataset\", data_dir, LEGACY_DATA_DIR, errors)\n        _require_canonical_legacy_path(\"result\", result_path, LEGACY_RESULT_PATH, errors)\n        _require_canonical_legacy_path(\n            \"manifest\", manifest_path, LEGACY_MANIFEST_PATH, errors\n        )\n        if audit_path is not None:\n            _require_canonical_legacy_path(\n                \"audit\", audit_path, LEGACY_AUDIT_PATH, errors\n            )\n        if bundle_path is not None:\n            _require_canonical_legacy_path(\n                \"bundle\", bundle_path, LEGACY_BUNDLE_PATH, errors\n            )\n        for receipt_error in verify_v0_1_repository_receipt():\n            errors.append(f\"immutable v0.1 receipt: {receipt_error}\")\n",
+            "outputCharOffset": 32786,
+            "sourceCharOffset": 22933,
+            "to": "    if audit_path is not None:\n        errors.append(\"v0.2 verification does not accept a legacy audit artifact\")\n    if bundle_path is not None:\n        errors.append(\"v0.2 verification does not accept a legacy evidence bundle\")\n"
+          },
+          {
+            "from": "        try:\n            items = load_items(data_dir, require_canonical=True)\n        except (OSError, RuntimeError, ValueError) as exc:\n",
+            "outputCharOffset": 33085,
+            "sourceCharOffset": 23788,
+            "to": "        if (\n            len(items) != FROZEN_DATASET_ITEM_COUNT\n            or dataset_digest != FROZEN_DATASET_SHA256\n        ):\n"
+          },
+          {
+            "from": "            errors.append(f\"{data_dir}: canonical v0.2 dataset check failed: {exc}\")\n",
+            "outputCharOffset": 33248,
+            "sourceCharOffset": 23957,
+            "to": "            errors.append(\n                f\"{data_dir}: canonical v0.2 dataset check failed: expected \"\n                f\"{FROZEN_DATASET_ITEM_COUNT} items/{FROZEN_DATASET_SHA256}, \"\n                f\"found {len(items)} items/{dataset_digest or '<unavailable>'}\"\n            )\n    else:\n        items_valid = False\n"
+          },
+          {
+            "from": "",
+            "outputCharOffset": 33796,
+            "sourceCharOffset": 24274,
+            "to": "    relational_items = items if items_valid else []\n"
+          },
+          {
+            "from": "    audit: dict[str, Any] = {}\n    bundle: dict[str, Any] = {}\n    if protocol_version == PROTOCOL_VERSION and (audit_path is not None or bundle_path is not None):\n        errors.append(\"v0.2 audit and bundle artifacts are not implemented; verify result and manifest only\")\n    elif audit_path is not None:\n        audit_schema = load_schema(REPO_ROOT / \"schemas/aleph-bench-audit.schema.json\")\n        try:\n            audit = _load_json(audit_path)\n            validate(audit, audit_schema)\n        except (json.JSONDecodeError, OSError, SchemaValidationError) as exc:\n            errors.append(f\"{audit_path}: {exc}\")\n    if protocol_version != PROTOCOL_VERSION and bundle_path is not None:\n        bundle_schema = load_schema(REPO_ROOT / \"schemas/aleph-bench-bundle.schema.json\")\n        try:\n            bundle = _load_json(bundle_path)\n            validate(bundle, bundle_schema)\n        except (json.JSONDecodeError, OSError, SchemaValidationError) as exc:\n            errors.append(f\"{bundle_path}: {exc}\")\n\n",
+            "outputCharOffset": 34365,
+            "sourceCharOffset": 24791,
+            "to": ""
+          },
+          {
+            "from": "    item_ids = {item[\"id\"] for item in items} if items_valid else set()\n    canaries = {item[\"canaryGuid\"] for item in items} if items_valid else set()\n",
+            "outputCharOffset": 34423,
+            "sourceCharOffset": 25865,
+            "to": "    item_ids = {item[\"id\"] for item in relational_items}\n    canaries = {item[\"canaryGuid\"] for item in relational_items}\n"
+          },
+          {
+            "from": "                validate(run[\"alephRun\"], aleph_run_schema)\n",
+            "outputCharOffset": 34820,
+            "sourceCharOffset": 26292,
+            "to": "                validate(run[\"alephRun\"], aleph_run_schema, root=result_schema)\n"
+          },
+          {
+            "from": "            for item in items\n",
+            "outputCharOffset": 36948,
+            "sourceCharOffset": 28400,
+            "to": "            for item in relational_items\n"
+          },
+          {
+            "from": "            for item in items\n",
+            "outputCharOffset": 40314,
+            "sourceCharOffset": 31755,
+            "to": "            for item in relational_items\n"
+          },
+          {
+            "from": "    if audit:\n        if audit[\"dataDir\"] != expected_dataset_path:\n            errors.append(\"audit dataDir does not match data directory\")\n        if audit[\"resultPath\"] != stable_dataset_path(result_path):\n            errors.append(\"audit resultPath does not match result path\")\n        if audit[\"status\"] != \"ok\":\n            errors.append(\"audit status is not ok\")\n        failed_checks = [check[\"id\"] for check in audit[\"checks\"] if check[\"status\"] != \"ok\"]\n        if failed_checks:\n            errors.append(f\"audit has failed checks: {failed_checks}\")\n\n    if bundle:\n        artifacts = {artifact[\"role\"]: artifact for artifact in bundle.get(\"artifacts\", [])}\n        required_roles = {\"result\", \"manifest\", \"audit\", \"report\", \"evidence_note\"}\n        missing_roles = sorted(required_roles - set(artifacts))\n        if missing_roles:\n            errors.append(f\"bundle missing artifact roles: {missing_roles}\")\n        if artifacts.get(\"result\", {}).get(\"path\") != stable_dataset_path(result_path):\n            errors.append(\"bundle result path does not match result path\")\n        if artifacts.get(\"manifest\", {}).get(\"path\") != stable_dataset_path(manifest_path):\n            errors.append(\"bundle manifest path does not match manifest path\")\n        if audit_path is None:\n            errors.append(\"bundle verification requires --audit\")\n        elif artifacts.get(\"audit\", {}).get(\"path\") != stable_dataset_path(audit_path):\n            errors.append(\"bundle audit path does not match audit path\")\n\n        if not missing_roles and audit_path is not None:\n            current_bundle = build_m0_bundle(\n                result_path=result_path,\n                manifest_path=manifest_path,\n                audit_path=audit_path,\n                report_path=REPO_ROOT / artifacts[\"report\"][\"path\"],\n                evidence_note_path=REPO_ROOT / artifacts[\"evidence_note\"][\"path\"],\n            )\n            for error in compare_bundle(bundle, current_bundle):\n                errors.append(f\"bundle {error}\")\n",
+            "outputCharOffset": 42783,
+            "sourceCharOffset": 34213,
+            "to": "    # Bind the report to the exact byte snapshots used above. Rechecking the\n    # path/inode metadata at the end rejects scan-to-use replacement; the\n    # returned digests remain the durable identity if a path changes later.\n    if dataset_binding is not None:\n        _recheck_dataset_binding(dataset_binding, errors)\n    if result_binding is not None:\n        _recheck_file_binding(result_binding, errors)\n    if manifest_binding is not None:\n        _recheck_file_binding(manifest_binding, errors)\n"
+          },
+          {
+            "from": "",
+            "outputCharOffset": 43439,
+            "sourceCharOffset": 36388,
+            "to": "        \"datasetSha256\": dataset_digest,\n"
+          },
+          {
+            "from": "",
+            "outputCharOffset": 43536,
+            "sourceCharOffset": 36444,
+            "to": "        \"resultSha256\": (\n            result_binding[\"sha256\"] if result_binding is not None else None\n        ),\n"
+          },
+          {
+            "from": "",
+            "outputCharOffset": 43710,
+            "sourceCharOffset": 36504,
+            "to": "        \"manifestSha256\": (\n            manifest_binding[\"sha256\"] if manifest_binding is not None else None\n        ),\n"
+          },
+          {
+            "from": "        \"auditCheckCount\": len(audit.get(\"checks\", [])) if audit else 0,\n        \"bundleArtifactCount\": len(bundle.get(\"artifacts\", [])) if bundle else 0,\n",
+            "outputCharOffset": 44989,
+            "sourceCharOffset": 37663,
+            "to": "        \"auditCheckCount\": 0,\n        \"bundleArtifactCount\": 0,\n"
+          },
+          {
+            "from": "        f\"dataset: {report['dataDir']} ({report['itemCount']} items)\",\n",
+            "outputCharOffset": 45247,
+            "sourceCharOffset": 38012,
+            "to": "        (\n            f\"dataset: {report['dataDir']} ({report['itemCount']} items, \"\n            f\"sha256={report['datasetSha256']})\"\n        ),\n"
+          },
+          {
+            "from": "            f\"{report['resultAlephRunContractCount']} canonical AlephRun)\"\n",
+            "outputCharOffset": 45541,
+            "sourceCharOffset": 38232,
+            "to": "            f\"{report['resultAlephRunContractCount']} canonical AlephRun, \"\n            f\"sha256={report['resultSha256']})\"\n"
+          },
+          {
+            "from": "            f\"{report['manifestEstimatedMaxHttpAttempts']} max HTTP attempts)\"\n",
+            "outputCharOffset": 45947,
+            "sourceCharOffset": 38589,
+            "to": "            f\"{report['manifestEstimatedMaxHttpAttempts']} max HTTP attempts, \"\n            f\"sha256={report['manifestSha256']})\"\n"
+          }
+        ],
+        "reviewIssue": "https://github.com/p-to-q/aleph-benchmark/issues/10"
+      }
+    }
+  ]
+}

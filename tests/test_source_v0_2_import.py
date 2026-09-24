@@ -59,6 +59,12 @@ class InventoryContractTests(unittest.TestCase):
         cls.e3c_transformations = checker._parse_e3c_receipt_bytes(
             cls.e3c_receipt_raw, cls.manifest
         )
+        cls.e3d_receipt_raw = (
+            REPOSITORY_ROOT / checker.E3D_RECEIPT_PATH
+        ).read_bytes()
+        cls.e3d_transformations = checker._parse_e3d_receipt_bytes(
+            cls.e3d_receipt_raw, cls.manifest
+        )
 
     def test_reviewed_inventory_and_copy_selection(self) -> None:
         self.assertEqual(len(self.copy_rows), 78)
@@ -179,6 +185,37 @@ class InventoryContractTests(unittest.TestCase):
                 expected_raw_sha256=None,
             )
 
+    def test_reviewed_e3d_receipt_and_transformation(self) -> None:
+        self.assertEqual(
+            [entry["destination"] for entry in self.e3d_transformations],
+            [checker.E3D_SOURCE_PATH],
+        )
+        self.assertEqual(
+            self.e3d_transformations[0]["transformation"]["algorithm"],
+            checker.E3C_TRANSFORMATION_ALGORITHM,
+        )
+
+    def test_e3d_receipt_tamper_is_rejected(self) -> None:
+        value = json.loads(self.e3d_receipt_raw)
+        value["standaloneBaseCommit"] = "0" * 40
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "raw E3d receipt"):
+            checker._parse_e3d_receipt_bytes(tampered, self.manifest)
+
+    def test_e3d_splice_contract_tamper_is_rejected_without_digest_pin(self) -> None:
+        value = json.loads(self.e3d_receipt_raw)
+        edit = value["transformations"][0]["transformation"]["edits"][0]
+        edit["outputCharOffset"] += 1
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(
+            checker.ImportCheckError, "source/output offsets are inconsistent"
+        ):
+            checker._parse_e3d_receipt_bytes(
+                tampered,
+                self.manifest,
+                expected_raw_sha256=None,
+            )
+
     def test_path_attacks_are_rejected(self) -> None:
         attacks = (
             "/absolute",
@@ -272,8 +309,17 @@ class InstalledTreeTests(unittest.TestCase):
         e3c_transformations = checker._parse_e3c_receipt_bytes(
             e3c_receipt_raw, cls.manifest
         )
+        e3d_receipt_raw = (
+            REPOSITORY_ROOT / checker.E3D_RECEIPT_PATH
+        ).read_bytes()
+        e3d_transformations = checker._parse_e3d_receipt_bytes(
+            e3d_receipt_raw, cls.manifest
+        )
         cls.transformations = (
-            e3a_transformations + e3b_transformations + e3c_transformations
+            e3a_transformations
+            + e3b_transformations
+            + e3c_transformations
+            + e3d_transformations
         )
 
     def materialize(self) -> tuple[tempfile.TemporaryDirectory[str], Path]:
@@ -642,6 +688,41 @@ class GitObjectVerificationTests(unittest.TestCase):
             ):
                 checker._reconstruct_e3c_sources(root, transformations)
 
+    def test_e3d_verifier_round_trips_to_its_reviewed_source(self) -> None:
+        manifest_raw = (REPOSITORY_ROOT / checker.INVENTORY_PATH).read_bytes()
+        manifest, _ = checker._parse_inventory_bytes(manifest_raw)
+        receipt_raw = (REPOSITORY_ROOT / checker.E3D_RECEIPT_PATH).read_bytes()
+        transformations = checker._parse_e3d_receipt_bytes(
+            receipt_raw, manifest
+        )
+        reconstructed = checker._reconstruct_e3d_source(
+            REPOSITORY_ROOT, transformations
+        )
+        checker._verify_e3d_transformation_at_source(
+            {checker.E3D_SOURCE_PATH: reconstructed},
+            REPOSITORY_ROOT,
+            transformations,
+        )
+        with self.assertRaisesRegex(
+            checker.ImportCheckError, "does not reconstruct its pinned source"
+        ):
+            checker._verify_e3d_transformation_at_source(
+                {checker.E3D_SOURCE_PATH: b"#" + reconstructed[1:]},
+                REPOSITORY_ROOT,
+                transformations,
+            )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            destination = root / checker.E3D_SOURCE_PATH
+            destination.parent.mkdir(parents=True)
+            installed = (REPOSITORY_ROOT / checker.E3D_SOURCE_PATH).read_bytes()
+            destination.write_bytes(installed.replace(b"MAX_RESULT_BYTES", b"MAX_RESULU_BYTES", 1))
+            with self.assertRaisesRegex(
+                checker.ImportCheckError, "installed verifier output metadata differs"
+            ):
+                checker._reconstruct_e3d_source(root, transformations)
+
 
 class LiveGateTests(unittest.TestCase):
     def test_repository_gate_passes(self) -> None:
@@ -650,6 +731,7 @@ class LiveGateTests(unittest.TestCase):
         self.assertEqual(result["e3aFiles"], 2)
         self.assertEqual(result["e3bFiles"], 1)
         self.assertEqual(result["e3cFiles"], 2)
+        self.assertEqual(result["e3dFiles"], 1)
         self.assertEqual(
             result["e3cPackageTreeSha256"],
             checker.E3C_PACKAGE_TREE_SHA256,

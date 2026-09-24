@@ -42,6 +42,10 @@ jobs:
         run: >-
           python -B -m unittest -v
           bench.tests.test_protocol_v0_2 -k package
+      - name: Run E3d cross-version verifier boundary tests
+        run: >-
+          python -B -m unittest -v
+          tests.test_verify_v0_2_port.VerifierInputBoundaryTests
       - name: Assert the canonical v0.2 scoring runtime
         if: matrix.python == '3.13'
         run: >-
@@ -51,6 +55,12 @@ jobs:
       - name: Run the complete E3c protocol suite
         if: matrix.python == '3.13'
         run: python -B -m unittest -v bench.tests.test_protocol_v0_2
+      - name: Run the complete E3d verifier suites
+        if: matrix.python == '3.13'
+        run: >-
+          python -B -m unittest -v
+          bench.tests.test_v0_2_verify
+          tests.test_verify_v0_2_port.VerifierProtocolBoundaryTests
       - name: Verify frozen S2 data
         if: matrix.python == '3.13'
         run: python -I -B bench/data/generate_s2.py --check
@@ -86,6 +96,10 @@ jobs:
         run: >-
           python -B -m unittest -v
           bench.tests.test_protocol_v0_2 -k package
+      - name: Exercise Darwin verifier input boundaries
+        run: >-
+          python -B -m unittest -v
+          tests.test_verify_v0_2_port.VerifierInputBoundaryTests
 
   pinned-source-provenance:
     runs-on: ubuntu-24.04
