@@ -970,12 +970,9 @@ def verify_artifacts(
             errors.append("manifest datasetPath does not match data directory")
         if manifest["promptCount"] != manifest["nonLeakingPromptCount"] + manifest["gatedPromptCount"]:
             errors.append("manifest prompt counts do not add up")
-        if protocol_version == PROTOCOL_VERSION:
-            effective_reruns = sum(
-                model["effectiveReruns"] for model in manifest["models"]
-            )
-        else:
-            effective_reruns = manifest["modelCount"] * manifest["effectiveReruns"]
+        effective_reruns = sum(
+            model["effectiveReruns"] for model in manifest["models"]
+        )
         expected_generations = manifest["nonLeakingPromptCount"] * effective_reruns
         if manifest["estimatedGenerations"] != expected_generations:
             errors.append("manifest estimatedGenerations does not match prompt/model/rerun counts")
@@ -1062,9 +1059,17 @@ def verify_artifacts(
         "auditPath": stable_dataset_path(audit_path) if audit_path is not None else None,
         "bundlePath": stable_dataset_path(bundle_path) if bundle_path is not None else None,
         "itemCount": len(items),
-        "resultItemRuns": len(result.get("itemRuns", [])) if result is not None else 0,
+        "resultItemRuns": (
+            len(result["itemRuns"])
+            if result is not None and isinstance(result.get("itemRuns"), list)
+            else 0
+        ),
         "resultAlephRunContractCount": aleph_run_contract_count,
-        "resultModelCount": len(result.get("models", [])) if result is not None else 0,
+        "resultModelCount": (
+            len(result["models"])
+            if result is not None and isinstance(result.get("models"), list)
+            else 0
+        ),
         "manifestPromptCount": manifest.get("promptCount", 0) if manifest is not None else 0,
         "manifestNonLeakingPromptCount": manifest.get("nonLeakingPromptCount", 0) if manifest is not None else 0,
         "manifestGatedPromptCount": manifest.get("gatedPromptCount", 0) if manifest is not None else 0,

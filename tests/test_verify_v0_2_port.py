@@ -228,6 +228,27 @@ class VerifierInputBoundaryTests(unittest.TestCase):
             msg=report["errors"],
         )
 
+    def test_invalid_result_collection_shapes_return_failed_report(self) -> None:
+        with tempfile.TemporaryDirectory() as temporary_directory:
+            root = Path(temporary_directory)
+            result_path = root / "result.json"
+            manifest_path = root / "manifest.json"
+            result_path.write_text(
+                '{"itemRuns":1,"models":true,"protocolVersion":"0.2.0"}',
+                encoding="utf-8",
+            )
+            manifest_path.write_text("{}", encoding="utf-8")
+
+            report = verifier.verify_artifacts(
+                data_dir=DATA_DIR,
+                result_path=result_path,
+                manifest_path=manifest_path,
+            )
+
+        self.assertEqual(report["status"], "failed")
+        self.assertEqual(report["resultItemRuns"], 0)
+        self.assertEqual(report["resultModelCount"], 0)
+
     def test_runtime_incompatibility_is_a_deterministic_verification_error(self) -> None:
         errors: list[str] = []
         try:

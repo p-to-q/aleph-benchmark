@@ -9,10 +9,10 @@
     {
       "destination": "bench/engine/verify.py",
       "output": {
-        "bytes": 46469,
-        "gitBlobSha1": "14b8d0f20dda9432fba7354e975b4a604002585f",
+        "bytes": 46478,
+        "gitBlobSha1": "0969e549ef822775abee4faaeadfae77176ec501",
         "mode": "100644",
-        "sha256": "84d5f8de961e90f2423f3d85beb42e0f03af05a4cb41e7b9cc325b45aa097b67"
+        "sha256": "4e564c032d1cfd1c8f94a70774501b87fa72b4874ccb1f178951e1ffadea66de"
       },
       "source": {
         "bytes": 39060,
@@ -230,56 +230,74 @@
             "to": "            for item in relational_items\n"
           },
           {
+            "from": "        if protocol_version == PROTOCOL_VERSION:\n            effective_reruns = sum(\n                model[\"effectiveReruns\"] for model in manifest[\"models\"]\n            )\n        else:\n            effective_reruns = manifest[\"modelCount\"] * manifest[\"effectiveReruns\"]\n",
+            "outputCharOffset": 39099,
+            "sourceCharOffset": 30540,
+            "to": "        effective_reruns = sum(\n            model[\"effectiveReruns\"] for model in manifest[\"models\"]\n        )\n"
+          },
+          {
             "from": "            for item in items\n",
-            "outputCharOffset": 40314,
+            "outputCharOffset": 40155,
             "sourceCharOffset": 31755,
             "to": "            for item in relational_items\n"
           },
           {
             "from": "    if audit:\n        if audit[\"dataDir\"] != expected_dataset_path:\n            errors.append(\"audit dataDir does not match data directory\")\n        if audit[\"resultPath\"] != stable_dataset_path(result_path):\n            errors.append(\"audit resultPath does not match result path\")\n        if audit[\"status\"] != \"ok\":\n            errors.append(\"audit status is not ok\")\n        failed_checks = [check[\"id\"] for check in audit[\"checks\"] if check[\"status\"] != \"ok\"]\n        if failed_checks:\n            errors.append(f\"audit has failed checks: {failed_checks}\")\n\n    if bundle:\n        artifacts = {artifact[\"role\"]: artifact for artifact in bundle.get(\"artifacts\", [])}\n        required_roles = {\"result\", \"manifest\", \"audit\", \"report\", \"evidence_note\"}\n        missing_roles = sorted(required_roles - set(artifacts))\n        if missing_roles:\n            errors.append(f\"bundle missing artifact roles: {missing_roles}\")\n        if artifacts.get(\"result\", {}).get(\"path\") != stable_dataset_path(result_path):\n            errors.append(\"bundle result path does not match result path\")\n        if artifacts.get(\"manifest\", {}).get(\"path\") != stable_dataset_path(manifest_path):\n            errors.append(\"bundle manifest path does not match manifest path\")\n        if audit_path is None:\n            errors.append(\"bundle verification requires --audit\")\n        elif artifacts.get(\"audit\", {}).get(\"path\") != stable_dataset_path(audit_path):\n            errors.append(\"bundle audit path does not match audit path\")\n\n        if not missing_roles and audit_path is not None:\n            current_bundle = build_m0_bundle(\n                result_path=result_path,\n                manifest_path=manifest_path,\n                audit_path=audit_path,\n                report_path=REPO_ROOT / artifacts[\"report\"][\"path\"],\n                evidence_note_path=REPO_ROOT / artifacts[\"evidence_note\"][\"path\"],\n            )\n            for error in compare_bundle(bundle, current_bundle):\n                errors.append(f\"bundle {error}\")\n",
-            "outputCharOffset": 42783,
+            "outputCharOffset": 42624,
             "sourceCharOffset": 34213,
             "to": "    # Bind the report to the exact byte snapshots used above. Rechecking the\n    # path/inode metadata at the end rejects scan-to-use replacement; the\n    # returned digests remain the durable identity if a path changes later.\n    if dataset_binding is not None:\n        _recheck_dataset_binding(dataset_binding, errors)\n    if result_binding is not None:\n        _recheck_file_binding(result_binding, errors)\n    if manifest_binding is not None:\n        _recheck_file_binding(manifest_binding, errors)\n"
           },
           {
             "from": "",
-            "outputCharOffset": 43439,
+            "outputCharOffset": 43280,
             "sourceCharOffset": 36388,
             "to": "        \"datasetSha256\": dataset_digest,\n"
           },
           {
             "from": "",
-            "outputCharOffset": 43536,
+            "outputCharOffset": 43377,
             "sourceCharOffset": 36444,
             "to": "        \"resultSha256\": (\n            result_binding[\"sha256\"] if result_binding is not None else None\n        ),\n"
           },
           {
             "from": "",
-            "outputCharOffset": 43710,
+            "outputCharOffset": 43551,
             "sourceCharOffset": 36504,
             "to": "        \"manifestSha256\": (\n            manifest_binding[\"sha256\"] if manifest_binding is not None else None\n        ),\n"
           },
           {
+            "from": "        \"resultItemRuns\": len(result.get(\"itemRuns\", [])) if result is not None else 0,\n",
+            "outputCharOffset": 43887,
+            "sourceCharOffset": 36720,
+            "to": "        \"resultItemRuns\": (\n            len(result[\"itemRuns\"])\n            if result is not None and isinstance(result.get(\"itemRuns\"), list)\n            else 0\n        ),\n"
+          },
+          {
+            "from": "        \"resultModelCount\": len(result.get(\"models\", [])) if result is not None else 0,\n",
+            "outputCharOffset": 44125,
+            "sourceCharOffset": 36873,
+            "to": "        \"resultModelCount\": (\n            len(result[\"models\"])\n            if result is not None and isinstance(result.get(\"models\"), list)\n            else 0\n        ),\n"
+          },
+          {
             "from": "        \"auditCheckCount\": len(audit.get(\"checks\", [])) if audit else 0,\n        \"bundleArtifactCount\": len(bundle.get(\"artifacts\", [])) if bundle else 0,\n",
-            "outputCharOffset": 44989,
+            "outputCharOffset": 44998,
             "sourceCharOffset": 37663,
             "to": "        \"auditCheckCount\": 0,\n        \"bundleArtifactCount\": 0,\n"
           },
           {
             "from": "        f\"dataset: {report['dataDir']} ({report['itemCount']} items)\",\n",
-            "outputCharOffset": 45247,
+            "outputCharOffset": 45256,
             "sourceCharOffset": 38012,
             "to": "        (\n            f\"dataset: {report['dataDir']} ({report['itemCount']} items, \"\n            f\"sha256={report['datasetSha256']})\"\n        ),\n"
           },
           {
             "from": "            f\"{report['resultAlephRunContractCount']} canonical AlephRun)\"\n",
-            "outputCharOffset": 45541,
+            "outputCharOffset": 45550,
             "sourceCharOffset": 38232,
             "to": "            f\"{report['resultAlephRunContractCount']} canonical AlephRun, \"\n            f\"sha256={report['resultSha256']})\"\n"
           },
           {
             "from": "            f\"{report['manifestEstimatedMaxHttpAttempts']} max HTTP attempts)\"\n",
-            "outputCharOffset": 45947,
+            "outputCharOffset": 45956,
             "sourceCharOffset": 38589,
             "to": "            f\"{report['manifestEstimatedMaxHttpAttempts']} max HTTP attempts, \"\n            f\"sha256={report['manifestSha256']})\"\n"
           }
