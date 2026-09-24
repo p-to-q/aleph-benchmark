@@ -1,0 +1,645 @@
+{
+  "artifactKind": "aleph_bench_source_migration_receipt",
+  "formatVersion": 1,
+  "inventoryCommit": "d76206bdaf9ba72730b066560862a3d00cac9699",
+  "slice": "E3e",
+  "sourceCommit": "10abdc1368439d1ab454ee3862a59e14b67a9530",
+  "standaloneBaseCommit": "f8d144e0a0c6a0393858129e11d871f56a41eaed",
+  "transformations": [
+    {
+      "destination": "bench/run.py",
+      "output": {
+        "bytes": 21311,
+        "gitBlobSha1": "7fc27500829cbd1f84fdbe212f17dfa4a6c8866a",
+        "mode": "100644",
+        "sha256": "6bdc071293004391a97bb608e720b0bd08ac9f8a59f08cc5841d11ca9b9cd1f1"
+      },
+      "source": {
+        "bytes": 16766,
+        "disposition": "port",
+        "gitBlobSha1": "8bbab97f6e125d4ac04104624080d34b3465b689",
+        "mode": "100644",
+        "path": "bench/run.py",
+        "sha256": "5a4a67bd9979d84c2ca6e402df55967c0c86186e246bdde056d517af9ccd9c51"
+      },
+      "transformation": {
+        "algorithm": "utf8-codepoint-offset-splice-sequence-v1",
+        "edits": [
+          {
+            "from": "",
+            "outputCharOffset": 66,
+            "sourceCharOffset": 66,
+            "to": "sys\n\n# The migration gate treats the repository source tree as closed.  Set this\n# before importing any project module so ordinary repository-root CLI use does\n# not create ``bench/**/__pycache__`` entries that invalidate that gate.\nsys.dont_write_bytecode = True\n\nimport "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 366,
+            "sourceCharOffset": 94,
+            "to": "o"
+          },
+          {
+            "from": "y",
+            "outputCharOffset": 368,
+            "sourceCharOffset": 95,
+            "to": "\nimport "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 377,
+            "sourceCharOffset": 97,
+            "to": "ecrets\nimport stat"
+          },
+          {
+            "from": "(  # noqa: E402\n    ",
+            "outputCharOffset": 681,
+            "sourceCharOffset": 383,
+            "to": ""
+          },
+          {
+            "from": ",\n)\nfrom bench.engine.audit import format_audit_report  # noqa: E402\nfrom bench.engine.bundle import build_m0_bundle, compare_bundle",
+            "outputCharOffset": 694,
+            "sourceCharOffset": 416,
+            "to": ""
+          },
+          {
+            "from": "\nfrom bench.engine.kaggle_receipt import (  # noqa: E402\n    DEFAULT_SATURATION_MARGIN_TOKENS,\n    DEFAULT_V0_1_PACKAGE_ROOT,\n    build_kaggle_receipt,\n    capture_kaggle_package_root_identity,\n    validate_kaggle_replay_output_path,\n    write_new_kaggle_receipt,\n)\nfrom bench.engine.legacy_v0_1 import (  # noqa: E402\n    assert_not_v0_1_write,\n    safe_write_text,\n    verify_v0_1_repository_receipt,\n)\nfrom bench.engine.platform_package import (  # noqa: E402\n    check_platform_package,\n    format_package_check,\n)",
+            "outputCharOffset": 771,
+            "sourceCharOffset": 625,
+            "to": ""
+          },
+          {
+            "from": "",
+            "outputCharOffset": 1264,
+            "sourceCharOffset": 1636,
+            "to": "_DIRECTORY_OPEN_FLAGS = (\n    os.O_RDONLY\n    | getattr(os, \"O_CLOEXEC\", 0)\n    | getattr(os, \"O_DIRECTORY\", 0)\n    | getattr(os, \"O_NOFOLLOW\", 0)\n)\n_FILE_CREATE_FLAGS = (\n    os.O_WRONLY\n    | os.O_CREAT\n    | os.O_EXCL\n    | getattr(os, \"O_CLOEXEC\", 0)\n    | getattr(os, \"O_NOFOLLOW\", 0)\n)\n_MAX_TRUSTED_ALIAS_EXPANSIONS = 16\n\n\n"
+          },
+          {
+            "from": "",
+            "outputCharOffset": 1793,
+            "sourceCharOffset": 1836,
+            "to": "\n\n\ndef _target_snapshot(\n    metadata: os.stat_result,\n) -> tuple[int, int, int, int, int, int, int]:\n    return (\n        metadata.st_dev,\n        metadata.st_ino,\n        metadata.st_mode,\n        metadata.st_nlink,\n        metadata.st_size,\n        metadata.st_mtime_ns,\n        metadata.st_ctime_ns,\n    )\n\n\ndef _identity(metadata: os.stat_result) -> tuple[int, int]:\n    return metadata.st_dev, metadata.st_ino\n\n\ndef _require_safe_output_directory(metadata: os.stat_result, *, label: str) -> None:\n    \"\"\"Reject a parent namespace writable by a different principal.\"\"\"\n\n    if not stat.S_ISDIR(metadata.st_mode):\n        raise ValueError(f\"output ancestor must be a directory: {label}\")\n    if metadata.st_uid not in {0, os.geteuid()}:\n        raise ValueError(f\"output ancestor has an untrusted owner: {label}\")\n    writable_by_others = stat.S_IMODE(metadata.st_mode) & 0o022\n    if writable_by_others and not metadata.st_mode & stat.S_ISVTX:\n        raise ValueError(\n            \"output ancestor is group/world writable without sticky protection: \"\n            f\"{label}\"\n        )\n\n\ndef _absolute_components(path: str) -> list[str]:\n    if not os.path.isabs(path):\n        raise ValueError(f\"output path must be absolute: {path}\")\n    return [component for component in path.split(os.sep) if component]\n\n\ndef _trusted_top_level_alias(\n    parent: os.stat_result,\n    link: os.stat_result,\n    resolved_components: list[str],\n) -> bool:\n    \"\"\"Allow only root-managed top-level aliases such as macOS ``/tmp``.\"\"\"\n\n    return (\n        not resolved_components\n        and parent.st_uid == 0\n        and stat.S_IMODE(parent.st_mode) & 0o022 == 0\n        and link.st_uid == 0\n    )\n\n\ndef _open_output_parent(path: Path, *, create: bool) -> tuple[int, str]:\n    \"\"\"Open an output parent by descriptor without following untrusted links.\"\"\"\n\n    raw = os.fspath(path)\n    if not isinstance(raw, str):\n        raise TypeError(\"output must be a text path\")\n    if not raw or \"\\x00\" in raw:\n        raise ValueError(\"output path must have a valid file name\")\n    absolute = os.path.abspath(raw)\n    components = _absolute_components(absolute)\n    if not components:\n        raise ValueError(\"output path must name a file\")\n    leaf = components[-1]\n    if leaf in {\"\", \".\", \"..\"}:\n        raise ValueError(\"output file name must not be empty, '.' or '..'\")\n\n    current_fd = os.open(os.sep, _DIRECTORY_OPEN_FLAGS)\n    resolved_components: list[str] = []\n    pending = components[:-1]\n    alias_expansions = 0\n    try:\n        _require_safe_output_directory(os.fstat(current_fd), label=os.sep)\n        while pending:\n            component = pending.pop(0)\n            created = False\n            try:\n                before = os.stat(\n                    component,\n                    dir_fd=current_fd,\n                    follow_symlinks=False,\n                )\n            except FileNotFoundError:\n                if not create:\n                    raise ValueError(\n                        f\"output ancestor is unavailable: {component!r}\"\n                    ) from None\n                try:\n                    os.mkdir(component, mode=0o700, dir_fd=current_fd)\n                    created = True\n                    os.fsync(current_fd)\n                except FileExistsError:\n                    # A concurrent creator won the race.  Inspect and open the\n                    # visible entry under the same rules as every other level.\n                    pass\n                before = os.stat(\n                    component,\n                    dir_fd=current_fd,\n                    follow_symlinks=False,\n                )\n            except OSError as exc:\n                raise ValueError(\n                    f\"output ancestor is unavailable: {component!r}: {exc}\"\n                ) from exc\n\n            if stat.S_ISLNK(before.st_mode):\n                parent_metadata = os.fstat(current_fd)\n                if not _trusted_top_level_alias(\n                    parent_metadata,\n                    before,\n                    resolved_components,\n                ):\n                    raise ValueError(\n                        f\"output ancestor must not be a symlink: {component!r}\"\n                    )\n                alias_expansions += 1\n                if alias_expansions > _MAX_TRUSTED_ALIAS_EXPANSIONS:\n                    raise ValueError(\"too many trusted system-alias expansions\")\n                alias_target = os.readlink(component, dir_fd=current_fd)\n                if os.path.isabs(alias_target):\n                    expanded = os.path.normpath(alias_target)\n                else:\n                    expanded = os.path.normpath(\n                        os.path.join(\n                            os.sep,\n                            *resolved_components,\n                            alias_target,\n                        )\n                    )\n                pending = _absolute_components(expanded) + pending\n                os.close(current_fd)\n                current_fd = os.open(os.sep, _DIRECTORY_OPEN_FLAGS)\n                resolved_components = []\n                continue\n\n            _require_safe_output_directory(before, label=component)\n            try:\n                next_fd = os.open(\n                    component,\n                    _DIRECTORY_OPEN_FLAGS,\n                    dir_fd=current_fd,\n                )\n            except OSError as exc:\n                raise ValueError(\n                    f\"could not safely open output ancestor {component!r}: {exc}\"\n                ) from exc\n            try:\n                opened = os.fstat(next_fd)\n                if _identity(before) != _identity(opened):\n                    raise ValueError(\n                        f\"output ancestor changed while opening: {component!r}\"\n                    )\n                if created:\n                    if opened.st_uid != os.geteuid():\n                        raise ValueError(\n                            \"created output ancestor has an unexpected owner: \"\n                            f\"{component!r}\"\n                        )\n                    os.fchmod(next_fd, 0o700)\n                    os.fsync(next_fd)\n            except Exception:\n                os.close(next_fd)\n                raise\n            os.close(current_fd)\n            current_fd = next_fd\n            resolved_components.append(component)\n\n        try:\n            encoded_leaf = os.fsencode(leaf)\n        except UnicodeError as exc:\n            raise ValueError(\n                \"output file name is not valid in the filesystem encoding\"\n            ) from exc\n        try:\n            name_max = os.fpathconf(current_fd, \"PC_NAME_MAX\")\n        except (AttributeError, OSError, ValueError):\n            name_max = 255\n        if name_max >= 0 and len(encoded_leaf) > name_max:\n            raise ValueError(\"output file name exceeds the parent name limit\")\n        return current_fd, leaf\n    except Exception:\n        os.close(current_fd)\n        raise\n\n\ndef _revalidate_output_parent(path: Path, parent_fd: int, leaf: str) -> None:\n    \"\"\"Confirm the pathname still identifies the retained parent descriptor.\"\"\"\n\n    check_fd, check_leaf = _open_output_parent(path, create=False)\n    try:\n        if check_leaf != leaf or _identity(os.fstat(check_fd)) != _identity(\n            os.fstat(parent_fd)\n        ):\n            raise ValueError(f\"output parent changed before publication: {path.parent}\")\n    finally:\n        os.close(check_fd)\n\n\ndef _inspect_output_target(parent_fd: int, name: str, target: Path) -> os.stat_result | None:\n    try:\n        metadata = os.stat(name, dir_fd=parent_fd, follow_symlinks=False)\n    except FileNotFoundError:\n        return None\n    if not stat.S_ISREG(metadata.st_mode) or metadata.st_nlink != 1:\n        raise ValueError(f\"output must be a singly linked regular file: {target}\")\n    return metadata\n\n\ndef _safe_write_text(path: Path, content: str, *, encoding: str = \"utf-8\") -> None:\n    \"\"\"Publish text atomically without following or deleting untrusted entries.\n\n    The output boundary is intentionally local to this repository runner.  The\n    response cache has its own stricter lifecycle in ``ResponseCacheAdapter``.\n    \"\"\"\n\n    target = Path(path).absolute()\n    parent_fd, target_name = _open_output_parent(target, create=True)\n\n    temporary_name = f\".{target.name}.{os.getpid()}.{secrets.token_hex(16)}.tmp\"\n    temporary_fd: int | None = None\n    published = False\n    try:\n        existing = _inspect_output_target(parent_fd, target_name, target)\n        existing_snapshot = (\n            _target_snapshot(existing) if existing is not None else None\n        )\n        temporary_fd = os.open(\n            temporary_name,\n            _FILE_CREATE_FLAGS,\n            0o600,\n            dir_fd=parent_fd,\n        )\n        temporary_metadata = os.fstat(temporary_fd)\n        if (\n            not stat.S_ISREG(temporary_metadata.st_mode)\n            or temporary_metadata.st_nlink != 1\n        ):\n            raise ValueError(f\"temporary output is not a singly linked regular file: {target}\")\n        os.fchmod(temporary_fd, 0o600)\n\n        payload = content.encode(encoding)\n        view = memoryview(payload)\n        while view:\n            written = os.write(temporary_fd, view)\n            if written <= 0:\n                raise OSError(\"output write made no progress\")\n            view = view[written:]\n        os.fsync(temporary_fd)\n\n        ready = os.fstat(temporary_fd)\n        if (\n            not stat.S_ISREG(ready.st_mode)\n            or ready.st_nlink != 1\n            or (ready.st_dev, ready.st_ino)\n            != (temporary_metadata.st_dev, temporary_metadata.st_ino)\n            or stat.S_IMODE(ready.st_mode) != 0o600\n            or ready.st_size != len(payload)\n        ):\n            raise ValueError(f\"temporary output changed before publication: {target}\")\n\n        _revalidate_output_parent(target, parent_fd, target_name)\n        current = _inspect_output_target(parent_fd, target_name, target)\n        current_snapshot = _target_snapshot(current) if current is not None else None\n        if current_snapshot != existing_snapshot:\n            raise ValueError(f\"output changed before publication: {target}\")\n\n        os.replace(\n            temporary_name,\n            target_name,\n            src_dir_fd=parent_fd,\n            dst_dir_fd=parent_fd,\n        )\n        published = True\n        if existing is not None:\n            # Restore the exact prior permission bits only after the mode-0600\n            # temporary entry has atomically replaced the destination.\n            os.fchmod(temporary_fd, stat.S_IMODE(existing.st_mode))\n            os.fsync(temporary_fd)\n        os.fsync(parent_fd)\n    finally:\n        active_error = sys.exc_info()[1] is not None\n        cleanup_error: OSError | None = None\n        if not published and temporary_fd is not None:\n            try:\n                created = os.fstat(temporary_fd)\n                try:\n                    visible = os.stat(\n                        temporary_name,\n                        dir_fd=parent_fd,\n                        follow_symlinks=False,\n                    )\n                except FileNotFoundError:\n                    visible = None\n                if visible is not None and (\n                    visible.st_dev,\n                    visible.st_ino,\n                ) == (created.st_dev, created.st_ino):\n                    os.unlink(temporary_name, dir_fd=parent_fd)\n            except OSError as error:\n                cleanup_error = error\n        if temporary_fd is not None:\n            try:\n                os.close(temporary_fd)\n            except OSError as error:\n                if cleanup_error is None:\n                    cleanup_error = error\n        try:\n            os.close(parent_fd)\n        except OSError as error:\n            if cleanup_error is None:\n                cleanup_error = error\n        if not active_error and cleanup_error is not None:\n            raise cleanup_error"
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14056,
+            "sourceCharOffset": 2111,
+            "to": "\n        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14075,
+            "sourceCharOffset": 2121,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14100,
+            "sourceCharOffset": 2138,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14123,
+            "sourceCharOffset": 2153,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14173,
+            "sourceCharOffset": 2195,
+            "to": ",\n    "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14360,
+            "sourceCharOffset": 2376,
+            "to": "\n        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14383,
+            "sourceCharOffset": 2390,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14405,
+            "sourceCharOffset": 2404,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14482,
+            "sourceCharOffset": 2473,
+            "to": ",\n    "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14525,
+            "sourceCharOffset": 2510,
+            "to": "\n        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14606,
+            "sourceCharOffset": 2582,
+            "to": "\n    "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14637,
+            "sourceCharOffset": 2608,
+            "to": "\n        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14656,
+            "sourceCharOffset": 2618,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14681,
+            "sourceCharOffset": 2635,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14701,
+            "sourceCharOffset": 2647,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14751,
+            "sourceCharOffset": 2689,
+            "to": ",\n    "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14847,
+            "sourceCharOffset": 2779,
+            "to": "\n        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14930,
+            "sourceCharOffset": 2853,
+            "to": "\n    "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 14974,
+            "sourceCharOffset": 2892,
+            "to": "\n        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15059,
+            "sourceCharOffset": 2968,
+            "to": "\n    "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15092,
+            "sourceCharOffset": 2996,
+            "to": "\n        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15111,
+            "sourceCharOffset": 3006,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15136,
+            "sourceCharOffset": 3023,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15159,
+            "sourceCharOffset": 3038,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15209,
+            "sourceCharOffset": 3080,
+            "to": ",\n    "
+          },
+          {
+            "from": "aud",
+            "outputCharOffset": 15394,
+            "sourceCharOffset": 3259,
+            "to": "ver"
+          },
+          {
+            "from": "t",
+            "outputCharOffset": 15398,
+            "sourceCharOffset": 3263,
+            "to": "fy"
+          },
+          {
+            "from": "audit\",\n        help=\"Verify the immutable v0.1 audit receipt without replaying its scorer\",\n    )\n    audit.add_argument(\"--json\", action=\"store_true\", help=\"Emit machine-readable audit JSON\")\n    bundle = subparsers.add_parser(\"bundle\", help=\"Check the immutable v0.1 evidence bundle\")\n    bundle.add_argument(\"--result\", default=str(REPO_ROOT / \"bench/results/m0-first-run.json\"))\n    bundle.add_argument(\"--manifest\", default=str(REPO_ROOT / \"bench/results/m0-call-manifest.json\"))\n    bundle.add_argument(\"--audit\", default=str(REPO_ROOT / \"bench/results/m0-audit.json\"))\n    bundle.add_argument(\"--report\", default=str(REPO_ROOT / \"bench/results/m0-report.md\"))\n    bundle.add_argument(\"--evidence-note\", default=str(REPO_ROOT / \"docs/benchmark/m0-evidence.md\"))\n    bundle.add_argument(\n        \"--check\",\n        default=str(REPO_ROOT / \"bench/results/m0-bundle.json\"),\n        help=\"Compare the immutable bundle manifest with current files\",\n    )\n    bundle.add_argument(\"--json\", action=\"store_true\", help=\"Emit machine-readable bundle JSON\")\n    verify = subparsers.add_parser(\"",
+            "outputCharOffset": 15435,
+            "sourceCharOffset": 3299,
+            "to": ""
+          },
+          {
+            "from": "benchmark",
+            "outputCharOffset": 15459,
+            "sourceCharOffset": 4413,
+            "to": "v0.2"
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15504,
+            "sourceCharOffset": 4463,
+            "to": "\n    "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15561,
+            "sourceCharOffset": 4515,
+            "to": "V2_DATA_DI"
+          },
+          {
+            "from": "EPO_ROOT / \"bench/data/public/s2\"",
+            "outputCharOffset": 15572,
+            "sourceCharOffset": 4516,
+            "to": ""
+          },
+          {
+            "from": "default=str(REPO_ROOT / \"bench/",
+            "outputCharOffset": 15611,
+            "sourceCharOffset": 4588,
+            "to": ""
+          },
+          {
+            "from": "s",
+            "outputCharOffset": 15613,
+            "sourceCharOffset": 4621,
+            "to": "q"
+          },
+          {
+            "from": "lts/m0-f",
+            "outputCharOffset": 15615,
+            "sourceCharOffset": 4623,
+            "to": ""
+          },
+          {
+            "from": "st-",
+            "outputCharOffset": 15617,
+            "sourceCharOffset": 4633,
+            "to": "ed=T"
+          },
+          {
+            "from": "n.json\")",
+            "outputCharOffset": 15623,
+            "sourceCharOffset": 4638,
+            "to": "e"
+          },
+          {
+            "from": "default=str(REPO_ROOT / \"bench/",
+            "outputCharOffset": 15664,
+            "sourceCharOffset": 4686,
+            "to": ""
+          },
+          {
+            "from": "s",
+            "outputCharOffset": 15666,
+            "sourceCharOffset": 4719,
+            "to": "q"
+          },
+          {
+            "from": "lts/m0-call-man",
+            "outputCharOffset": 15668,
+            "sourceCharOffset": 4721,
+            "to": ""
+          },
+          {
+            "from": "f",
+            "outputCharOffset": 15669,
+            "sourceCharOffset": 4737,
+            "to": "r"
+          },
+          {
+            "from": "st.json\")",
+            "outputCharOffset": 15671,
+            "sourceCharOffset": 4739,
+            "to": "d=True"
+          },
+          {
+            "from": "\"--audit\", default=None, help=\"Optional audit receipt JSON to validate with the bundle\")",
+            "outputCharOffset": 15703,
+            "sourceCharOffset": 4774,
+            "to": ""
+          },
+          {
+            "from": "verify.add_argument(\"--bundle\", default=None, help=\"Optional evidence bundle JSON to validate against current files\")\n",
+            "outputCharOffset": 15708,
+            "sourceCharOffset": 4867,
+            "to": ""
+          },
+          {
+            "from": "verify.add_argument(",
+            "outputCharOffset": 15712,
+            "sourceCharOffset": 4989,
+            "to": ""
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15789,
+            "sourceCharOffset": 5086,
+            "to": "\n    "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15831,
+            "sourceCharOffset": 5123,
+            "to": "\n        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15886,
+            "sourceCharOffset": 5169,
+            "to": "v0.2 "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 15903,
+            "sourceCharOffset": 5181,
+            "to": "\n    "
+          },
+          {
+            "from": "default=str(REPO_ROOT / \"bench/",
+            "outputCharOffset": 15946,
+            "sourceCharOffset": 5219,
+            "to": ""
+          },
+          {
+            "from": "s",
+            "outputCharOffset": 15948,
+            "sourceCharOffset": 5252,
+            "to": "q"
+          },
+          {
+            "from": "lts/m0-f",
+            "outputCharOffset": 15950,
+            "sourceCharOffset": 5254,
+            "to": ""
+          },
+          {
+            "from": "st-",
+            "outputCharOffset": 15952,
+            "sourceCharOffset": 5264,
+            "to": "ed=T"
+          },
+          {
+            "from": "n.json\")",
+            "outputCharOffset": 15958,
+            "sourceCharOffset": 5269,
+            "to": "e"
+          },
+          {
+            "from": "\")\n    package = subparsers.add_parser(\"package\", help=\"Check the immutable v0.1 platform package\")\n    package.add_argument(\"--check\", required=True, help=\"Check the v0.1 package-manifest.json\")\n    package.add_argument(\"--json\", action=\"store_true\", help=\"Emit machine-readable package report",
+            "outputCharOffset": 16043,
+            "sourceCharOffset": 5361,
+            "to": ""
+          },
+          {
+            "from": ")\n    kaggle_replay = subparsers.add_parser(\n        \"kaggle-replay\",\n        help=\"Replay a completed legacy Kaggle run into a canonical detailed receipt\",\n    )\n    kaggle_replay.add_argument(\"--run-json\", required=True)\n    kaggle_replay.add_argument(\n        \"--package-root\",\n        default=str(DEFAULT_V0_1_PACKAGE_ROOT),\n        help=\"Receipt-identical immutable v0.1 platform package\",\n    )\n    kaggle_replay.add_argument(\n        \"--max-tokens\",\n        required=True,\n        type=int,\n        help=(\n            \"Operator-asserted max_tokens; only audited value 512 is accepted, \"\n            \"and the legacy run JSON does not prove this invocation argument\"\n        ),\n    )\n    kaggle_replay.add_argument(\n        \"--saturation-margin-tokens\",\n        type=int,\n        default=DEFAULT_SATURATION_MARGIN_TOKENS,\n        help=\"Audited near-cap margin; only 4 is accepted\",\n    )\n    kaggle_replay.add_argument(\"--out\", required=True",
+            "outputCharOffset": 16354,
+            "sourceCharOffset": 5966,
+            "to": ""
+          },
+          {
+            "from": "assert_not_v0_1_write(out)\n        ",
+            "outputCharOffset": 17328,
+            "sourceCharOffset": 7886,
+            "to": ""
+          },
+          {
+            "from": "",
+            "outputCharOffset": 17628,
+            "sourceCharOffset": 8221,
+            "to": "_"
+          },
+          {
+            "from": "}\")\n        return 0\n    if args.command == \"audit\":\n        receipt_errors = verify_v0_1_repository_receipt()\n        if receipt_errors:\n            print(\"status: failed\")\n            for error in receipt_errors:\n                print(f\"error: {error}\")\n            return 2\n        report = json.loads(\n            (REPO_ROOT / \"bench/results/m0-audit.json\").read_text(encoding=\"utf-8\")\n        )\n        schema = load_schema(REPO_ROOT / \"schemas/aleph-bench-audit.schema.json\")\n        validate(report, schema)\n        if args.json:\n            print(json.dumps(report, indent=2, sort_keys=True))\n        else:\n            print(format_audit_report(report))\n        return 0 if report[\"status\"] == \"ok\" else 2\n    if args.command == \"bundle\":\n        canonical_paths = {\n            \"result\": REPO_ROOT / \"bench/results/m0-first-run.json\",\n            \"manifest\": REPO_ROOT / \"bench/results/m0-call-manifest.json\",\n            \"audit\": REPO_ROOT / \"bench/results/m0-audit.json\",\n            \"report\": REPO_ROOT / \"bench/results/m0-report.md\",\n            \"evidence note\": REPO_ROOT / \"docs/benchmark/m0-evidence.md\",\n            \"bundle\": REPO_ROOT / \"bench/results/m0-bundle.json\",\n        }\n        supplied_paths = {\n            \"result\": Path(args.result),\n            \"manifest\": Path(args.manifest),\n            \"audit\": Path(args.audit),\n            \"report\": Path(args.report),\n            \"evidence note\": Path(args.evidence_note),\n            \"bundle\": Path(args.check),\n        }\n        for role, expected_path in canonical_paths.items():\n            if supplied_paths[role].resolve(strict=False) != expected_path.resolve(\n                strict=False\n            ):\n                raise ValueError(\n                    \"immutable v0.1 bundle check requires canonical \"\n                    f\"{role} path {expected_path.relative_to(REPO_ROOT)}\"\n                )\n        receipt_errors = verify_v0_1_repository_receipt()\n        if receipt_errors:\n            raise ValueError(\n                \"immutable v0.1 receipt failed: \" + \"; \".join(receipt_errors)\n            )\n        bundle = build_m0_bundle(\n            result_path=Path(args.result),\n            manifest_path=Path(args.manifest),\n            audit_path=Path(args.audit),\n            report_path=Path(args.report),\n            evidence_note_path=Path(args.evidence_note),\n        )\n        schema = load_schema(REPO_ROOT / \"schemas/aleph-bench-bundle.schema.json\")\n        validate(bundle, schema)\n        expected = json.loads(Path(args.check).read_text(encoding=\"utf-8\"))\n        validate(expected, schema)\n        errors = compare_bundle(expected, bundle)\n        if errors:\n            print(\"status: failed\")\n            for error in errors:\n                print(f\"error: {error}\")\n            return 2\n        if args.json:\n            print(json.dumps(bundle, indent=2, sort_keys=True))\n        else:\n            print(f\"status: ok\\nbundle: {args.check",
+            "outputCharOffset": 17766,
+            "sourceCharOffset": 8358,
+            "to": ""
+          },
+          {
+            "from": ",\n            audit_path=Path(args.audit) if args.audit else None,\n            bundle_path=Path(args.bundle) if args.bundle else None",
+            "outputCharOffset": 17985,
+            "sourceCharOffset": 11516,
+            "to": ""
+          },
+          {
+            "from": "assert",
+            "outputCharOffset": 18353,
+            "sourceCharOffset": 12017,
+            "to": ""
+          },
+          {
+            "from": "not_v0_1_write(out)\n            ",
+            "outputCharOffset": 18354,
+            "sourceCharOffset": 12024,
+            "to": ""
+          },
+          {
+            "from": "",
+            "outputCharOffset": 18976,
+            "sourceCharOffset": 12678,
+            "to": "(\n            "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19016,
+            "sourceCharOffset": 12704,
+            "to": "\n           "
+          },
+          {
+            "from": " else [",
+            "outputCharOffset": 19044,
+            "sourceCharOffset": 12720,
+            "to": ""
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19057,
+            "sourceCharOffset": 12740,
+            "to": "else ["
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19102,
+            "sourceCharOffset": 12779,
+            "to": "]"
+          },
+          {
+            "from": "]",
+            "outputCharOffset": 19112,
+            "sourceCharOffset": 12788,
+            "to": ")"
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19292,
+            "sourceCharOffset": 12968,
+            "to": "\n            "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19316,
+            "sourceCharOffset": 12979,
+            "to": "\n                "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19335,
+            "sourceCharOffset": 12981,
+            "to": "        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19371,
+            "sourceCharOffset": 13009,
+            "to": "        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19422,
+            "sourceCharOffset": 13052,
+            "to": "        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19456,
+            "sourceCharOffset": 13078,
+            "to": "        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19538,
+            "sourceCharOffset": 13152,
+            "to": "        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19577,
+            "sourceCharOffset": 13183,
+            "to": "        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19587,
+            "sourceCharOffset": 13185,
+            "to": "\n               "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19613,
+            "sourceCharOffset": 13195,
+            "to": "\n               "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19644,
+            "sourceCharOffset": 13210,
+            "to": ",\n            "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 19659,
+            "sourceCharOffset": 13211,
+            "to": "\n        "
+          },
+          {
+            "from": "\n    if args.command == \"package\":\n        report = check_platform_package(Path(args.check))\n        if args.json:\n            print(json.dumps(report, indent=2, sort_keys=True))\n        else:\n            print(format_package_check(report))\n        return 0 if report[\"status\"] == \"ok\" else 2",
+            "outputCharOffset": 19686,
+            "sourceCharOffset": 13229,
+            "to": ""
+          },
+          {
+            "from": "Syst",
+            "outputCharOffset": 19795,
+            "sourceCharOffset": 13630,
+            "to": "Valu"
+          },
+          {
+            "from": "m",
+            "outputCharOffset": 19800,
+            "sourceCharOffset": 13635,
+            "to": ""
+          },
+          {
+            "from": "xit",
+            "outputCharOffset": 19801,
+            "sourceCharOffset": 13637,
+            "to": "rror"
+          },
+          {
+            "from": "== \"kaggle-replay\":\n        run_json_path = Path(args.run_json)\n        package_root = Path(args.package_root)\n        package_root_identity = capture_kaggle_package_root_identity(package_root)\n        out = validate_kaggle_replay_output_path(\n            run_json_path=run_json_path,\n            package_root=package_root,\n            out=Path(args.out),\n        )\n        receipt = build_kaggle_receipt(\n            run_json_path=run_json_path,\n            package_root=package_root,\n            max_tokens=args.max_tokens,\n            saturation_margin_tokens=args.saturation_margin_tokens,\n        )\n        write_new_kaggle_receipt(\n            out,\n            receipt,\n            run_json_path=run_json_path,\n            package_root=package_root,\n            expected_package_root_identity=package_root_identity,\n        )\n        summary = {\n            \"status\": receipt[\"diagnostics\"][\"status\"],\n            \"receipt\": str(out),\n            \"id\": receipt[\"id\"],\n            \"rowCount\": receipt[\"rowCount\"],\n            \"emptyRowCount\": len(receipt[\"diagnostics\"][\"emptyRowIds\"]),\n            \"invalidUsageRowCount\": len(\n                receipt[\"diagnostics\"][\"invalidUsageRowIds\"]\n            ),\n            \"nearCapRowCount\": len(receipt[\"diagnostics\"][\"nearCapRowIds\"]),\n            \"leaderboardScalar\": receipt[\"leaderboardScalar\"],\n            \"replayedScalar\": receipt[\"replayedScalar\"],\n        }\n        print(json.dumps(summary, indent=2, sort_keys=True))\n        return 0 if receipt[\"diagnostics\"][\"status\"] == \"valid\" else 2\n    if args.command ",
+            "outputCharOffset": 20460,
+            "sourceCharOffset": 14295,
+            "to": ""
+          },
+          {
+            "from": ")\n    assert_not_v0_1_write(out)\n    if args.cache_dir:\n        assert_not_v0_1_write(Path(args.cache_dir), recursive=True",
+            "outputCharOffset": 20536,
+            "sourceCharOffset": 15939,
+            "to": ""
+          },
+          {
+            "from": "",
+            "outputCharOffset": 20871,
+            "sourceCharOffset": 16396,
+            "to": "_"
+          },
+          {
+            "from": "",
+            "outputCharOffset": 21068,
+            "sourceCharOffset": 16592,
+            "to": "\n        "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 21098,
+            "sourceCharOffset": 16613,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 21115,
+            "sourceCharOffset": 16622,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 21137,
+            "sourceCharOffset": 16636,
+            "to": "\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 21168,
+            "sourceCharOffset": 16659,
+            "to": "\n        UnicodeError,\n       "
+          },
+          {
+            "from": "",
+            "outputCharOffset": 21209,
+            "sourceCharOffset": 16670,
+            "to": ",\n    "
+          }
+        ],
+        "reviewIssue": "https://github.com/p-to-q/aleph-benchmark/issues/13"
+      }
+    }
+  ]
+}
