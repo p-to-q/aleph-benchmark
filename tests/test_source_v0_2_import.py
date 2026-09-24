@@ -393,8 +393,18 @@ class GitObjectVerificationTests(unittest.TestCase):
             root = Path(tmp)
             metrics = root / "bench/engine/metrics.py"
             metrics.parent.mkdir(parents=True)
-            metrics.write_bytes(installed + b"# drift\n")
-            with self.assertRaises(checker.ImportCheckError):
+            drifted = installed.replace(
+                b"Lower is better",
+                b"Lower is bettor",
+                1,
+            )
+            self.assertNotEqual(drifted, installed)
+            self.assertEqual(len(drifted), len(installed))
+            metrics.write_bytes(drifted)
+            with self.assertRaisesRegex(
+                checker.ImportCheckError,
+                "one reviewed path replacement",
+            ):
                 checker._verify_e3a_transformations_at_source(
                     {
                         "bench/engine/metrics.py": source,
