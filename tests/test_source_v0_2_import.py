@@ -122,6 +122,50 @@ class InventoryContractTests(unittest.TestCase):
                     checker._validate_unique_paths(paths, role="test")
 
 
+class RootClosureTests(unittest.TestCase):
+    def materialize(self) -> tuple[tempfile.TemporaryDirectory[str], Path]:
+        temporary = tempfile.TemporaryDirectory()
+        root = Path(temporary.name)
+        for path in checker.EXPECTED_ROOT_FILES:
+            (root / path).touch()
+        for path in checker.EXPECTED_ROOT_DIRECTORIES:
+            (root / path).mkdir()
+        (root / "platform/m0-mock").mkdir()
+        return temporary, root
+
+    def test_expected_root_entries_pass(self) -> None:
+        temporary, root = self.materialize()
+        with temporary:
+            checker._verify_root_entries(root)
+
+    def test_top_level_import_shadow_is_rejected(self) -> None:
+        for filename in ("random.py", "statistics.py"):
+            with self.subTest(filename=filename):
+                temporary, root = self.materialize()
+                with temporary:
+                    (root / filename).write_text("shadow = True\n")
+                    with self.assertRaisesRegex(checker.ImportCheckError, "extra"):
+                        checker._verify_root_entries(root)
+
+    def test_standard_library_package_shadow_is_rejected(self) -> None:
+        for filename in ("__init__.py", "__init__.pyc"):
+            with self.subTest(filename=filename):
+                temporary, root = self.materialize()
+                with temporary:
+                    (root / "platform" / filename).write_bytes(b"shadow\n")
+                    with self.assertRaisesRegex(checker.ImportCheckError, "shadow"):
+                        checker._verify_root_entries(root)
+
+    def test_root_symlink_is_rejected(self) -> None:
+        temporary, root = self.materialize()
+        with temporary:
+            readme = root / "README.md"
+            readme.unlink()
+            readme.symlink_to("NOTICE")
+            with self.assertRaisesRegex(checker.ImportCheckError, "symlink"):
+                checker._verify_root_entries(root)
+
+
 class InstalledTreeTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -144,6 +188,12 @@ class InstalledTreeTests(unittest.TestCase):
         for entry in self.transformations:
             source = REPOSITORY_ROOT / entry["destination"]
             destination = root / entry["destination"]
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, destination)
+            destination.chmod(0o644)
+        for path in checker.SUPPORT_MANAGED_PATHS:
+            source = REPOSITORY_ROOT / path
+            destination = root / path
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, destination)
             destination.chmod(0o644)
@@ -188,6 +238,9 @@ class InstalledTreeTests(unittest.TestCase):
 
     def test_executable_mode_drift_is_rejected(self) -> None:
         self.assert_rejected(lambda root: (root / "aleph-bench").chmod(0o644))
+
+    def test_group_only_execute_does_not_satisfy_executable_mode(self) -> None:
+        self.assert_rejected(lambda root: (root / "aleph-bench").chmod(0o410))
 
     def test_symlink_is_rejected(self) -> None:
         def mutate(root: Path) -> None:

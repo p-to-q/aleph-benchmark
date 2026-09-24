@@ -109,6 +109,8 @@ class ProtocolDocumentTests(unittest.TestCase):
             "not yet the source-authority cutover",
             "ASCII word-like-span proxy",
             "success-conditioned",
+            "30 items × 6 eligible prompts × 5 reruns = 900",
+            "`r0-p0`",
             "There is currently no formal v0.2 public model score",
             "Full runner and installed CLI | not yet available",
         ):

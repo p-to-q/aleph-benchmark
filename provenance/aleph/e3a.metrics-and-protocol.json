@@ -34,10 +34,10 @@
     {
       "destination": "docs/protocol-v0.2.md",
       "output": {
-        "bytes": 10285,
-        "gitBlobSha1": "d3c3acbc19d8595ee7a8b20c703af64fafd0a051",
+        "bytes": 11222,
+        "gitBlobSha1": "25ad9e649349fc2c946d67f453e65d841603393c",
         "mode": "100644",
-        "sha256": "04f4d92bc374376f9ef1c8231cc77fde356370184add56d41acd00d1f49eab1f"
+        "sha256": "51c0249568064ad7e337a8d8b86541c2e7e218d4b5438a4b483fe564c0a0e198"
       },
       "source": {
         "bytes": 21005,

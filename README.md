@@ -16,7 +16,8 @@ python3 -I -B scripts/check-source-v0.2-import.py
 ```
 
 That gate verifies the checked-in inventory, copied bytes, Git modes, paths,
-closed source tree, reviewed standalone notice, and the two E3a transformations.
+closed managed source trees, the top-level import surface, the reviewed
+standalone notice, and the two E3a transformations.
 With `--source-git`, it also proves that the metrics port differs from the pinned
 source by exactly one documentation-path replacement. Passing the gate does not
 make the CLI, full benchmark test suite, packaging, or authority transition
@@ -68,9 +69,11 @@ release. Preserve the `mock` / `evidenceMode = mock` label in every downstream u
   remaining documentation rewrites are deliberately absent.
 - `aleph-bench` therefore must not be presented as a working installed CLI.
 - The copied benchmark tests are provenance material in this slice; the full
-  suite is not runnable until the port closure lands. Four production/support
-  modules and seven test modules remain outside the complete import closure.
-- On Python 3.13, CI runs the 62 tests in `test_kaggle_capture`,
+  suite is not runnable until the port closure lands. Among the checked-in
+  production/support modules, four fail import; among the 11 copied benchmark
+  test modules, seven fail import.
+- Among the copied benchmark suite, Python 3.13 CI runs the 62 tests in
+  `test_kaggle_capture`,
   `test_kaggle_creation_output`, and `test_replay_adapter`, plus the seven
   scorer-conformance tests unlocked by E3a. This is a bounded migration smoke
   check, not the full suite.

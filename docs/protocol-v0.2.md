@@ -43,13 +43,23 @@ The frozen identity is recorded by
 | Dataset digest | `6f3a03400ec16405414afb94c7c639f2df07f7f0797c3b58ad1c4229e52f2041` |
 | Threshold | `tau = 0.95` |
 | Budget | `k = 16` current length units |
-| Reruns | 5 generations per prompt |
+| Hosted reruns | 5 generations per eligible, non-disqualified prompt |
 | Bootstrap | 500 resamples |
 
 The dataset digest uses
 `sha256-length-framed-filename-and-content-v1`; it binds both canonical
 filenames and file contents. A limit smaller than 30 items is diagnostic smoke
 scope and is not a canonical benchmark result.
+
+Each current item has six eligible prompt coordinates: rung 0 is explicitly
+disqualified, while rungs 1–3 contribute two paraphrases each. Canonical hosted
+black-box evidence therefore contains
+`30 items × 6 eligible prompts × 5 reruns = 900` logical response slots per
+hosted model. A complete hosted result must retain all 900 slots for each
+hosted model; a resumed run may dispatch fewer new provider calls when verified
+cached responses fill earlier slots. Deterministic mock adapters use one
+generation per eligible coordinate and remain mock pipeline evidence, not
+canonical hosted model evidence.
 
 ## 2. Rate–distortion coordinates
 
@@ -71,15 +81,17 @@ not enter that envelope. The right-hand normalization anchor is
 
 ```text
 L_max = max(
-  |explicit reconstruction prompt|,
+  |frozenLadder[0].prompt|,
   |target text|,
   1
 )
 ```
 
-where both lengths use the current proxy. The staircase begins at distortion
-`1.0` at zero budget, changes only when an eligible point becomes available,
-and holds its last distortion through the right-hand anchor.
+Here `frozenLadder[0]` is the first authored coordinate, `r0-p0`; the second
+rung-0 paraphrase is not considered when selecting the anchor. Both lengths use
+the current proxy. The staircase begins at distortion `1.0` at zero budget,
+changes only when an eligible point becomes available, and holds its last
+distortion through the right-hand anchor.
 
 The current metrics are:
 
@@ -141,11 +153,14 @@ skeleton: skeletonLcsRatio            >= 0.80
        or skeletonVerbatimSpanUnits   >= 32
 ```
 
-Raw bidi controls and CJK Compatibility Ideographs fail closed before overlap
-scoring. Private-use and unassigned code points remain visible rather than
-being erased. The skeleton is conservative and is not a Unicode UTS #39
-confusable implementation; cross-script homoglyphs and visual substitutions
-such as `I`/`l` or `rn`/`m` remain manual-audit limitations.
+Raw bidi controls and CJK Compatibility Ideographs are fail-closed
+disqualifiers regardless of the overlap diagnostics. They do not bypass the
+scorer's input and quadratic-work bounds, so an oversized comparison can be
+rejected before a disqualification receipt is produced. Private-use and
+unassigned code points remain visible rather than being erased. The skeleton
+is conservative and is not a Unicode UTS #39 confusable implementation;
+cross-script homoglyphs and visual substitutions such as `I`/`l` or `rn`/`m`
+remain manual-audit limitations.
 
 ## 5. Runtime profile
 
@@ -199,7 +214,7 @@ run:
 
 ```bash
 python3 -I -B scripts/check-source-v0.2-import.py
-python3 -B -m unittest discover -s tests -p 'test_metrics_v0_2.py' -v
+python3 -B -m unittest -v tests.test_metrics_v0_2
 python3.13 -B -m unittest -v bench.tests.test_scorer_conformance
 ```
 

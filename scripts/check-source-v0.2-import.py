@@ -43,9 +43,9 @@ COPY_TREE_SHA256 = "097b6de4ce08e6bd792043a4263097990bb37c561ac6b822e879f7d77722
 
 E3A_RECEIPT_PATH = "provenance/aleph/e3a.metrics-and-protocol.json"
 E3A_RECEIPT_BYTES = 1_834
-E3A_RECEIPT_GIT_BLOB_SHA1 = "76b43fe936d68a610cecec1ab523706a6d0a45b8"
+E3A_RECEIPT_GIT_BLOB_SHA1 = "e11275464e3cdbb94ffb06705637587beeb63606"
 E3A_RECEIPT_SHA256 = (
-    "57755779b0ce8b8f29b8fc7f78b4b0600b020b857222184519d83a15bb824955"
+    "a19497bb50640135bb8d5e5f9f3e78ec667d276f4431b5c85f681531c7eed333"
 )
 E3A_SOURCE_PATHS = ("bench/engine/metrics.py", "bench/README.md")
 METRICS_OLD_DOC_PATH = b"docs/benchmark/02-design-spec.md"
@@ -78,7 +78,33 @@ HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 SAFE_PATH = re.compile(r"[A-Za-z0-9._/-]+\Z")
 MAX_INVENTORY_BYTES = 4 * 1024 * 1024
 MAX_RECEIPT_BYTES = 64 * 1024
-MANAGED_PREFIXES = ("bench/", "docs/", "schemas/")
+MANAGED_PREFIXES = ("bench/", "docs/", "schemas/", "tests/")
+SUPPORT_MANAGED_PATHS = {
+    "tests/__init__.py",
+    "tests/test_metrics_v0_2.py",
+    "tests/test_source_v0_2_import.py",
+}
+EXPECTED_ROOT_FILES = {
+    ".gitattributes",
+    ".gitignore",
+    "LICENSE",
+    "NOTICE",
+    "README.md",
+    "aleph-bench",
+}
+EXPECTED_ROOT_DIRECTORIES = {
+    ".github",
+    "bench",
+    "docs",
+    "platform",
+    "provenance",
+    "references",
+    "schemas",
+    "scripts",
+    "tests",
+}
+OPTIONAL_ROOT_ENTRIES = {".git"}
+EXPECTED_PLATFORM_ROOT_ENTRIES = {"m0-mock"}
 
 
 class ImportCheckError(RuntimeError):
@@ -657,7 +683,49 @@ def _read_regular_path(
 def _git_mode_from_stat(status: os.stat_result, *, path: str) -> str:
     if status.st_mode & (stat.S_ISUID | stat.S_ISGID | stat.S_ISVTX):
         raise ImportCheckError(f"special permission bits are forbidden: {path}")
-    return "100755" if status.st_mode & 0o111 else "100644"
+    return "100755" if status.st_mode & stat.S_IXUSR else "100644"
+
+
+def _verify_root_entries(root: Path) -> None:
+    expected = EXPECTED_ROOT_FILES | EXPECTED_ROOT_DIRECTORIES
+    try:
+        entries = {entry.name: entry for entry in os.scandir(root)}
+    except OSError as exc:
+        raise ImportCheckError(f"could not scan repository root {root}: {exc}") from exc
+    actual = set(entries) - OPTIONAL_ROOT_ENTRIES
+    if actual != expected:
+        raise ImportCheckError(
+            "repository root entry set differs: "
+            f"missing={sorted(expected - actual)}, extra={sorted(actual - expected)}"
+        )
+    for name in sorted(expected):
+        status = entries[name].stat(follow_symlinks=False)
+        if stat.S_ISLNK(status.st_mode):
+            raise ImportCheckError(f"repository root symlink is forbidden: {name}")
+        if name in EXPECTED_ROOT_FILES and not stat.S_ISREG(status.st_mode):
+            raise ImportCheckError(f"repository root file is not regular: {name}")
+        if name in EXPECTED_ROOT_DIRECTORIES and not stat.S_ISDIR(status.st_mode):
+            raise ImportCheckError(f"repository root directory is not real: {name}")
+    git_entry = entries.get(".git")
+    if git_entry is not None:
+        status = git_entry.stat(follow_symlinks=False)
+        if stat.S_ISLNK(status.st_mode) or not (
+            stat.S_ISREG(status.st_mode) or stat.S_ISDIR(status.st_mode)
+        ):
+            raise ImportCheckError("optional .git entry has an unsafe type")
+    try:
+        platform_entries = {
+            entry.name: entry for entry in os.scandir(root / "platform")
+        }
+    except OSError as exc:
+        raise ImportCheckError(f"could not scan platform root: {exc}") from exc
+    if set(platform_entries) != EXPECTED_PLATFORM_ROOT_ENTRIES:
+        raise ImportCheckError(
+            "platform root entry set differs; unexpected entries could shadow the standard library"
+        )
+    platform_snapshot = platform_entries["m0-mock"].stat(follow_symlinks=False)
+    if not stat.S_ISDIR(platform_snapshot.st_mode):
+        raise ImportCheckError("platform/m0-mock must be a real directory")
 
 
 def _scan_closed_tree(root: Path, prefix: str) -> tuple[set[str], set[str]]:
@@ -747,7 +815,9 @@ def _verify_installed(
 ) -> None:
     expected_copy_paths = {row["destination"] for row in copy_rows}
     transformed_paths = {entry["destination"] for entry in transformations}
-    expected_managed_paths = expected_copy_paths | transformed_paths
+    expected_managed_paths = (
+        expected_copy_paths | transformed_paths | SUPPORT_MANAGED_PATHS
+    )
     for prefix in MANAGED_PREFIXES:
         actual_files, actual_directories = _scan_closed_tree(root, prefix)
         expected_files = {
@@ -1097,6 +1167,7 @@ def _repository_root() -> Path:
 def verify_repository(
     root: Path, *, source_git: Path | None = None
 ) -> dict[str, Any]:
+    _verify_root_entries(root)
     inventory_raw, inventory_status = _read_regular_path(
         root, INVENTORY_PATH, max_bytes=MAX_INVENTORY_BYTES
     )
