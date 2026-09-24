@@ -1,0 +1,96 @@
+{
+  "canaryGuid": "0f72d6e8-6d5a-4bb1-b8e0-cad1e31a3e6f",
+  "frozenLadder": [
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-019-r0-p0",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 0,
+      "prompt": "Reproduce this text exactly:\n\nS2-019 arithmetic card\nrow 1: n=24; n+step=30; n*step=144; glyph=jade\nrow 2: n=30; n+step=36; n*step=180; glyph=violet\nrow 3: n=36; n+step=42; n*step=216; glyph=silver\nchecksum: A-594",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-019-r0-p1",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 1,
+      "prompt": "Copy the target verbatim with no extra words:\n\nS2-019 arithmetic card\nrow 1: n=24; n+step=30; n*step=144; glyph=jade\nrow 2: n=30; n+step=36; n*step=180; glyph=violet\nrow 3: n=36; n+step=42; n*step=216; glyph=silver\nchecksum: A-594",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-019-r1-p0",
+      "label": "Descriptive Rule",
+      "paraphrase": 0,
+      "prompt": "Create S2-019 arithmetic card. Use start 24, step 6, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence jade, violet, silver. End with checksum A-594.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-019-r1-p1",
+      "label": "Descriptive Rule",
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-019 arithmetic card: three numbered rows from start 24 with step 6; include fields n, n+step, n*step, glyph using jade, violet, silver; final checksum A-594.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-019-r2-p0",
+      "label": "Concept Prompt",
+      "paraphrase": 0,
+      "prompt": "S2-019 arithmetic card; arithmetic schema; start 24; step 6; glyphs jade, violet, silver; checksum A-594.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-019-r2-p1",
+      "label": "Concept Prompt",
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-019: start 24, step 6, glyph cycle jade/violet/silver, checksum A-594.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-019-r3-p0",
+      "label": "Minimal Cue",
+      "paraphrase": 0,
+      "prompt": "S2-019 arithmetic 24/6/A-594",
+      "rung": 3
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-019-r3-p1",
+      "label": "Minimal Cue",
+      "paraphrase": 1,
+      "prompt": "card 019: 24+6, A-594",
+      "rung": 3
+    }
+  ],
+  "id": "s2-019",
+  "language": "en",
+  "license": "CC0-1.0",
+  "metricClass": "normalized_edit_similarity",
+  "protocolVersion": "0.2.0",
+  "provenance": {
+    "createdBy": "Codex deterministic generator",
+    "generatedAt": "2026-06-03T00:00:00Z",
+    "method": "Rule-generated S2 compositional target with frozen ladder prompts.",
+    "parameters": {
+      "checksum": "A-594",
+      "family": "arithmetic",
+      "glyphs": [
+        "jade",
+        "violet",
+        "silver"
+      ],
+      "start": 24,
+      "step": 6
+    },
+    "seed": 0
+  },
+  "stratum": "S2",
+  "target": {
+    "label": "S2 compositional seed 019",
+    "text": "S2-019 arithmetic card\nrow 1: n=24; n+step=30; n*step=144; glyph=jade\nrow 2: n=30; n+step=36; n*step=180; glyph=violet\nrow 3: n=36; n+step=42; n*step=216; glyph=silver\nchecksum: A-594"
+  }
+}

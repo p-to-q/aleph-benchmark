@@ -1,0 +1,95 @@
+{
+  "canaryGuid": "0f72d6e8-6d5a-4bb1-b8e0-cad1e31a3e6f",
+  "frozenLadder": [
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-026-r0-p0",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 0,
+      "prompt": "Reproduce this text exactly:\n\nS2-026 letter lattice\nA. Aster clicks the copper cipher at 14.\nB. Beryl drifts the jade delta at 23.\nC. Cato echoes the violet ember at 32.\nD. Dessa folds the silver fable at 41.\nchecksum: L-143",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-026-r0-p1",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 1,
+      "prompt": "Copy the target verbatim with no extra words:\n\nS2-026 letter lattice\nA. Aster clicks the copper cipher at 14.\nB. Beryl drifts the jade delta at 23.\nC. Cato echoes the violet ember at 32.\nD. Dessa folds the silver fable at 41.\nchecksum: L-143",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-026-r1-p0",
+      "label": "Descriptive Rule",
+      "paraphrase": 0,
+      "prompt": "Create S2-026 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:copper:cipher:clicks:14; Beryl:jade:delta:drifts:23; Cato:violet:ember:echoes:32; Dessa:silver:fable:folds:41. End with checksum L-143.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-026-r1-p1",
+      "label": "Descriptive Rule",
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-026 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:copper:cipher:clicks:14; Beryl:jade:delta:drifts:23; Cato:violet:ember:echoes:32; Dessa:silver:fable:folds:41 and final checksum L-143.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-026-r2-p0",
+      "label": "Concept Prompt",
+      "paraphrase": 0,
+      "prompt": "S2-026 letter lattice; A-D lattice; tuples Aster:copper:cipher:clicks:14 | Beryl:jade:delta:drifts:23 | Cato:violet:ember:echoes:32 | Dessa:silver:fable:folds:41; checksum L-143.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-026-r2-p1",
+      "label": "Concept Prompt",
+      "paraphrase": 1,
+      "prompt": "Lattice S2-026: Aster/Beryl/Cato/Dessa tuple list Aster:copper:cipher:clicks:14 | Beryl:jade:delta:drifts:23 | Cato:violet:ember:echoes:32 | Dessa:silver:fable:folds:41; L-143.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-026-r3-p0",
+      "label": "Minimal Cue",
+      "paraphrase": 0,
+      "prompt": "S2-026 lattice L-143",
+      "rung": 3
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-026-r3-p1",
+      "label": "Minimal Cue",
+      "paraphrase": 1,
+      "prompt": "lattice 026: Aster:copper:cipher:clicks:14 ... L-143",
+      "rung": 3
+    }
+  ],
+  "id": "s2-026",
+  "language": "en",
+  "license": "CC0-1.0",
+  "metricClass": "normalized_edit_similarity",
+  "protocolVersion": "0.2.0",
+  "provenance": {
+    "createdBy": "Codex deterministic generator",
+    "generatedAt": "2026-06-03T00:00:00Z",
+    "method": "Rule-generated S2 compositional target with frozen ladder prompts.",
+    "parameters": {
+      "checksum": "L-143",
+      "family": "letter-lattice",
+      "values": [
+        "Aster:copper:cipher:clicks:14",
+        "Beryl:jade:delta:drifts:23",
+        "Cato:violet:ember:echoes:32",
+        "Dessa:silver:fable:folds:41"
+      ]
+    },
+    "seed": 0
+  },
+  "stratum": "S2",
+  "target": {
+    "label": "S2 compositional seed 026",
+    "text": "S2-026 letter lattice\nA. Aster clicks the copper cipher at 14.\nB. Beryl drifts the jade delta at 23.\nC. Cato echoes the violet ember at 32.\nD. Dessa folds the silver fable at 41.\nchecksum: L-143"
+  }
+}

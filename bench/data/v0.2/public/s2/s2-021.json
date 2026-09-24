@@ -1,0 +1,97 @@
+{
+  "canaryGuid": "0f72d6e8-6d5a-4bb1-b8e0-cad1e31a3e6f",
+  "frozenLadder": [
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-021-r0-p0",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 0,
+      "prompt": "Reproduce this text exactly:\n\nS2-021 route receipt\nleg 1: go east for 11; mark=N4\nleg 2: go south for 9; mark=V6\nleg 3: go west for 7; mark=P9\nleg 4: go north for 5; mark=R3\ntotal: 32; parity: even; code: R-713",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-021-r0-p1",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 1,
+      "prompt": "Copy the target verbatim with no extra words:\n\nS2-021 route receipt\nleg 1: go east for 11; mark=N4\nleg 2: go south for 9; mark=V6\nleg 3: go west for 7; mark=P9\nleg 4: go north for 5; mark=R3\ntotal: 32; parity: even; code: R-713",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-021-r1-p0",
+      "label": "Descriptive Rule",
+      "paraphrase": 0,
+      "prompt": "Create S2-021 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples east:11:N4; south:9:V6; west:7:P9; north:5:R3. Then print total 32, parity even, code R-713.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-021-r1-p1",
+      "label": "Descriptive Rule",
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-021 route receipt; four legs from triples east:11:N4; south:9:V6; west:7:P9; north:5:R3; finish with total 32, parity even, and code R-713.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-021-r2-p0",
+      "label": "Concept Prompt",
+      "paraphrase": 0,
+      "prompt": "S2-021 route receipt; route schema; legs east:11:N4 | south:9:V6 | west:7:P9 | north:5:R3; total 32; even; R-713.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-021-r2-p1",
+      "label": "Concept Prompt",
+      "paraphrase": 1,
+      "prompt": "Route S2-021: east:11:N4 | south:9:V6 | west:7:P9 | north:5:R3 -> 32/even/R-713.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-021-r3-p0",
+      "label": "Minimal Cue",
+      "paraphrase": 0,
+      "prompt": "S2-021 route R-713",
+      "rung": 3
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-021-r3-p1",
+      "label": "Minimal Cue",
+      "paraphrase": 1,
+      "prompt": "route 021: east:11:N4 ... R-713",
+      "rung": 3
+    }
+  ],
+  "id": "s2-021",
+  "language": "en",
+  "license": "CC0-1.0",
+  "metricClass": "normalized_edit_similarity",
+  "protocolVersion": "0.2.0",
+  "provenance": {
+    "createdBy": "Codex deterministic generator",
+    "generatedAt": "2026-06-03T00:00:00Z",
+    "method": "Rule-generated S2 compositional target with frozen ladder prompts.",
+    "parameters": {
+      "code": "R-713",
+      "family": "route",
+      "legs": [
+        "east:11:N4",
+        "south:9:V6",
+        "west:7:P9",
+        "north:5:R3"
+      ],
+      "parity": "even",
+      "total": 32
+    },
+    "seed": 0
+  },
+  "stratum": "S2",
+  "target": {
+    "label": "S2 compositional seed 021",
+    "text": "S2-021 route receipt\nleg 1: go east for 11; mark=N4\nleg 2: go south for 9; mark=V6\nleg 3: go west for 7; mark=P9\nleg 4: go north for 5; mark=R3\ntotal: 32; parity: even; code: R-713"
+  }
+}

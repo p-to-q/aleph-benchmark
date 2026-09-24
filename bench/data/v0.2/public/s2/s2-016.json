@@ -1,0 +1,96 @@
+{
+  "canaryGuid": "0f72d6e8-6d5a-4bb1-b8e0-cad1e31a3e6f",
+  "frozenLadder": [
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-016-r0-p0",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 0,
+      "prompt": "Reproduce this text exactly:\n\nS2-016 arithmetic card\nrow 1: n=21; n+step=24; n*step=63; glyph=amber\nrow 2: n=24; n+step=27; n*step=72; glyph=blue\nrow 3: n=27; n+step=30; n*step=81; glyph=copper\nchecksum: A-450",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-016-r0-p1",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 1,
+      "prompt": "Copy the target verbatim with no extra words:\n\nS2-016 arithmetic card\nrow 1: n=21; n+step=24; n*step=63; glyph=amber\nrow 2: n=24; n+step=27; n*step=72; glyph=blue\nrow 3: n=27; n+step=30; n*step=81; glyph=copper\nchecksum: A-450",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-016-r1-p0",
+      "label": "Descriptive Rule",
+      "paraphrase": 0,
+      "prompt": "Create S2-016 arithmetic card. Use start 21, step 3, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence amber, blue, copper. End with checksum A-450.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-016-r1-p1",
+      "label": "Descriptive Rule",
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-016 arithmetic card: three numbered rows from start 21 with step 3; include fields n, n+step, n*step, glyph using amber, blue, copper; final checksum A-450.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-016-r2-p0",
+      "label": "Concept Prompt",
+      "paraphrase": 0,
+      "prompt": "S2-016 arithmetic card; arithmetic schema; start 21; step 3; glyphs amber, blue, copper; checksum A-450.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-016-r2-p1",
+      "label": "Concept Prompt",
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-016: start 21, step 3, glyph cycle amber/blue/copper, checksum A-450.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-016-r3-p0",
+      "label": "Minimal Cue",
+      "paraphrase": 0,
+      "prompt": "S2-016 arithmetic 21/3/A-450",
+      "rung": 3
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-016-r3-p1",
+      "label": "Minimal Cue",
+      "paraphrase": 1,
+      "prompt": "card 016: 21+3, A-450",
+      "rung": 3
+    }
+  ],
+  "id": "s2-016",
+  "language": "en",
+  "license": "CC0-1.0",
+  "metricClass": "normalized_edit_similarity",
+  "protocolVersion": "0.2.0",
+  "provenance": {
+    "createdBy": "Codex deterministic generator",
+    "generatedAt": "2026-06-03T00:00:00Z",
+    "method": "Rule-generated S2 compositional target with frozen ladder prompts.",
+    "parameters": {
+      "checksum": "A-450",
+      "family": "arithmetic",
+      "glyphs": [
+        "amber",
+        "blue",
+        "copper"
+      ],
+      "start": 21,
+      "step": 3
+    },
+    "seed": 0
+  },
+  "stratum": "S2",
+  "target": {
+    "label": "S2 compositional seed 016",
+    "text": "S2-016 arithmetic card\nrow 1: n=21; n+step=24; n*step=63; glyph=amber\nrow 2: n=24; n+step=27; n*step=72; glyph=blue\nrow 3: n=27; n+step=30; n*step=81; glyph=copper\nchecksum: A-450"
+  }
+}

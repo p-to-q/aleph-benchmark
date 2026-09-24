@@ -1,0 +1,630 @@
+{
+  "fixtureVersion": "1.0",
+  "protocolVersion": "0.2.0",
+  "scoringProfile": {
+    "scorerId": "aleph-unicode",
+    "scorerVersion": "0.2.0",
+    "schemaVersion": "0.2.0",
+    "normalizationProfile": "unicode_nfc_newline_v1",
+    "lexicalProfile": "unicode_nfc_casefold_whitespace_char3_multiset_jaccard_v1",
+    "leakageUnit": "unicode_dual_channel_v1",
+    "leakageFailClosedPolicy": "bidi_controls_and_cjk_compatibility_ideographs_v1",
+    "responseCaptureVersion": "raw-v1",
+    "unicodeDatabaseVersion": "15.1.0",
+    "pythonVersion": "3.13",
+    "maxScoringTextCharacters": 16384,
+    "maxNormalizedTextCharacters": 32768,
+    "maxQuadraticCells": 1000000
+  },
+  "leakageThresholds": {
+    "lcsRatio": 0.65,
+    "targetTrigramRecall": 0.5,
+    "verbatimSpanUnits": 16,
+    "skeletonLcsRatio": 0.8,
+    "skeletonTargetTrigramRecall": 0.8,
+    "skeletonVerbatimSpanUnits": 32
+  },
+  "supportedMetricClasses": [
+    "exact",
+    "normalized_edit_similarity",
+    "unicode_char_ngram"
+  ],
+  "unsupportedMetricClasses": [
+    "semantic",
+    "judge",
+    "execution",
+    "unknown"
+  ],
+  "fidelityVectors": [
+    {
+      "id": "cjk-substitution",
+      "target": "春风又绿江南岸",
+      "output": "春风又绿江北岸",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.857143,
+        "unicode_char_ngram": 0.428571
+      }
+    },
+    {
+      "id": "mixed-script-substitution",
+      "target": "版本v2：稳定✅",
+      "output": "版本v3：稳定✅",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.875,
+        "unicode_char_ngram": 0.333333
+      }
+    },
+    {
+      "id": "emoji-modifier-removed",
+      "target": "👍🏽",
+      "output": "👍",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.5,
+        "unicode_char_ngram": 0.0
+      }
+    },
+    {
+      "id": "zwj-removed",
+      "target": "👩‍💻",
+      "output": "👩💻",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.666667,
+        "unicode_char_ngram": 0.0
+      }
+    },
+    {
+      "id": "canonical-equivalence",
+      "target": "Café",
+      "output": "Cafe\u0301",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 1.0,
+        "unicode_char_ngram": 1.0
+      }
+    },
+    {
+      "id": "code-operator-substitution",
+      "target": "if (x <= 10):",
+      "output": "if (x < 10):",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.923077,
+        "unicode_char_ngram": 0.615385
+      }
+    },
+    {
+      "id": "punctuation-only-substitution",
+      "target": "!!!",
+      "output": "???",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.0,
+        "unicode_char_ngram": 0.0
+      }
+    },
+    {
+      "id": "whitespace-collapse",
+      "target": "a  b\nc",
+      "output": "a b c",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.666667,
+        "unicode_char_ngram": 1.0
+      }
+    },
+    {
+      "id": "newline-normalization",
+      "target": "line 1\r\nline 2",
+      "output": "line 1\nline 2",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 1.0,
+        "unicode_char_ngram": 1.0
+      }
+    },
+    {
+      "id": "case-folding",
+      "target": "Alpha",
+      "output": "alpha",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.8,
+        "unicode_char_ngram": 1.0
+      }
+    },
+    {
+      "id": "empty-pair",
+      "target": "",
+      "output": "",
+      "expected": {
+        "exact": 1.0,
+        "normalized_edit_similarity": 1.0,
+        "unicode_char_ngram": 1.0
+      }
+    },
+    {
+      "id": "empty-vs-whitespace",
+      "target": "",
+      "output": "   ",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.0,
+        "unicode_char_ngram": 1.0
+      }
+    },
+    {
+      "id": "empty-vs-content",
+      "target": "",
+      "output": "x",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.0,
+        "unicode_char_ngram": 0.0
+      }
+    },
+    {
+      "id": "repetition-inflation",
+      "target": "哈哈哈",
+      "output": "哈哈哈哈哈哈",
+      "expected": {
+        "exact": 0.0,
+        "normalized_edit_similarity": 0.5,
+        "unicode_char_ngram": 0.25
+      }
+    }
+  ],
+  "leakageVectors": [
+    {
+      "id": "cjk-verbatim-copy",
+      "prompt": "春风又绿江南岸",
+      "target": "春风又绿江南岸",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 1.0,
+        "verbatimSpanUnits": 7,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 7
+      }
+    },
+    {
+      "id": "cjk-copy-with-spaces",
+      "prompt": "春 风 又 绿 江 南 岸",
+      "target": "春风又绿江南岸",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 1.0,
+        "verbatimSpanUnits": 7,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 7
+      }
+    },
+    {
+      "id": "cjk-concept-prompt",
+      "prompt": "写一句描写江南春色的七字诗",
+      "target": "春风又绿江南岸",
+      "expected": {
+        "disqualified": false,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.285714,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 2,
+        "skeletonLcsRatio": 0.285714,
+        "skeletonTargetTrigramRecall": 0.0,
+        "skeletonVerbatimSpanUnits": 2
+      }
+    },
+    {
+      "id": "mixed-script-verbatim-copy",
+      "prompt": "版本v2：稳定✅",
+      "target": "版本v2：稳定✅",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 1.0,
+        "verbatimSpanUnits": 7,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 8
+      }
+    },
+    {
+      "id": "zwj-verbatim-copy",
+      "prompt": "👩‍💻",
+      "target": "👩‍💻",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 2,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 0.0,
+        "skeletonVerbatimSpanUnits": 2
+      }
+    },
+    {
+      "id": "punctuation-verbatim-copy",
+      "prompt": "!!!",
+      "target": "!!!",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 1.0,
+        "verbatimSpanUnits": 3,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 3
+      }
+    },
+    {
+      "id": "cjk-variation-selector-injection",
+      "prompt": "春️风️又️绿️江️南️岸️",
+      "target": "春风又绿江南岸",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 1.0,
+        "verbatimSpanUnits": 7,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 7
+      }
+    },
+    {
+      "id": "latin-zwj-injection",
+      "prompt": "s‍ecret p‍hrase",
+      "target": "secret phrase",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 2,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 12
+      }
+    },
+    {
+      "id": "latin-zwnj-injection",
+      "prompt": "s‌ecret p‌hrase",
+      "target": "secret phrase",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 2,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 12
+      }
+    },
+    {
+      "id": "bidi-control-injection",
+      "prompt": "sec‮ret phrase",
+      "target": "secret phrase",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": "bidi_control",
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 2,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 12
+      }
+    },
+    {
+      "id": "fullwidth-copy",
+      "prompt": "ｓｅｃｒｅｔ　ｐｈｒａｓｅ",
+      "target": "secret phrase",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 2,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 12
+      }
+    },
+    {
+      "id": "boundary-concatenation",
+      "prompt": "secretphrase",
+      "target": "secret phrase",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 0,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 12
+      }
+    },
+    {
+      "id": "boundary-character-split",
+      "prompt": "s e c r e t p h r a s e",
+      "target": "secret phrase",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 0,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 12
+      }
+    },
+    {
+      "id": "punctuation-injection",
+      "prompt": "sec.ret phrase",
+      "target": "secret phrase",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.5,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 1,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 0.8,
+        "skeletonVerbatimSpanUnits": 9
+      }
+    },
+    {
+      "id": "thai-character-split",
+      "prompt": "ภ า ษ า ไ ท ย",
+      "target": "ภาษาไทย",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 0,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 7
+      }
+    },
+    {
+      "id": "emoji-modifier-injection",
+      "prompt": "👍🏽",
+      "target": "👍",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 1,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 0.0,
+        "skeletonVerbatimSpanUnits": 1
+      }
+    },
+    {
+      "id": "compatibility-casefold-copy",
+      "prompt": "𝐀",
+      "target": "a",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 1,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 0.0,
+        "skeletonVerbatimSpanUnits": 1
+      }
+    },
+    {
+      "id": "private-use-verbatim-copy",
+      "prompt": "",
+      "target": "",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 1.0,
+        "targetTrigramRecall": 1.0,
+        "verbatimSpanUnits": 3,
+        "skeletonLcsRatio": 1.0,
+        "skeletonTargetTrigramRecall": 1.0,
+        "skeletonVerbatimSpanUnits": 3
+      }
+    },
+    {
+      "id": "bidi-visual-order-reconstruction",
+      "prompt": "\u202ezyxwvutsrqponmlkjihgfedcba\u202c",
+      "target": "abcdefghijklmnopqrstuvwxyz",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": "bidi_control",
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 0,
+        "skeletonLcsRatio": 0.038462,
+        "skeletonTargetTrigramRecall": 0.0,
+        "skeletonVerbatimSpanUnits": 1
+      }
+    },
+    {
+      "id": "cjk-compatibility-ideograph-copy",
+      "prompt": "﨑﨑﨑",
+      "target": "崎崎崎",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": "cjk_compatibility_ideograph",
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 0,
+        "skeletonLcsRatio": 0.0,
+        "skeletonTargetTrigramRecall": 0.0,
+        "skeletonVerbatimSpanUnits": 0
+      }
+    },
+    {
+      "id": "repetition-does-not-inflate-trigram-recall",
+      "prompt": "哈哈哈",
+      "target": "哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈",
+      "expected": {
+        "disqualified": false,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.15,
+        "targetTrigramRecall": 0.055556,
+        "verbatimSpanUnits": 3,
+        "skeletonLcsRatio": 0.15,
+        "skeletonTargetTrigramRecall": 0.055556,
+        "skeletonVerbatimSpanUnits": 3
+      }
+    },
+    {
+      "id": "threshold-equality-lcs-ratio",
+      "prompt": "一丁七丄丆万三上丌不丏丐丒",
+      "target": "一丁丂七丄丅丆万丈三上下丌不与丏丐丑丒专",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.65,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 2,
+        "skeletonLcsRatio": 0.65,
+        "skeletonTargetTrigramRecall": 0.0,
+        "skeletonVerbatimSpanUnits": 2
+      }
+    },
+    {
+      "id": "threshold-equality-target-trigram-recall",
+      "prompt": "一丁丂七丄丅",
+      "target": "一丁丂七丄丅丆万丈三",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.6,
+        "targetTrigramRecall": 0.5,
+        "verbatimSpanUnits": 6,
+        "skeletonLcsRatio": 0.6,
+        "skeletonTargetTrigramRecall": 0.5,
+        "skeletonVerbatimSpanUnits": 6
+      }
+    },
+    {
+      "id": "threshold-equality-verbatim-span-units",
+      "prompt": "一丁丂七丄丅丆万丈三上下丌不与丏",
+      "target": "一丁丂七丄丅丆万丈三上下丌不与丏丐丑丒专且丕世丗丘丙业丛东丝丞丟丠両丢丣两严並丧",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.4,
+        "targetTrigramRecall": 0.368421,
+        "verbatimSpanUnits": 16,
+        "skeletonLcsRatio": 0.4,
+        "skeletonTargetTrigramRecall": 0.368421,
+        "skeletonVerbatimSpanUnits": 16
+      }
+    },
+    {
+      "id": "threshold-equality-skeleton-lcs-ratio",
+      "prompt": "a b c d e f g h",
+      "target": "abcdefghij",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 0,
+        "skeletonLcsRatio": 0.8,
+        "skeletonTargetTrigramRecall": 0.75,
+        "skeletonVerbatimSpanUnits": 8
+      }
+    },
+    {
+      "id": "threshold-equality-skeleton-target-trigram-recall",
+      "prompt": "fghijklabcde",
+      "target": "abcdefghijkl",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 0,
+        "skeletonLcsRatio": 0.583333,
+        "skeletonTargetTrigramRecall": 0.8,
+        "skeletonVerbatimSpanUnits": 7
+      }
+    },
+    {
+      "id": "threshold-equality-skeleton-verbatim-span-units",
+      "prompt": "abcdefghijklmnopqrstuvwxyzabcdef",
+      "target": "abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwx",
+      "expected": {
+        "disqualified": true,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 0,
+        "skeletonLcsRatio": 0.64,
+        "skeletonTargetTrigramRecall": 0.625,
+        "skeletonVerbatimSpanUnits": 32
+      }
+    },
+    {
+      "id": "empty-target",
+      "prompt": "anything",
+      "target": "",
+      "expected": {
+        "disqualified": false,
+        "failClosedReason": null,
+        "unit": "unicode_dual_channel_v1",
+        "lcsRatio": 0.0,
+        "targetTrigramRecall": 0.0,
+        "verbatimSpanUnits": 0,
+        "skeletonLcsRatio": 0.0,
+        "skeletonTargetTrigramRecall": 0.0,
+        "skeletonVerbatimSpanUnits": 0
+      }
+    }
+  ]
+}

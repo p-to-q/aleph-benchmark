@@ -1,0 +1,280 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Aleph-Bench Kaggle capture evidence envelope",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "evidenceSchemaVersion",
+    "artifactKind",
+    "targetProtocolVersion",
+    "leaderboardEligible",
+    "publicationEligible",
+    "assemblyEligible",
+    "downloadedAt",
+    "task",
+    "run",
+    "archive",
+    "payload",
+    "source",
+    "id"
+  ],
+  "properties": {
+    "evidenceSchemaVersion": {"enum": ["1.0.0", "1.1.0"]},
+    "artifactKind": {"const": "aleph_bench_kaggle_capture_evidence"},
+    "targetProtocolVersion": {"const": "0.2.0"},
+    "leaderboardEligible": {"const": false},
+    "publicationEligible": {"const": false},
+    "assemblyEligible": {"type": "boolean"},
+    "downloadedAt": {"$ref": "#/$defs/timestamp"},
+    "task": {"$ref": "#/$defs/task"},
+    "run": {"$ref": "#/$defs/run"},
+    "archive": {"$ref": "#/$defs/archive"},
+    "payload": {"$ref": "#/$defs/payload"},
+    "source": {"$ref": "#/$defs/source"},
+    "modelCatalogBinding": {"$ref": "#/$defs/modelCatalogBinding"},
+    "id": {
+      "type": "string",
+      "pattern": "^aleph-bench-kaggle-capture-evidence-v1-artifact-[0-9a-f]{64}$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "type": "object",
+        "properties": {"evidenceSchemaVersion": {"const": "1.0.0"}},
+        "required": ["evidenceSchemaVersion"]
+      },
+      "then": {
+        "not": {
+          "type": "object",
+          "required": ["modelCatalogBinding"]
+        }
+      }
+    },
+    {
+      "if": {
+        "type": "object",
+        "properties": {"evidenceSchemaVersion": {"const": "1.1.0"}},
+        "required": ["evidenceSchemaVersion"]
+      },
+      "then": {
+        "type": "object",
+        "required": ["modelCatalogBinding"]
+      }
+    }
+  ],
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 40,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?Z$"
+    },
+    "nullablePlatformTimestamp": {
+      "anyOf": [
+        {"type": "string", "minLength": 20, "maxLength": 64},
+        {"type": "null"}
+      ]
+    },
+    "nullableSha256": {
+      "anyOf": [
+        {"$ref": "#/$defs/sha256"},
+        {"type": "null"}
+      ]
+    },
+    "nullablePositiveInteger": {
+      "anyOf": [
+        {"type": "integer", "minimum": 1},
+        {"type": "null"}
+      ]
+    },
+    "slugSegment": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 100,
+      "pattern": "^[a-z0-9](?:[a-z0-9-]{0,98}[a-z0-9])?$"
+    },
+    "logicalPath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1024
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "requested",
+        "owner",
+        "slug",
+        "version",
+        "sourceKernelId",
+        "creationState",
+        "creationErrorStringSha256",
+        "createTime",
+        "url",
+        "datasets"
+      ],
+      "properties": {
+        "requested": {"type": "string", "minLength": 1, "maxLength": 201},
+        "owner": {"$ref": "#/$defs/slugSegment"},
+        "slug": {"$ref": "#/$defs/slugSegment"},
+        "version": {"type": "integer", "minimum": 1},
+        "sourceKernelId": {"$ref": "#/$defs/nullablePositiveInteger"},
+        "creationState": {
+          "enum": [
+            "BENCHMARK_TASK_VERSION_CREATION_STATE_COMPLETED",
+            "BENCHMARK_TASK_VERSION_CREATION_STATE_ERRORED"
+          ]
+        },
+        "creationErrorStringSha256": {"$ref": "#/$defs/nullableSha256"},
+        "createTime": {"$ref": "#/$defs/nullablePlatformTimestamp"},
+        "url": {
+          "anyOf": [
+            {"type": "string", "minLength": 1, "maxLength": 2048},
+            {"type": "null"}
+          ]
+        },
+        "datasets": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 1,
+          "uniqueItems": true,
+          "items": {"type": "string", "minLength": 3, "maxLength": 201}
+        }
+      }
+    },
+    "run": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "owner",
+        "task",
+        "version",
+        "modelVersionSlug",
+        "state",
+        "errorStringSha256",
+        "startTime",
+        "endTime"
+      ],
+      "properties": {
+        "id": {"type": "integer", "minimum": 1},
+        "owner": {"$ref": "#/$defs/slugSegment"},
+        "task": {"$ref": "#/$defs/slugSegment"},
+        "version": {"type": "integer", "minimum": 1},
+        "modelVersionSlug": {"type": "string", "minLength": 3, "maxLength": 256},
+        "state": {
+          "enum": [
+            "BENCHMARK_TASK_RUN_STATE_COMPLETED",
+            "BENCHMARK_TASK_RUN_STATE_ERRORED"
+          ]
+        },
+        "errorStringSha256": {"$ref": "#/$defs/nullableSha256"},
+        "startTime": {"$ref": "#/$defs/nullablePlatformTimestamp"},
+        "endTime": {"$ref": "#/$defs/nullablePlatformTimestamp"}
+      }
+    },
+    "archive": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "bytes",
+        "sha256",
+        "payloadEntry",
+        "sourceContainerEntry"
+      ],
+      "properties": {
+        "file": {"$ref": "#/$defs/logicalPath"},
+        "bytes": {"type": "integer", "minimum": 1, "maximum": 268435456},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "payloadEntry": {"$ref": "#/$defs/logicalPath"},
+        "sourceContainerEntry": {"$ref": "#/$defs/logicalPath"}
+      }
+    },
+    "payload": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "bytes",
+        "sha256",
+        "artifactId",
+        "captureComplete",
+        "canonicalReplayEligible"
+      ],
+      "properties": {
+        "file": {"$ref": "#/$defs/logicalPath"},
+        "bytes": {"type": "integer", "minimum": 1, "maximum": 16777216},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "artifactId": {
+          "type": "string",
+          "pattern": "^aleph-bench-kaggle-capture-v1-artifact-[0-9a-f]{64}$"
+        },
+        "captureComplete": {"type": "boolean"},
+        "canonicalReplayEligible": {"type": "boolean"}
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "file",
+        "bytes",
+        "sha256",
+        "sourcePath",
+        "archiveKind",
+        "notebookCellIndex"
+      ],
+      "properties": {
+        "file": {"$ref": "#/$defs/logicalPath"},
+        "bytes": {"type": "integer", "minimum": 1, "maximum": 1048576},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "sourcePath": {"$ref": "#/$defs/logicalPath"},
+        "archiveKind": {"enum": ["directFile", "notebookCodeCell"]},
+        "notebookCellIndex": {
+          "anyOf": [
+            {"type": "integer", "minimum": 0, "maximum": 10000},
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "modelCatalogBinding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "operationId",
+        "benchmarkModelId",
+        "benchmarkModelVersionId",
+        "scheduledSlug",
+        "modelProxySlug",
+        "dispatchJournal"
+      ],
+      "properties": {
+        "operationId": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+        },
+        "benchmarkModelId": {"type": "integer", "minimum": 1},
+        "benchmarkModelVersionId": {"type": "integer", "minimum": 1},
+        "scheduledSlug": {"type": "string", "minLength": 1, "maxLength": 256},
+        "modelProxySlug": {"type": "string", "minLength": 1, "maxLength": 256},
+        "dispatchJournal": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["file", "bytes", "sha256"],
+          "properties": {
+            "file": {"$ref": "#/$defs/logicalPath"},
+            "bytes": {"type": "integer", "minimum": 1, "maximum": 16777216},
+            "sha256": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      }
+    }
+  }
+}

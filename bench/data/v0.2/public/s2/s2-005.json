@@ -1,0 +1,95 @@
+{
+  "canaryGuid": "0f72d6e8-6d5a-4bb1-b8e0-cad1e31a3e6f",
+  "frozenLadder": [
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-005-r0-p0",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 0,
+      "prompt": "Reproduce this text exactly:\n\nS2-005 letter lattice\nA. Aster folds the silver fable at 45.\nB. Beryl glows the crimson glyph at 54.\nC. Cato halts the olive harbor at 63.\nD. Dessa arcs the amber atom at 72.\nchecksum: L-270",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-005-r0-p1",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 1,
+      "prompt": "Copy the target verbatim with no extra words:\n\nS2-005 letter lattice\nA. Aster folds the silver fable at 45.\nB. Beryl glows the crimson glyph at 54.\nC. Cato halts the olive harbor at 63.\nD. Dessa arcs the amber atom at 72.\nchecksum: L-270",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-005-r1-p0",
+      "label": "Descriptive Rule",
+      "paraphrase": 0,
+      "prompt": "Create S2-005 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:silver:fable:folds:45; Beryl:crimson:glyph:glows:54; Cato:olive:harbor:halts:63; Dessa:amber:atom:arcs:72. End with checksum L-270.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-005-r1-p1",
+      "label": "Descriptive Rule",
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-005 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:silver:fable:folds:45; Beryl:crimson:glyph:glows:54; Cato:olive:harbor:halts:63; Dessa:amber:atom:arcs:72 and final checksum L-270.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-005-r2-p0",
+      "label": "Concept Prompt",
+      "paraphrase": 0,
+      "prompt": "S2-005 letter lattice; A-D lattice; tuples Aster:silver:fable:folds:45 | Beryl:crimson:glyph:glows:54 | Cato:olive:harbor:halts:63 | Dessa:amber:atom:arcs:72; checksum L-270.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-005-r2-p1",
+      "label": "Concept Prompt",
+      "paraphrase": 1,
+      "prompt": "Lattice S2-005: Aster/Beryl/Cato/Dessa tuple list Aster:silver:fable:folds:45 | Beryl:crimson:glyph:glows:54 | Cato:olive:harbor:halts:63 | Dessa:amber:atom:arcs:72; L-270.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-005-r3-p0",
+      "label": "Minimal Cue",
+      "paraphrase": 0,
+      "prompt": "S2-005 lattice L-270",
+      "rung": 3
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-005-r3-p1",
+      "label": "Minimal Cue",
+      "paraphrase": 1,
+      "prompt": "lattice 005: Aster:silver:fable:folds:45 ... L-270",
+      "rung": 3
+    }
+  ],
+  "id": "s2-005",
+  "language": "en",
+  "license": "CC0-1.0",
+  "metricClass": "normalized_edit_similarity",
+  "protocolVersion": "0.2.0",
+  "provenance": {
+    "createdBy": "Codex deterministic generator",
+    "generatedAt": "2026-06-03T00:00:00Z",
+    "method": "Rule-generated S2 compositional target with frozen ladder prompts.",
+    "parameters": {
+      "checksum": "L-270",
+      "family": "letter-lattice",
+      "values": [
+        "Aster:silver:fable:folds:45",
+        "Beryl:crimson:glyph:glows:54",
+        "Cato:olive:harbor:halts:63",
+        "Dessa:amber:atom:arcs:72"
+      ]
+    },
+    "seed": 0
+  },
+  "stratum": "S2",
+  "target": {
+    "label": "S2 compositional seed 005",
+    "text": "S2-005 letter lattice\nA. Aster folds the silver fable at 45.\nB. Beryl glows the crimson glyph at 54.\nC. Cato halts the olive harbor at 63.\nD. Dessa arcs the amber atom at 72.\nchecksum: L-270"
+  }
+}

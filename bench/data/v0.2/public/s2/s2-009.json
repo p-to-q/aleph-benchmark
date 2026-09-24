@@ -1,0 +1,97 @@
+{
+  "canaryGuid": "0f72d6e8-6d5a-4bb1-b8e0-cad1e31a3e6f",
+  "frozenLadder": [
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-009-r0-p0",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 0,
+      "prompt": "Reproduce this text exactly:\n\nS2-009 route receipt\nleg 1: go east for 13; mark=K7\nleg 2: go south for 12; mark=M2\nleg 3: go west for 11; mark=Q5\nleg 4: go north for 10; mark=T8\ntotal: 46; parity: even; code: R-919",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-009-r0-p1",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 1,
+      "prompt": "Copy the target verbatim with no extra words:\n\nS2-009 route receipt\nleg 1: go east for 13; mark=K7\nleg 2: go south for 12; mark=M2\nleg 3: go west for 11; mark=Q5\nleg 4: go north for 10; mark=T8\ntotal: 46; parity: even; code: R-919",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-009-r1-p0",
+      "label": "Descriptive Rule",
+      "paraphrase": 0,
+      "prompt": "Create S2-009 route receipt. Print four legs as 'leg i: go direction for distance; mark=mark'. Use leg triples east:13:K7; south:12:M2; west:11:Q5; north:10:T8. Then print total 46, parity even, code R-919.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-009-r1-p1",
+      "label": "Descriptive Rule",
+      "paraphrase": 1,
+      "prompt": "Render a route receipt named S2-009 route receipt; four legs from triples east:13:K7; south:12:M2; west:11:Q5; north:10:T8; finish with total 46, parity even, and code R-919.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-009-r2-p0",
+      "label": "Concept Prompt",
+      "paraphrase": 0,
+      "prompt": "S2-009 route receipt; route schema; legs east:13:K7 | south:12:M2 | west:11:Q5 | north:10:T8; total 46; even; R-919.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-009-r2-p1",
+      "label": "Concept Prompt",
+      "paraphrase": 1,
+      "prompt": "Route S2-009: east:13:K7 | south:12:M2 | west:11:Q5 | north:10:T8 -> 46/even/R-919.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-009-r3-p0",
+      "label": "Minimal Cue",
+      "paraphrase": 0,
+      "prompt": "S2-009 route R-919",
+      "rung": 3
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-009-r3-p1",
+      "label": "Minimal Cue",
+      "paraphrase": 1,
+      "prompt": "route 009: east:13:K7 ... R-919",
+      "rung": 3
+    }
+  ],
+  "id": "s2-009",
+  "language": "en",
+  "license": "CC0-1.0",
+  "metricClass": "normalized_edit_similarity",
+  "protocolVersion": "0.2.0",
+  "provenance": {
+    "createdBy": "Codex deterministic generator",
+    "generatedAt": "2026-06-03T00:00:00Z",
+    "method": "Rule-generated S2 compositional target with frozen ladder prompts.",
+    "parameters": {
+      "code": "R-919",
+      "family": "route",
+      "legs": [
+        "east:13:K7",
+        "south:12:M2",
+        "west:11:Q5",
+        "north:10:T8"
+      ],
+      "parity": "even",
+      "total": 46
+    },
+    "seed": 0
+  },
+  "stratum": "S2",
+  "target": {
+    "label": "S2 compositional seed 009",
+    "text": "S2-009 route receipt\nleg 1: go east for 13; mark=K7\nleg 2: go south for 12; mark=M2\nleg 3: go west for 11; mark=Q5\nleg 4: go north for 10; mark=T8\ntotal: 46; parity: even; code: R-919"
+  }
+}

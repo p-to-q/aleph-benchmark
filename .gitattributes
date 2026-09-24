@@ -1,0 +1,5 @@
+# These three pinned source blobs intentionally end with an extra blank line.
+# Keep their reviewed bytes while allowing repository-wide `git diff --check`.
+bench/__init__.py whitespace=-blank-at-eof
+bench/engine/__init__.py whitespace=-blank-at-eof
+bench/tests/__init__.py whitespace=-blank-at-eof

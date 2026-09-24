@@ -1,0 +1,575 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Aleph-Bench Kaggle raw capture payload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "captureSchemaVersion",
+    "artifactKind",
+    "targetProtocolVersion",
+    "leaderboardEligible",
+    "publicationEligible",
+    "captureComplete",
+    "canonicalReplayEligible",
+    "startedAt",
+    "endedAt",
+    "datasetIdentity",
+    "packageIdentity",
+    "callPlanIdentity",
+    "taskIdentity",
+    "modelObservation",
+    "runtimeObservation",
+    "requestPolicy",
+    "shard",
+    "calls",
+    "rows",
+    "diagnostics",
+    "id"
+  ],
+  "properties": {
+    "captureSchemaVersion": {"const": "1.1.0"},
+    "artifactKind": {"const": "aleph_bench_kaggle_raw_capture"},
+    "targetProtocolVersion": {"const": "0.2.0"},
+    "leaderboardEligible": {"const": false},
+    "publicationEligible": {"const": false},
+    "captureComplete": {
+      "type": "boolean",
+      "description": "True when every planned call has one persisted terminal observation, even if an observation cannot be replayed."
+    },
+    "canonicalReplayEligible": {
+      "type": "boolean",
+      "description": "True only when capture coverage is complete and every replay-safety gate passes."
+    },
+    "startedAt": {"$ref": "#/$defs/timestamp"},
+    "endedAt": {"$ref": "#/$defs/nullableTimestamp"},
+    "datasetIdentity": {"$ref": "#/$defs/datasetIdentity"},
+    "packageIdentity": {"$ref": "#/$defs/packageIdentity"},
+    "callPlanIdentity": {"$ref": "#/$defs/callPlanIdentity"},
+    "taskIdentity": {"$ref": "#/$defs/taskIdentity"},
+    "modelObservation": {"$ref": "#/$defs/modelObservation"},
+    "runtimeObservation": {"$ref": "#/$defs/runtimeObservation"},
+    "requestPolicy": {"$ref": "#/$defs/requestPolicy"},
+    "shard": {"$ref": "#/$defs/shard"},
+    "calls": {"$ref": "#/$defs/calls"},
+    "rows": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 900,
+      "items": {"$ref": "#/$defs/row"}
+    },
+    "diagnostics": {"$ref": "#/$defs/diagnostics"},
+    "id": {
+      "type": "string",
+      "pattern": "^aleph-bench-kaggle-capture-v1-artifact-[0-9a-f]{64}$"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "timestamp": {
+      "type": "string",
+      "minLength": 20,
+      "maxLength": 40,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(\\.[0-9]{1,6})?Z$"
+    },
+    "nullableTimestamp": {
+      "anyOf": [
+        {"$ref": "#/$defs/timestamp"},
+        {"type": "null"}
+      ]
+    },
+    "identifier": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 256,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@+-]{0,255}$"
+    },
+    "keySegment": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 128,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}$"
+    },
+    "rowIdentifier": {
+      "type": "string",
+      "minLength": 12,
+      "maxLength": 300,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,127}:[A-Za-z0-9][A-Za-z0-9._-]{0,127}:rerun-[0-4]$"
+    },
+    "logicalPath": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512
+    },
+    "nullableString": {
+      "anyOf": [
+        {"type": "string", "minLength": 1, "maxLength": 512},
+        {"type": "null"}
+      ]
+    },
+    "nullableSha256": {
+      "anyOf": [
+        {"$ref": "#/$defs/sha256"},
+        {"type": "null"}
+      ]
+    },
+    "nullableNonnegativeInteger": {
+      "anyOf": [
+        {"type": "integer", "minimum": 0, "maximum": 1000000000},
+        {"type": "null"}
+      ]
+    },
+    "nullableUnsignedIntegerString": {
+      "anyOf": [
+        {"type": "string", "pattern": "^[0-9]{1,40}$"},
+        {"type": "null"}
+      ]
+    },
+    "datasetIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "itemCount", "sha256", "hashAlgorithm"],
+      "properties": {
+        "id": {"const": "aleph-bench-v0.2-public-s2"},
+        "itemCount": {"const": 30},
+        "sha256": {
+          "const": "6f3a03400ec16405414afb94c7c639f2df07f7f0797c3b58ad1c4229e52f2041"
+        },
+        "hashAlgorithm": {"const": "sha256-length-framed-filename-and-content-v1"}
+      }
+    },
+    "packageIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "manifestPath", "sha256", "bytes"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "manifestPath": {"$ref": "#/$defs/logicalPath"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "bytes": {"type": "integer", "minimum": 1, "maximum": 1073741824}
+      }
+    },
+    "callPlanIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "sha256",
+        "fullShardPlanSha256",
+        "totalPlannedCallCount",
+        "rerunsPerPrompt"
+      ],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "fullShardPlanSha256": {"$ref": "#/$defs/sha256"},
+        "totalPlannedCallCount": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 900
+        },
+        "rerunsPerPrompt": {"const": 5}
+      }
+    },
+    "taskIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "sourcePath",
+        "definitionSha256",
+        "implementationSha256"
+      ],
+      "properties": {
+        "name": {"$ref": "#/$defs/identifier"},
+        "version": {"$ref": "#/$defs/identifier"},
+        "sourcePath": {"$ref": "#/$defs/logicalPath"},
+        "definitionSha256": {"$ref": "#/$defs/sha256"},
+        "implementationSha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "modelObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platform",
+        "slug",
+        "pythonType",
+        "mappingStatus",
+        "canonicalModelId",
+        "providerRevision"
+      ],
+      "properties": {
+        "platform": {"const": "kaggle"},
+        "slug": {
+          "type": "string",
+          "minLength": 3,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*(/[A-Za-z0-9][A-Za-z0-9._-]*)+(@[A-Za-z0-9][A-Za-z0-9._-]*)?$"
+        },
+        "pythonType": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z_][A-Za-z0-9_.]*$"
+            },
+            {"type": "null"}
+          ]
+        },
+        "mappingStatus": {"enum": ["unmapped", "operatorDeclared"]},
+        "canonicalModelId": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[A-Za-z0-9][A-Za-z0-9._:@+/-]{0,255}$"
+            },
+            {"type": "null"}
+          ]
+        },
+        "providerRevision": {"type": "null"}
+      }
+    },
+    "runtimeObservation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pythonVersion",
+        "pythonFullVersion",
+        "unicodeDatabaseVersion",
+        "platform"
+      ],
+      "properties": {
+        "pythonVersion": {"type": "string", "minLength": 3, "maxLength": 32},
+        "pythonFullVersion": {"type": "string", "minLength": 3, "maxLength": 256},
+        "unicodeDatabaseVersion": {"type": "string", "minLength": 3, "maxLength": 32},
+        "platform": {"type": "string", "minLength": 1, "maxLength": 512}
+      }
+    },
+    "requestPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "conversationIsolation",
+        "transportRetries",
+        "maxAttemptsPerCall",
+        "temperature",
+        "maxOutputTokens",
+        "nearCapMarginTokens",
+        "seed",
+        "reasoning"
+      ],
+      "properties": {
+        "conversationIsolation": {"const": "oneNamedChatPerPromptAndRerun"},
+        "transportRetries": {"const": 0},
+        "maxAttemptsPerCall": {"const": 1},
+        "temperature": {"type": "number", "minimum": 0, "maximum": 2},
+        "maxOutputTokens": {"type": "integer", "minimum": 1, "maximum": 1000000},
+        "nearCapMarginTokens": {"type": "integer", "minimum": 0, "maximum": 999999},
+        "seed": {
+          "anyOf": [
+            {"type": "integer", "minimum": 0, "maximum": 2147483647},
+            {"type": "null"}
+          ]
+        },
+        "reasoning": {"$ref": "#/$defs/nullableString"}
+      }
+    },
+    "callIdentity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rowId",
+        "itemId",
+        "promptId",
+        "rerunIndex",
+        "conversationName",
+        "promptText",
+        "promptUtf8Sha256",
+        "promptCodePointCount"
+      ],
+      "properties": {
+        "rowId": {"$ref": "#/$defs/rowIdentifier"},
+        "itemId": {"$ref": "#/$defs/keySegment"},
+        "promptId": {"$ref": "#/$defs/keySegment"},
+        "rerunIndex": {"type": "integer", "minimum": 0, "maximum": 4},
+        "conversationName": {"$ref": "#/$defs/identifier"},
+        "promptText": {"type": "string", "maxLength": 16384},
+        "promptUtf8Sha256": {"$ref": "#/$defs/sha256"},
+        "promptCodePointCount": {"type": "integer", "minimum": 0, "maximum": 16384}
+      }
+    },
+    "shard": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "fullShardPlanSha256", "coverageSha256", "plannedCalls"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "fullShardPlanSha256": {"$ref": "#/$defs/sha256"},
+        "coverageSha256": {"$ref": "#/$defs/sha256"},
+        "plannedCalls": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 900,
+          "items": {"$ref": "#/$defs/callIdentity"}
+        }
+      }
+    },
+    "activeCall": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["call", "state", "updatedAt"],
+      "properties": {
+        "call": {"$ref": "#/$defs/callIdentity"},
+        "state": {"enum": ["prepared", "dispatching", "terminalPersisted"]},
+        "updatedAt": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "calls": {
+      "type": "object",
+      "description": "Outcome counts cover persisted rows. Attempted calls are dispatched rows plus one unpersisted dispatching marker; terminal calls are dispatched persisted rows only.",
+      "additionalProperties": false,
+      "required": [
+        "plannedCallCount",
+        "attemptedCallCount",
+        "terminalCallCount",
+        "returnedStringCount",
+        "missingOutputCount",
+        "nonStringOutputCount",
+        "oversizedOutputCount",
+        "failedCallCount",
+        "activeCall"
+      ],
+      "properties": {
+        "plannedCallCount": {"type": "integer", "minimum": 1, "maximum": 900},
+        "attemptedCallCount": {"type": "integer", "minimum": 0, "maximum": 900},
+        "terminalCallCount": {"type": "integer", "minimum": 0, "maximum": 900},
+        "returnedStringCount": {"type": "integer", "minimum": 0, "maximum": 900},
+        "missingOutputCount": {"type": "integer", "minimum": 0, "maximum": 900},
+        "nonStringOutputCount": {"type": "integer", "minimum": 0, "maximum": 900},
+        "oversizedOutputCount": {"type": "integer", "minimum": 0, "maximum": 900},
+        "failedCallCount": {"type": "integer", "minimum": 0, "maximum": 900},
+        "activeCall": {
+          "anyOf": [
+            {"$ref": "#/$defs/activeCall"},
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "usage": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "inputTokens",
+        "outputTokens",
+        "inputCostNanodollars",
+        "outputCostNanodollars",
+        "backendLatencyMs",
+        "finishReason"
+      ],
+      "properties": {
+        "inputTokens": {"$ref": "#/$defs/nullableNonnegativeInteger"},
+        "outputTokens": {"$ref": "#/$defs/nullableNonnegativeInteger"},
+        "inputCostNanodollars": {"$ref": "#/$defs/nullableUnsignedIntegerString"},
+        "outputCostNanodollars": {"$ref": "#/$defs/nullableUnsignedIntegerString"},
+        "backendLatencyMs": {"$ref": "#/$defs/nullableNonnegativeInteger"},
+        "finishReason": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 256,
+              "pattern": "^[^\\u0000-\\u001F\\u007F]{1,256}$"
+            },
+            {"type": "null"}
+          ]
+        }
+      }
+    },
+    "terminalFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["failureKind", "exceptionType", "messageStringSha256"],
+      "properties": {
+        "failureKind": {"enum": ["chatOpenFailed", "modelCallFailed"]},
+        "exceptionType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z_][A-Za-z0-9_.]*$"
+        },
+        "messageStringSha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "lifecycleFailure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["failureKind", "exceptionType", "messageStringSha256"],
+      "properties": {
+        "failureKind": {"const": "chatCloseFailed"},
+        "exceptionType": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^[A-Za-z_][A-Za-z0-9_.]*$"
+        },
+        "messageStringSha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "row": {
+      "type": "object",
+      "description": "One durably persisted terminal call observation.",
+      "additionalProperties": false,
+      "required": [
+        "rowId",
+        "itemId",
+        "promptId",
+        "rerunIndex",
+        "conversationName",
+        "promptText",
+        "promptUtf8Sha256",
+        "promptCodePointCount",
+        "dispatchStarted",
+        "outcome",
+        "observedOutputType",
+        "rawOutputStringSha256",
+        "rawOutputCodePointCount",
+        "terminalFailure",
+        "lifecycleFailure",
+        "usage",
+        "capturedAt"
+      ],
+      "properties": {
+        "rowId": {"$ref": "#/$defs/rowIdentifier"},
+        "itemId": {"$ref": "#/$defs/keySegment"},
+        "promptId": {"$ref": "#/$defs/keySegment"},
+        "rerunIndex": {"type": "integer", "minimum": 0, "maximum": 4},
+        "conversationName": {"$ref": "#/$defs/identifier"},
+        "promptText": {"type": "string", "maxLength": 16384},
+        "promptUtf8Sha256": {"$ref": "#/$defs/sha256"},
+        "promptCodePointCount": {"type": "integer", "minimum": 0, "maximum": 16384},
+        "dispatchStarted": {"type": "boolean"},
+        "outcome": {
+          "enum": [
+            "returnedString",
+            "missingOutput",
+            "nonStringOutput",
+            "oversizedOutput",
+            "failed"
+          ]
+        },
+        "observedOutputType": {
+          "anyOf": [
+            {"enum": ["string", "missing", "null", "boolean", "number", "array", "object"]},
+            {"type": "null"}
+          ]
+        },
+        "rawOutput": {"type": "string", "maxLength": 65536},
+        "rawOutputStringSha256": {"$ref": "#/$defs/nullableSha256"},
+        "rawOutputCodePointCount": {
+          "anyOf": [
+            {"type": "integer", "minimum": 0, "maximum": 1000000000},
+            {"type": "null"}
+          ]
+        },
+        "terminalFailure": {
+          "anyOf": [
+            {"$ref": "#/$defs/terminalFailure"},
+            {"type": "null"}
+          ]
+        },
+        "lifecycleFailure": {
+          "anyOf": [
+            {"$ref": "#/$defs/lifecycleFailure"},
+            {"type": "null"}
+          ]
+        },
+        "usage": {"$ref": "#/$defs/usage"},
+        "capturedAt": {"$ref": "#/$defs/timestamp"}
+      }
+    },
+    "rowIdArray": {
+      "type": "array",
+      "minItems": 0,
+      "maxItems": 900,
+      "uniqueItems": true,
+      "items": {"$ref": "#/$defs/rowIdentifier"}
+    },
+    "diagnostics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "coverageComplete",
+        "missingPlannedRowIds",
+        "unpairedSurrogateRowIds",
+        "missingOutputRowIds",
+        "nonStringOutputRowIds",
+        "oversizedOutputRowIds",
+        "terminalFailureRowIds",
+        "lifecycleFailureRowIds",
+        "scoringTextTooLongRowIds",
+        "missingUsageRowIds",
+        "missingFinishReasonRowIds",
+        "zeroUsageRowIds",
+        "nearCapOutputRowIds",
+        "tokenLimitTerminationRowIds",
+        "unsupportedFinishReasonRowIds",
+        "activeCallRowId",
+        "replayBlockedReasons"
+      ],
+      "properties": {
+        "coverageComplete": {"type": "boolean"},
+        "missingPlannedRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "unpairedSurrogateRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "missingOutputRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "nonStringOutputRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "oversizedOutputRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "terminalFailureRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "lifecycleFailureRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "scoringTextTooLongRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "missingUsageRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "missingFinishReasonRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "zeroUsageRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "nearCapOutputRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "tokenLimitTerminationRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "unsupportedFinishReasonRowIds": {"$ref": "#/$defs/rowIdArray"},
+        "activeCallRowId": {
+          "anyOf": [
+            {"$ref": "#/$defs/rowIdentifier"},
+            {"type": "null"}
+          ]
+        },
+        "replayBlockedReasons": {
+          "type": "array",
+          "minItems": 0,
+          "maxItems": 13,
+          "uniqueItems": true,
+          "items": {
+            "enum": [
+              "incompleteCoverage",
+              "activeCall",
+              "unpairedSurrogate",
+              "missingOutput",
+              "nonStringOutput",
+              "oversizedOutput",
+              "terminalFailure",
+              "lifecycleFailure",
+              "scoringTextTooLong",
+              "missingUsage",
+              "nearCapOutput",
+              "tokenLimitTermination",
+              "unsupportedFinishReason"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

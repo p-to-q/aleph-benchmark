@@ -1,0 +1,95 @@
+{
+  "canaryGuid": "0f72d6e8-6d5a-4bb1-b8e0-cad1e31a3e6f",
+  "frozenLadder": [
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-023-r0-p0",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 0,
+      "prompt": "Reproduce this text exactly:\n\nS2-023 letter lattice\nA. Aster halts the olive harbor at 82.\nB. Beryl arcs the amber atom at 91.\nC. Cato bends the blue binary at 11.\nD. Dessa clicks the copper cipher at 20.\nchecksum: L-069",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-023-r0-p1",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 1,
+      "prompt": "Copy the target verbatim with no extra words:\n\nS2-023 letter lattice\nA. Aster halts the olive harbor at 82.\nB. Beryl arcs the amber atom at 91.\nC. Cato bends the blue binary at 11.\nD. Dessa clicks the copper cipher at 20.\nchecksum: L-069",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-023-r1-p0",
+      "label": "Descriptive Rule",
+      "paraphrase": 0,
+      "prompt": "Create S2-023 letter lattice. Four lettered lines A-D use names Aster, Beryl, Cato, Dessa. For each line write '<letter>. <name> <verb> the <color> <noun> at <number>.' Use values Aster:olive:harbor:halts:82; Beryl:amber:atom:arcs:91; Cato:blue:binary:bends:11; Dessa:copper:cipher:clicks:20. End with checksum L-069.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-023-r1-p1",
+      "label": "Descriptive Rule",
+      "paraphrase": 1,
+      "prompt": "Render a letter lattice titled S2-023 letter lattice: A-D lines with the fixed name/color/noun/verb/number tuples Aster:olive:harbor:halts:82; Beryl:amber:atom:arcs:91; Cato:blue:binary:bends:11; Dessa:copper:cipher:clicks:20 and final checksum L-069.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-023-r2-p0",
+      "label": "Concept Prompt",
+      "paraphrase": 0,
+      "prompt": "S2-023 letter lattice; A-D lattice; tuples Aster:olive:harbor:halts:82 | Beryl:amber:atom:arcs:91 | Cato:blue:binary:bends:11 | Dessa:copper:cipher:clicks:20; checksum L-069.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-023-r2-p1",
+      "label": "Concept Prompt",
+      "paraphrase": 1,
+      "prompt": "Lattice S2-023: Aster/Beryl/Cato/Dessa tuple list Aster:olive:harbor:halts:82 | Beryl:amber:atom:arcs:91 | Cato:blue:binary:bends:11 | Dessa:copper:cipher:clicks:20; L-069.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-023-r3-p0",
+      "label": "Minimal Cue",
+      "paraphrase": 0,
+      "prompt": "S2-023 lattice L-069",
+      "rung": 3
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-023-r3-p1",
+      "label": "Minimal Cue",
+      "paraphrase": 1,
+      "prompt": "lattice 023: Aster:olive:harbor:halts:82 ... L-069",
+      "rung": 3
+    }
+  ],
+  "id": "s2-023",
+  "language": "en",
+  "license": "CC0-1.0",
+  "metricClass": "normalized_edit_similarity",
+  "protocolVersion": "0.2.0",
+  "provenance": {
+    "createdBy": "Codex deterministic generator",
+    "generatedAt": "2026-06-03T00:00:00Z",
+    "method": "Rule-generated S2 compositional target with frozen ladder prompts.",
+    "parameters": {
+      "checksum": "L-069",
+      "family": "letter-lattice",
+      "values": [
+        "Aster:olive:harbor:halts:82",
+        "Beryl:amber:atom:arcs:91",
+        "Cato:blue:binary:bends:11",
+        "Dessa:copper:cipher:clicks:20"
+      ]
+    },
+    "seed": 0
+  },
+  "stratum": "S2",
+  "target": {
+    "label": "S2 compositional seed 023",
+    "text": "S2-023 letter lattice\nA. Aster halts the olive harbor at 82.\nB. Beryl arcs the amber atom at 91.\nC. Cato bends the blue binary at 11.\nD. Dessa clicks the copper cipher at 20.\nchecksum: L-069"
+  }
+}

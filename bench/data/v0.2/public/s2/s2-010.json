@@ -1,0 +1,96 @@
+{
+  "canaryGuid": "0f72d6e8-6d5a-4bb1-b8e0-cad1e31a3e6f",
+  "frozenLadder": [
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-010-r0-p0",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 0,
+      "prompt": "Reproduce this text exactly:\n\nS2-010 arithmetic card\nrow 1: n=15; n+step=17; n*step=30; glyph=copper\nrow 2: n=17; n+step=19; n*step=34; glyph=jade\nrow 3: n=19; n+step=21; n*step=38; glyph=violet\nchecksum: A-317",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-010-r0-p1",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 1,
+      "prompt": "Copy the target verbatim with no extra words:\n\nS2-010 arithmetic card\nrow 1: n=15; n+step=17; n*step=30; glyph=copper\nrow 2: n=17; n+step=19; n*step=34; glyph=jade\nrow 3: n=19; n+step=21; n*step=38; glyph=violet\nchecksum: A-317",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-010-r1-p0",
+      "label": "Descriptive Rule",
+      "paraphrase": 0,
+      "prompt": "Create S2-010 arithmetic card. Use start 15, step 2, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence copper, jade, violet. End with checksum A-317.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-010-r1-p1",
+      "label": "Descriptive Rule",
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-010 arithmetic card: three numbered rows from start 15 with step 2; include fields n, n+step, n*step, glyph using copper, jade, violet; final checksum A-317.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-010-r2-p0",
+      "label": "Concept Prompt",
+      "paraphrase": 0,
+      "prompt": "S2-010 arithmetic card; arithmetic schema; start 15; step 2; glyphs copper, jade, violet; checksum A-317.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-010-r2-p1",
+      "label": "Concept Prompt",
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-010: start 15, step 2, glyph cycle copper/jade/violet, checksum A-317.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-010-r3-p0",
+      "label": "Minimal Cue",
+      "paraphrase": 0,
+      "prompt": "S2-010 arithmetic 15/2/A-317",
+      "rung": 3
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-010-r3-p1",
+      "label": "Minimal Cue",
+      "paraphrase": 1,
+      "prompt": "card 010: 15+2, A-317",
+      "rung": 3
+    }
+  ],
+  "id": "s2-010",
+  "language": "en",
+  "license": "CC0-1.0",
+  "metricClass": "normalized_edit_similarity",
+  "protocolVersion": "0.2.0",
+  "provenance": {
+    "createdBy": "Codex deterministic generator",
+    "generatedAt": "2026-06-03T00:00:00Z",
+    "method": "Rule-generated S2 compositional target with frozen ladder prompts.",
+    "parameters": {
+      "checksum": "A-317",
+      "family": "arithmetic",
+      "glyphs": [
+        "copper",
+        "jade",
+        "violet"
+      ],
+      "start": 15,
+      "step": 2
+    },
+    "seed": 0
+  },
+  "stratum": "S2",
+  "target": {
+    "label": "S2 compositional seed 010",
+    "text": "S2-010 arithmetic card\nrow 1: n=15; n+step=17; n*step=30; glyph=copper\nrow 2: n=17; n+step=19; n*step=34; glyph=jade\nrow 3: n=19; n+step=21; n*step=38; glyph=violet\nchecksum: A-317"
+  }
+}

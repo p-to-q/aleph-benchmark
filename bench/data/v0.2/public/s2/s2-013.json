@@ -1,0 +1,96 @@
+{
+  "canaryGuid": "0f72d6e8-6d5a-4bb1-b8e0-cad1e31a3e6f",
+  "frozenLadder": [
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-013-r0-p0",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 0,
+      "prompt": "Reproduce this text exactly:\n\nS2-013 arithmetic card\nrow 1: n=18; n+step=23; n*step=90; glyph=silver\nrow 2: n=23; n+step=28; n*step=115; glyph=crimson\nrow 3: n=28; n+step=33; n*step=140; glyph=olive\nchecksum: A-461",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "leaky_anchor",
+      "id": "s2-013-r0-p1",
+      "label": "Explicit Reconstruction",
+      "paraphrase": 1,
+      "prompt": "Copy the target verbatim with no extra words:\n\nS2-013 arithmetic card\nrow 1: n=18; n+step=23; n*step=90; glyph=silver\nrow 2: n=23; n+step=28; n*step=115; glyph=crimson\nrow 3: n=28; n+step=33; n*step=140; glyph=olive\nchecksum: A-461",
+      "rung": 0
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-013-r1-p0",
+      "label": "Descriptive Rule",
+      "paraphrase": 0,
+      "prompt": "Create S2-013 arithmetic card. Use start 18, step 5, three rows. For row r, print n=start+(r-1)*step, n+step, n*step, and the glyph sequence silver, crimson, olive. End with checksum A-461.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-013-r1-p1",
+      "label": "Descriptive Rule",
+      "paraphrase": 1,
+      "prompt": "Render an arithmetic card named S2-013 arithmetic card: three numbered rows from start 18 with step 5; include fields n, n+step, n*step, glyph using silver, crimson, olive; final checksum A-461.",
+      "rung": 1
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-013-r2-p0",
+      "label": "Concept Prompt",
+      "paraphrase": 0,
+      "prompt": "S2-013 arithmetic card; arithmetic schema; start 18; step 5; glyphs silver, crimson, olive; checksum A-461.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-013-r2-p1",
+      "label": "Concept Prompt",
+      "paraphrase": 1,
+      "prompt": "Arithmetic card S2-013: start 18, step 5, glyph cycle silver/crimson/olive, checksum A-461.",
+      "rung": 2
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-013-r3-p0",
+      "label": "Minimal Cue",
+      "paraphrase": 0,
+      "prompt": "S2-013 arithmetic 18/5/A-461",
+      "rung": 3
+    },
+    {
+      "expectedLeakage": "non_leaking_candidate",
+      "id": "s2-013-r3-p1",
+      "label": "Minimal Cue",
+      "paraphrase": 1,
+      "prompt": "card 013: 18+5, A-461",
+      "rung": 3
+    }
+  ],
+  "id": "s2-013",
+  "language": "en",
+  "license": "CC0-1.0",
+  "metricClass": "normalized_edit_similarity",
+  "protocolVersion": "0.2.0",
+  "provenance": {
+    "createdBy": "Codex deterministic generator",
+    "generatedAt": "2026-06-03T00:00:00Z",
+    "method": "Rule-generated S2 compositional target with frozen ladder prompts.",
+    "parameters": {
+      "checksum": "A-461",
+      "family": "arithmetic",
+      "glyphs": [
+        "silver",
+        "crimson",
+        "olive"
+      ],
+      "start": 18,
+      "step": 5
+    },
+    "seed": 0
+  },
+  "stratum": "S2",
+  "target": {
+    "label": "S2 compositional seed 013",
+    "text": "S2-013 arithmetic card\nrow 1: n=18; n+step=23; n*step=90; glyph=silver\nrow 2: n=23; n+step=28; n*step=115; glyph=crimson\nrow 3: n=28; n+step=33; n*step=140; glyph=olive\nchecksum: A-461"
+  }
+}
