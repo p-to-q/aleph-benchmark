@@ -1,0 +1,56 @@
+{
+  "artifactKind": "aleph_bench_source_migration_receipt",
+  "formatVersion": 1,
+  "inventoryCommit": "d76206bdaf9ba72730b066560862a3d00cac9699",
+  "slice": "E3a",
+  "sourceCommit": "10abdc1368439d1ab454ee3862a59e14b67a9530",
+  "transformations": [
+    {
+      "destination": "bench/engine/metrics.py",
+      "output": {
+        "bytes": 4796,
+        "gitBlobSha1": "65df52dd1e17c5147548d14e03a7d0f71106f3ee",
+        "mode": "100644",
+        "sha256": "3628f3bf60998707eeadb6e2ab72a1942ca0459d1c018fa5cf7887d2904461d7"
+      },
+      "source": {
+        "bytes": 4807,
+        "disposition": "port",
+        "gitBlobSha1": "681ebb1fcfaee2159b81670b92c4932c55e349c8",
+        "mode": "100644",
+        "path": "bench/engine/metrics.py",
+        "sha256": "23ce9f04cdbc358e7984d346bde1c22679f0902ffc2bbd0afcd597ee0a17c002"
+      },
+      "transformation": {
+        "algorithm": "utf8-replace-once-v1",
+        "replacements": [
+          {
+            "from": "docs/benchmark/02-design-spec.md",
+            "to": "docs/protocol-v0.2.md"
+          }
+        ]
+      }
+    },
+    {
+      "destination": "docs/protocol-v0.2.md",
+      "output": {
+        "bytes": 11222,
+        "gitBlobSha1": "25ad9e649349fc2c946d67f453e65d841603393c",
+        "mode": "100644",
+        "sha256": "51c0249568064ad7e337a8d8b86541c2e7e218d4b5438a4b483fe564c0a0e198"
+      },
+      "source": {
+        "bytes": 21005,
+        "disposition": "rewrite",
+        "gitBlobSha1": "381aa098bc1a531ede4faea4572c69a03cb7f527",
+        "mode": "100644",
+        "path": "bench/README.md",
+        "sha256": "56d6303f6c81a7fa1fd604b602cc9d714e127708e0eb34c53acd5db069a287ff"
+      },
+      "transformation": {
+        "algorithm": "reviewed-standalone-rewrite-v1",
+        "reviewIssue": "https://github.com/p-to-q/aleph-benchmark/issues/4"
+      }
+    }
+  ]
+}
