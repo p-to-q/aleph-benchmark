@@ -36,6 +36,8 @@ jobs:
         run: python -I -B -m unittest discover -s tests -p 'test_source_v0_2_import.py' -v
       - name: Run metrics and protocol-document tests
         run: python -B -m unittest -v tests.test_metrics_v0_2
+      - name: Run v0.2 report tests
+        run: python -B -m unittest -v tests.test_report_v0_2
       - name: Verify frozen S2 data
         if: matrix.python == '3.13'
         run: python -I -B bench/data/generate_s2.py --check
