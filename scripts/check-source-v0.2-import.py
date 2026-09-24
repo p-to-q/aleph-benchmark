@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the content-addressed Aleph Bench E2 + E3a + E3b source import.
+"""Verify the content-addressed Aleph Bench E2 + E3a + E3b + E3c source import.
 
 The default gate is offline. ``--source-git`` adds provenance verification
 against an already-fetched Git object database. This program never fetches and
@@ -60,6 +60,29 @@ E3B_RECEIPT_SHA256 = (
 E3B_SOURCE_PATH = "bench/engine/report.py"
 E3B_STANDALONE_BASE_COMMIT = "698fdd26e98544816fc25c220def542bc4750a68"
 
+E3C_RECEIPT_PATH = (
+    "provenance/aleph/e3c.platform-package-and-protocol-tests.json"
+)
+E3C_RECEIPT_BYTES = 94_648
+E3C_RECEIPT_GIT_BLOB_SHA1 = "0f7bf4a1979f191c0fa7816bde6da44de40b0725"
+E3C_RECEIPT_SHA256 = (
+    "237c59563ffccdc5b320e648824133e0fc2ce60dcf455b9fc5ddde50189674ec"
+)
+E3C_SOURCE_PATHS = (
+    "bench/engine/platform_package_v0_2.py",
+    "bench/tests/test_protocol_v0_2.py",
+)
+E3C_STANDALONE_BASE_COMMIT = "e9ad706c1eb1cf26b3a33f4f1dca93419be9a80b"
+E3C_REVIEW_ISSUE = "https://github.com/p-to-q/aleph-benchmark/issues/8"
+E3C_TRANSFORMATION_ALGORITHM = "utf8-codepoint-offset-splice-sequence-v1"
+E3C_PACKAGE_TREE_HASH_ALGORITHM = (
+    "sha256-length-framed-path-type-mode-and-content-v1"
+)
+E3C_PACKAGE_TREE_FILES = 10
+E3C_PACKAGE_TREE_SHA256 = (
+    "be213ca07782f108815bf94264b4d87f48570c29cbe8511f6346e31296bf0cd8"
+)
+
 SOURCE_NOTICE_GIT_BLOB_SHA1 = "be3b6c048fee80545b99e83e0a3e089be1a3ee09"
 SOURCE_NOTICE_SHA256 = "c6fefd8d70b629b2fd61ea481793dc227d5e59cf8ba7e44e92fa3eef8fab886f"
 REVIEWED_NOTICE_SHA256 = (
@@ -87,6 +110,7 @@ HEX64 = re.compile(r"[0-9a-f]{64}\Z")
 SAFE_PATH = re.compile(r"[A-Za-z0-9._/-]+\Z")
 MAX_INVENTORY_BYTES = 4 * 1024 * 1024
 MAX_RECEIPT_BYTES = 64 * 1024
+MAX_E3C_RECEIPT_BYTES = 512 * 1024
 MANAGED_PREFIXES = ("bench/", "docs/", "schemas/", "tests/")
 SUPPORT_MANAGED_PATHS = {
     "tests/__init__.py",
@@ -718,6 +742,246 @@ def _parse_e3b_receipt_bytes(
     return transformations
 
 
+def _validate_e3c_splice_transformation(
+    transformation: Any, *, role: str
+) -> None:
+    if not isinstance(transformation, dict) or set(transformation) != {
+        "algorithm",
+        "edits",
+        "reviewIssue",
+    }:
+        raise ImportCheckError(f"{role} transformation contract keys differ")
+    if transformation["algorithm"] != E3C_TRANSFORMATION_ALGORITHM:
+        raise ImportCheckError(f"{role} transformation algorithm differs")
+    if transformation["reviewIssue"] != E3C_REVIEW_ISSUE:
+        raise ImportCheckError(f"{role} review issue differs")
+
+    edits = transformation["edits"]
+    if not isinstance(edits, list) or not edits:
+        raise ImportCheckError(f"{role} must declare at least one splice edit")
+    source_cursor = 0
+    output_cursor = 0
+    cumulative_delta = 0
+    for index, edit in enumerate(edits):
+        if not isinstance(edit, dict) or set(edit) != {
+            "from",
+            "outputCharOffset",
+            "sourceCharOffset",
+            "to",
+        }:
+            raise ImportCheckError(f"{role} edit[{index}] keys differ")
+        source_offset = _exact_int(
+            edit["sourceCharOffset"],
+            field=f"{role} edit[{index}].sourceCharOffset",
+        )
+        output_offset = _exact_int(
+            edit["outputCharOffset"],
+            field=f"{role} edit[{index}].outputCharOffset",
+        )
+        before = edit["from"]
+        after = edit["to"]
+        if not isinstance(before, str) or not isinstance(after, str):
+            raise ImportCheckError(f"{role} edit[{index}] payloads must be strings")
+        if before == after:
+            raise ImportCheckError(f"{role} edit[{index}] must change the payload")
+        try:
+            before.encode("utf-8")
+            after.encode("utf-8")
+        except UnicodeError as exc:
+            raise ImportCheckError(
+                f"{role} edit[{index}] payload is not valid UTF-8"
+            ) from exc
+        if source_offset < source_cursor or output_offset < output_cursor:
+            raise ImportCheckError(f"{role} splice edits overlap or are out of order")
+        if output_offset != source_offset + cumulative_delta:
+            raise ImportCheckError(
+                f"{role} edit[{index}] source/output offsets are inconsistent"
+            )
+        source_cursor = source_offset + len(before)
+        output_cursor = output_offset + len(after)
+        cumulative_delta += len(after) - len(before)
+
+
+def _apply_e3c_splice_transformation(
+    payload: bytes,
+    transformation: dict[str, Any],
+    *,
+    reverse: bool,
+    role: str,
+) -> bytes:
+    _validate_e3c_splice_transformation(transformation, role=role)
+    try:
+        text = payload.decode("utf-8")
+    except UnicodeError as exc:
+        raise ImportCheckError(f"{role} input is not valid UTF-8") from exc
+
+    chunks: list[str] = []
+    cursor = 0
+    offset_key = "outputCharOffset" if reverse else "sourceCharOffset"
+    before_key = "to" if reverse else "from"
+    after_key = "from" if reverse else "to"
+    direction = "reverse" if reverse else "forward"
+    for index, edit in enumerate(transformation["edits"]):
+        offset = edit[offset_key]
+        before = edit[before_key]
+        after = edit[after_key]
+        if offset < cursor or text[offset : offset + len(before)] != before:
+            raise ImportCheckError(
+                f"{role} {direction} splice[{index}] does not match its input"
+            )
+        chunks.append(text[cursor:offset])
+        chunks.append(after)
+        cursor = offset + len(before)
+    chunks.append(text[cursor:])
+    return "".join(chunks).encode("utf-8")
+
+
+def _parse_e3c_receipt_bytes(
+    raw: bytes,
+    manifest: dict[str, Any],
+    *,
+    expected_raw_sha256: str | None = E3C_RECEIPT_SHA256,
+) -> list[dict[str, Any]]:
+    if len(raw) > MAX_E3C_RECEIPT_BYTES:
+        raise ImportCheckError("E3c receipt is unreasonably large")
+    try:
+        receipt = json.loads(
+            raw.decode("ascii"),
+            object_pairs_hook=_reject_duplicate_pairs,
+            parse_constant=_reject_json_constant,
+        )
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise ImportCheckError(f"invalid E3c receipt JSON: {exc}") from exc
+    if raw != _canonical_file_json(receipt):
+        raise ImportCheckError(
+            "E3c receipt must be canonical sorted, indented ASCII JSON with one trailing newline"
+        )
+    if expected_raw_sha256 is not None and _sha256(raw) != expected_raw_sha256:
+        raise ImportCheckError(
+            "raw E3c receipt SHA-256 differs from the reviewed artifact"
+        )
+
+    expected_top_level = {
+        "artifactKind",
+        "formatVersion",
+        "inventoryCommit",
+        "packageTree",
+        "slice",
+        "sourceCommit",
+        "standaloneBaseCommit",
+        "transformations",
+    }
+    if not isinstance(receipt, dict) or set(receipt) != expected_top_level:
+        raise ImportCheckError("E3c receipt top-level keys differ")
+    if receipt["artifactKind"] != "aleph_bench_source_migration_receipt":
+        raise ImportCheckError("unexpected E3c receipt artifactKind")
+    if type(receipt["formatVersion"]) is not int or receipt["formatVersion"] != 1:
+        raise ImportCheckError("E3c receipt formatVersion must be the integer 1")
+    if receipt["slice"] != "E3c":
+        raise ImportCheckError("unexpected migration slice in E3c receipt")
+    if receipt["sourceCommit"] != SOURCE_COMMIT:
+        raise ImportCheckError("E3c receipt source commit differs")
+    if receipt["inventoryCommit"] != INVENTORY_COMMIT:
+        raise ImportCheckError("E3c receipt inventory commit differs")
+    if receipt["standaloneBaseCommit"] != E3C_STANDALONE_BASE_COMMIT:
+        raise ImportCheckError("E3c receipt standalone base commit differs")
+
+    package_tree = receipt["packageTree"]
+    if not isinstance(package_tree, dict) or set(package_tree) != {
+        "algorithm",
+        "fileCount",
+        "sha256",
+    }:
+        raise ImportCheckError("E3c packageTree contract keys differ")
+    if package_tree != {
+        "algorithm": E3C_PACKAGE_TREE_HASH_ALGORITHM,
+        "fileCount": E3C_PACKAGE_TREE_FILES,
+        "sha256": E3C_PACKAGE_TREE_SHA256,
+    }:
+        raise ImportCheckError("E3c package tree contract differs")
+
+    transformations = receipt["transformations"]
+    if not isinstance(transformations, list) or len(transformations) != 2:
+        raise ImportCheckError("E3c receipt must contain exactly two transformations")
+    inventory_by_source = {row["source"]: row for row in manifest["files"]}
+    observed_sources: list[str] = []
+    observed_destinations: list[str] = []
+    for index, entry in enumerate(transformations):
+        role = f"E3c transformations[{index}]"
+        if not isinstance(entry, dict) or set(entry) != {
+            "destination",
+            "output",
+            "source",
+            "transformation",
+        }:
+            raise ImportCheckError(f"{role} keys differ")
+        destination = _validate_repository_path(
+            entry["destination"], role="E3c destination"
+        )
+        source = entry["source"]
+        expected_source_keys = {
+            "bytes",
+            "disposition",
+            "gitBlobSha1",
+            "mode",
+            "path",
+            "sha256",
+        }
+        if not isinstance(source, dict) or set(source) != expected_source_keys:
+            raise ImportCheckError(f"{role}.source keys differ")
+        source_path = _validate_repository_path(source["path"], role="E3c source")
+        inventory_row = inventory_by_source.get(source_path)
+        if inventory_row is None:
+            raise ImportCheckError(f"E3c source is absent from inventory: {source_path}")
+        expected_source = {
+            "bytes": inventory_row["bytes"],
+            "disposition": inventory_row["disposition"],
+            "gitBlobSha1": inventory_row["gitBlobSha1"],
+            "mode": inventory_row["mode"],
+            "path": inventory_row["source"],
+            "sha256": inventory_row["sha256"],
+        }
+        if source != expected_source or destination != inventory_row["destination"]:
+            raise ImportCheckError(
+                f"E3c transformation differs from inventory row: {source_path}"
+            )
+        if source["disposition"] != "port" or source["mode"] != "100644":
+            raise ImportCheckError(f"E3c source must be a reviewed 100644 port: {source_path}")
+
+        output = entry["output"]
+        if not isinstance(output, dict) or set(output) != {
+            "bytes",
+            "gitBlobSha1",
+            "mode",
+            "sha256",
+        }:
+            raise ImportCheckError(f"{role}.output keys differ")
+        _exact_int(output["bytes"], field=f"{role}.output.bytes", minimum=1)
+        if output["mode"] != "100644":
+            raise ImportCheckError("E3c outputs must use Git mode 100644")
+        if (
+            not isinstance(output["sha256"], str)
+            or HEX64.fullmatch(output["sha256"]) is None
+        ):
+            raise ImportCheckError(f"{role} output has invalid SHA-256")
+        if (
+            not isinstance(output["gitBlobSha1"], str)
+            or HEX40.fullmatch(output["gitBlobSha1"]) is None
+        ):
+            raise ImportCheckError(f"{role} output has invalid Git blob SHA-1")
+        _validate_e3c_splice_transformation(
+            entry["transformation"], role=role
+        )
+        observed_sources.append(source_path)
+        observed_destinations.append(destination)
+
+    if tuple(observed_sources) != E3C_SOURCE_PATHS:
+        raise ImportCheckError("E3c source selection or order differs")
+    if tuple(observed_destinations) != E3C_SOURCE_PATHS:
+        raise ImportCheckError("E3c destination selection or order differs")
+    return transformations
+
+
 def _require_secure_io() -> None:
     if (
         os.name != "posix"
@@ -843,7 +1107,12 @@ def _read_regular_path(
 def _git_mode_from_stat(status: os.stat_result, *, path: str) -> str:
     if status.st_mode & (stat.S_ISUID | stat.S_ISGID | stat.S_ISVTX):
         raise ImportCheckError(f"special permission bits are forbidden: {path}")
-    return "100755" if status.st_mode & stat.S_IXUSR else "100644"
+    execute_bits = status.st_mode & (stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH)
+    if execute_bits and not status.st_mode & stat.S_IXUSR:
+        raise ImportCheckError(
+            f"non-canonical execute permissions are forbidden: {path}"
+        )
+    return "100755" if execute_bits else "100644"
 
 
 def _verify_root_entries(root: Path) -> None:
@@ -1297,6 +1566,67 @@ def _verify_e3b_transformations_at_source(
         )
 
 
+def _reconstruct_e3c_sources(
+    root: Path, transformations: list[dict[str, Any]]
+) -> dict[str, bytes]:
+    reconstructed: dict[str, bytes] = {}
+    for index, entry in enumerate(transformations):
+        role = f"E3c transformations[{index}]"
+        output = entry["output"]
+        installed, _ = _read_regular_path(
+            root,
+            entry["destination"],
+            expected_bytes=output["bytes"],
+            max_bytes=output["bytes"],
+        )
+        if (
+            len(installed) != output["bytes"]
+            or _sha256(installed) != output["sha256"]
+            or _git_blob_sha1(installed) != output["gitBlobSha1"]
+        ):
+            raise ImportCheckError(f"{role} installed output metadata differs")
+        source_payload = _apply_e3c_splice_transformation(
+            installed,
+            entry["transformation"],
+            reverse=True,
+            role=role,
+        )
+        source = entry["source"]
+        if (
+            len(source_payload) != source["bytes"]
+            or _sha256(source_payload) != source["sha256"]
+            or _git_blob_sha1(source_payload) != source["gitBlobSha1"]
+        ):
+            raise ImportCheckError(
+                f"{role} reverse replay does not reconstruct the pinned source"
+            )
+        replayed = _apply_e3c_splice_transformation(
+            source_payload,
+            entry["transformation"],
+            reverse=False,
+            role=role,
+        )
+        if replayed != installed:
+            raise ImportCheckError(
+                f"{role} forward replay does not reconstruct the installed output"
+            )
+        reconstructed[source["path"]] = source_payload
+    return reconstructed
+
+
+def _verify_e3c_transformations_at_source(
+    source_payloads: dict[str, bytes],
+    root: Path,
+    transformations: list[dict[str, Any]],
+) -> None:
+    reconstructed = _reconstruct_e3c_sources(root, transformations)
+    for source_path in E3C_SOURCE_PATHS:
+        if reconstructed[source_path] != source_payloads[source_path]:
+            raise ImportCheckError(
+                f"installed E3c port does not reconstruct pinned source: {source_path}"
+            )
+
+
 def _verify_source(
     repository: Path,
     root: Path,
@@ -1304,6 +1634,7 @@ def _verify_source(
     copy_rows: list[dict[str, Any]],
     e3a_transformations: list[dict[str, Any]],
     e3b_transformations: list[dict[str, Any]],
+    e3c_transformations: list[dict[str, Any]],
     installed_inventory_raw: bytes,
 ) -> None:
     repository = _validate_source_root(repository)
@@ -1320,7 +1651,9 @@ def _verify_source(
     _verify_rows_at_commit(repository, SOURCE_COMMIT, copy_rows)
 
     inventory_by_source = {row["source"]: row for row in manifest["files"]}
-    all_transformations = e3a_transformations + e3b_transformations
+    all_transformations = (
+        e3a_transformations + e3b_transformations + e3c_transformations
+    )
     transformation_rows = [
         inventory_by_source[entry["source"]["path"]]
         for entry in all_transformations
@@ -1333,6 +1666,9 @@ def _verify_source(
     )
     _verify_e3b_transformations_at_source(
         source_payloads, root, e3b_transformations
+    )
+    _verify_e3c_transformations_at_source(
+        source_payloads, root, e3c_transformations
     )
 
     notice_rows = [
@@ -1398,8 +1734,27 @@ def verify_repository(
     if _git_blob_sha1(e3b_receipt_raw) != E3B_RECEIPT_GIT_BLOB_SHA1:
         raise ImportCheckError("installed E3b receipt Git blob SHA-1 differs")
     e3b_transformations = _parse_e3b_receipt_bytes(e3b_receipt_raw, manifest)
-    all_transformations = e3a_transformations + e3b_transformations
+    e3c_receipt_raw, e3c_receipt_status = _read_regular_path(
+        root,
+        E3C_RECEIPT_PATH,
+        expected_bytes=E3C_RECEIPT_BYTES,
+        max_bytes=MAX_E3C_RECEIPT_BYTES,
+    )
+    if (
+        _git_mode_from_stat(e3c_receipt_status, path=E3C_RECEIPT_PATH)
+        != "100644"
+    ):
+        raise ImportCheckError("installed E3c receipt must have Git mode 100644")
+    if _git_blob_sha1(e3c_receipt_raw) != E3C_RECEIPT_GIT_BLOB_SHA1:
+        raise ImportCheckError("installed E3c receipt Git blob SHA-1 differs")
+    e3c_transformations = _parse_e3c_receipt_bytes(
+        e3c_receipt_raw, manifest
+    )
+    all_transformations = (
+        e3a_transformations + e3b_transformations + e3c_transformations
+    )
     _verify_installed(root, manifest, copy_rows, all_transformations)
+    _reconstruct_e3c_sources(root, e3c_transformations)
     if source_git is not None:
         _verify_source(
             source_git,
@@ -1408,6 +1763,7 @@ def verify_repository(
             copy_rows,
             e3a_transformations,
             e3b_transformations,
+            e3c_transformations,
             inventory_raw,
         )
     return {
@@ -1416,13 +1772,17 @@ def verify_repository(
         "copyTreeSha256": COPY_TREE_SHA256,
         "e3aFiles": len(e3a_transformations),
         "e3bFiles": len(e3b_transformations),
+        "e3cFiles": len(e3c_transformations),
+        "e3cPackageTreeSha256": E3C_PACKAGE_TREE_SHA256,
         "sourceVerified": source_git is not None,
     }
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
-        description="Verify the pinned Aleph Bench E2 + E3a + E3b source import."
+        description=(
+            "Verify the pinned Aleph Bench E2 + E3a + E3b + E3c source import."
+        )
     )
     parser.add_argument(
         "--source-git",
@@ -1441,6 +1801,8 @@ def main(argv: list[str] | None = None) -> int:
         f"bytes={result['copyBytes']} "
         f"e3aFiles={result['e3aFiles']} "
         f"e3bFiles={result['e3bFiles']} "
+        f"e3cFiles={result['e3cFiles']} "
+        f"e3cPackageTreeSha256={result['e3cPackageTreeSha256']} "
         f"copyTreeSha256={result['copyTreeSha256']}"
     )
     return 0

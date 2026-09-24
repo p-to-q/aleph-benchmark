@@ -53,6 +53,12 @@ class InventoryContractTests(unittest.TestCase):
         cls.e3b_transformations = checker._parse_e3b_receipt_bytes(
             cls.e3b_receipt_raw, cls.manifest
         )
+        cls.e3c_receipt_raw = (
+            REPOSITORY_ROOT / checker.E3C_RECEIPT_PATH
+        ).read_bytes()
+        cls.e3c_transformations = checker._parse_e3c_receipt_bytes(
+            cls.e3c_receipt_raw, cls.manifest
+        )
 
     def test_reviewed_inventory_and_copy_selection(self) -> None:
         self.assertEqual(len(self.copy_rows), 78)
@@ -125,6 +131,49 @@ class InventoryContractTests(unittest.TestCase):
         tampered = checker._canonical_file_json(value)
         with self.assertRaisesRegex(checker.ImportCheckError, "five replacements"):
             checker._parse_e3b_receipt_bytes(
+                tampered,
+                self.manifest,
+                expected_raw_sha256=None,
+            )
+
+    def test_reviewed_e3c_receipt_and_transformations(self) -> None:
+        self.assertEqual(
+            [entry["destination"] for entry in self.e3c_transformations],
+            list(checker.E3C_SOURCE_PATHS),
+        )
+        self.assertEqual(
+            [
+                entry["transformation"]["algorithm"]
+                for entry in self.e3c_transformations
+            ],
+            [checker.E3C_TRANSFORMATION_ALGORITHM] * 2,
+        )
+        receipt = json.loads(self.e3c_receipt_raw)
+        self.assertEqual(
+            receipt["packageTree"],
+            {
+                "algorithm": checker.E3C_PACKAGE_TREE_HASH_ALGORITHM,
+                "fileCount": checker.E3C_PACKAGE_TREE_FILES,
+                "sha256": checker.E3C_PACKAGE_TREE_SHA256,
+            },
+        )
+
+    def test_e3c_receipt_tamper_is_rejected(self) -> None:
+        value = json.loads(self.e3c_receipt_raw)
+        value["packageTree"]["sha256"] = "0" * 64
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "raw E3c receipt"):
+            checker._parse_e3c_receipt_bytes(tampered, self.manifest)
+
+    def test_e3c_splice_contract_tamper_is_rejected_without_digest_pin(self) -> None:
+        value = json.loads(self.e3c_receipt_raw)
+        edit = value["transformations"][0]["transformation"]["edits"][0]
+        edit["outputCharOffset"] += 1
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(
+            checker.ImportCheckError, "source/output offsets are inconsistent"
+        ):
+            checker._parse_e3c_receipt_bytes(
                 tampered,
                 self.manifest,
                 expected_raw_sha256=None,
@@ -217,7 +266,15 @@ class InstalledTreeTests(unittest.TestCase):
         e3b_transformations = checker._parse_e3b_receipt_bytes(
             e3b_receipt_raw, cls.manifest
         )
-        cls.transformations = e3a_transformations + e3b_transformations
+        e3c_receipt_raw = (
+            REPOSITORY_ROOT / checker.E3C_RECEIPT_PATH
+        ).read_bytes()
+        e3c_transformations = checker._parse_e3c_receipt_bytes(
+            e3c_receipt_raw, cls.manifest
+        )
+        cls.transformations = (
+            e3a_transformations + e3b_transformations + e3c_transformations
+        )
 
     def materialize(self) -> tuple[tempfile.TemporaryDirectory[str], Path]:
         temporary = tempfile.TemporaryDirectory()
@@ -285,6 +342,13 @@ class InstalledTreeTests(unittest.TestCase):
     def test_group_only_execute_does_not_satisfy_executable_mode(self) -> None:
         self.assert_rejected(lambda root: (root / "aleph-bench").chmod(0o410))
 
+    def test_execute_bits_on_non_executable_output_are_rejected(self) -> None:
+        self.assert_rejected(
+            lambda root: (
+                root / "bench/engine/platform_package_v0_2.py"
+            ).chmod(0o655)
+        )
+
     def test_symlink_is_rejected(self) -> None:
         def mutate(root: Path) -> None:
             path = root / "bench/__init__.py"
@@ -331,6 +395,25 @@ class InstalledTreeTests(unittest.TestCase):
             path.symlink_to("metrics.py")
 
         self.assert_rejected(mutate)
+
+    def test_e3c_outputs_tamper_is_rejected(self) -> None:
+        for relative in checker.E3C_SOURCE_PATHS:
+            with self.subTest(relative=relative):
+                self.assert_rejected(
+                    lambda root, relative=relative: (root / relative).write_text(
+                        "not the reviewed E3c port\n"
+                    )
+                )
+
+    def test_e3c_output_symlinks_are_rejected(self) -> None:
+        for relative in checker.E3C_SOURCE_PATHS:
+            with self.subTest(relative=relative):
+                def mutate(root: Path, relative: str = relative) -> None:
+                    path = root / relative
+                    path.unlink()
+                    path.symlink_to("__init__.py")
+
+                self.assert_rejected(mutate)
 
     def test_missing_protocol_document_is_rejected(self) -> None:
         self.assert_rejected(
@@ -510,6 +593,55 @@ class GitObjectVerificationTests(unittest.TestCase):
                     transformations,
                 )
 
+    def test_e3c_ports_round_trip_to_their_reviewed_sources(self) -> None:
+        manifest_raw = (REPOSITORY_ROOT / checker.INVENTORY_PATH).read_bytes()
+        manifest, _ = checker._parse_inventory_bytes(manifest_raw)
+        receipt_raw = (REPOSITORY_ROOT / checker.E3C_RECEIPT_PATH).read_bytes()
+        transformations = checker._parse_e3c_receipt_bytes(
+            receipt_raw, manifest
+        )
+        reconstructed = checker._reconstruct_e3c_sources(
+            REPOSITORY_ROOT, transformations
+        )
+        self.assertEqual(set(reconstructed), set(checker.E3C_SOURCE_PATHS))
+        checker._verify_e3c_transformations_at_source(
+            reconstructed,
+            REPOSITORY_ROOT,
+            transformations,
+        )
+        source_drift = dict(reconstructed)
+        source_drift[checker.E3C_SOURCE_PATHS[0]] = (
+            b"#" + source_drift[checker.E3C_SOURCE_PATHS[0]][1:]
+        )
+        with self.assertRaisesRegex(
+            checker.ImportCheckError, "does not reconstruct pinned source"
+        ):
+            checker._verify_e3c_transformations_at_source(
+                source_drift,
+                REPOSITORY_ROOT,
+                transformations,
+            )
+
+        with tempfile.TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            for relative in checker.E3C_SOURCE_PATHS:
+                destination = root / relative
+                destination.parent.mkdir(parents=True, exist_ok=True)
+                shutil.copyfile(REPOSITORY_ROOT / relative, destination)
+            platform_path = root / checker.E3C_SOURCE_PATHS[0]
+            installed = platform_path.read_bytes()
+            marker = b'PACKAGE_VERSION = "0.2.0"'
+            replacement = b'PACKAGE_VERSION = "0.2.O"'
+            self.assertEqual(installed.count(marker), 1)
+            drifted = installed.replace(marker, replacement, 1)
+            self.assertNotEqual(drifted, installed)
+            self.assertEqual(len(drifted), len(installed))
+            platform_path.write_bytes(drifted)
+            with self.assertRaisesRegex(
+                checker.ImportCheckError, "installed output metadata differs"
+            ):
+                checker._reconstruct_e3c_sources(root, transformations)
+
 
 class LiveGateTests(unittest.TestCase):
     def test_repository_gate_passes(self) -> None:
@@ -517,6 +649,11 @@ class LiveGateTests(unittest.TestCase):
         self.assertEqual(result["copyFiles"], 78)
         self.assertEqual(result["e3aFiles"], 2)
         self.assertEqual(result["e3bFiles"], 1)
+        self.assertEqual(result["e3cFiles"], 2)
+        self.assertEqual(
+            result["e3cPackageTreeSha256"],
+            checker.E3C_PACKAGE_TREE_SHA256,
+        )
         self.assertFalse(result["sourceVerified"])
 
 

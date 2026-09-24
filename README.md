@@ -8,7 +8,9 @@ from pinned Aleph commit
 `10abdc1368439d1ab454ee3862a59e14b67a9530`, together with the reviewed E1
 inventory, one behavior-preserving metrics port, and one standalone protocol
 rewrite. E3b also adds the v0.2-only report renderer with a fail-closed protocol
-boundary.
+boundary. E3c adds runtime-neutral deterministic scorer-conformance package
+assembly and the ported protocol/package regression suite; scorer execution
+itself remains frozen to Python 3.13 and Unicode database 15.1.0.
 
 The sole source-parity gate for this slice is:
 
@@ -19,11 +21,11 @@ python3 -I -B scripts/check-source-v0.2-import.py
 That gate verifies the checked-in inventory, copied bytes, Git modes, paths,
 closed managed source trees, the top-level import surface, the reviewed
 standalone notice, the two E3a transformations, and the E3b report transform.
-With `--source-git`, it also proves that the metrics port differs from the pinned
-source by exactly one documentation-path replacement and reconstructs the
-report port from its declared replacement sequence. Passing the gate does not
-make the CLI, full benchmark test suite, packaging, or authority transition
-complete.
+It also verifies the two E3c output digests, exact modes, package-tree contract,
+and mechanically replays the declared UTF-8/code-point splice sequences in both
+directions. With `--source-git`, it proves that every reconstructed port input
+matches the exact pinned Git object. Passing the gate does not make the CLI,
+full benchmark test suite, release packaging, or authority transition complete.
 The migration checker is tested with Python 3.10 through 3.13 on POSIX systems
 with no-follow file APIs. This tooling range does not relax the separate v0.2
 scoring contract, which remains pinned to Python 3.13 and Unicode 15.1.0.
@@ -44,10 +46,20 @@ release or an admissible model result. The authority transition is tracked in
 ## What is here
 
 - `bench/`, `schemas/v0.2/`, `LICENSE`, and `aleph-bench`: the E2 byte-copy
-  slice, the E3a metrics port, and the E3b v0.2 report renderer. The launcher
-  intentionally remains unavailable until its separately reviewed
+  slice; E3a metrics; E3b report rendering; and E3c deterministic
+  scorer-conformance package assembly, checking, and protocol tests. The
+  launcher intentionally remains unavailable until its separately reviewed
   `bench/run.py` port lands. Direct and file-backed reports are schema checked;
   smoke reports identify themselves as non-canonical and non-leaderboard output.
+  Package build/check runs on Python 3.10–3.13 without evaluating scoring or
+  leakage vectors. The packaged runner returns structured
+  `runtime_incompatible` evidence with zero executed vectors outside the frozen
+  Python 3.13/UCD 15.1 runtime. Package publication uses descriptor-relative,
+  atomic no-replace operations. Failed writes remove staging only while its
+  parent-relative name still identifies the recorded inode; a renamed or
+  replaced entry is left as a private mode-0700 orphan. This guarantee assumes
+  the enforced POSIX owner/mode policy: processes sharing the writer's effective
+  UID and mutation rights granted through platform ACLs remain trusted.
 - [`docs/protocol-v0.2.md`](docs/protocol-v0.2.md): the standalone protocol and
   claim-boundary record. Its combined report/verification/package orchestration
   surface remains incomplete until the other runtime ports and CLI path land.
@@ -57,6 +69,10 @@ release or an admissible model result. The authority transition is tracked in
   transformation contracts for the E3a port and rewrite.
 - `provenance/aleph/e3b.report.json`: the content-addressed, mechanically
   replayable report-port receipt.
+- `provenance/aleph/e3c.platform-package-and-protocol-tests.json`: exact
+  source/output identities and reversible splice contracts for both E3c ports,
+  plus the ten-file package-tree digest
+  `be213ca07782f108815bf94264b4d87f48570c29cbe8511f6346e31296bf0cd8`.
 - `platform/m0-mock/`: a historical Aleph Bench Frozen Ladder M0 platform
   package snapshot.
 - `references/kaggle-bench/`: local Kaggle Benchmarks syntax notes and a minimal example task.
@@ -72,18 +88,23 @@ release. Preserve the `mock` / `evidenceMode = mock` label in every downstream u
 
 ## Current limitations
 
-- Four files classified as `port`, the two generated Kaggle tasks, and four
+- Two files classified as `port`, the two generated Kaggle tasks, and four
   remaining documentation rewrites are deliberately absent.
 - `aleph-bench` therefore must not be presented as a working installed CLI.
-- The copied benchmark tests are provenance material in this slice; the full
-  suite is not runnable until the port closure lands. Among the checked-in
-  production/support modules, four fail import; among the 11 copied benchmark
-  test modules, seven fail import.
-- Among the copied benchmark suite, Python 3.13 CI runs the 62 tests in
+- The copied benchmark tests remain provenance material until the port closure
+  lands. On Python 3.13, all 17 checked-in engine modules import; 11 of 12
+  checked-in benchmark test modules import. `test_v0_2_verify` remains blocked
+  by the absent `bench/engine/verify.py` port.
+- Among the copied benchmark suite, Python 3.13 CI retains the 62 tests in
   `test_kaggle_capture`,
   `test_kaggle_creation_output`, and `test_replay_adapter`, plus the seven
-  scorer-conformance tests unlocked by E3a. This is a bounded migration smoke
-  check, not the full suite.
+  scorer-conformance tests unlocked by E3a. E3c separately runs 34
+  protocol/package tests on Python 3.13 (33 pass plus the expected
+  incompatible-runtime-branch skip). Each Python 3.10–3.12 matrix job runs the
+  17 package-focused cases (16 pass plus the expected canonical-runtime skip).
+  Hosted Linux and macOS 15 jobs are the publication gate for the two
+  no-replace syscall paths. These are bounded migration checks, not the full
+  benchmark suite or a model score.
   Positive archive cases in `test_kaggle_creation_output` mock the diagnostic
   receipt parser, so this smoke does not prove real receipt parsing or E2E
   Kaggle execution.
