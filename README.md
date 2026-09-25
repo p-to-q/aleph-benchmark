@@ -18,7 +18,12 @@ replaces its excluded legacy output dependency with a descriptor-relative
 atomic writer. E4a adds the reviewed portable-Unicode input closure from exact
 Aleph commit `7a15c2410e199b82dc65f9caf65f53aa9e8d6c5f`: 15 byte-identical
 copies and two explicitly receipted standalone ports. The retained wheels
-remain inert archives; E4a neither installs nor imports them.
+remain inert archives; E4a neither installs nor imports them. E4b adds ten
+byte-identical frozen-string-semantics files from exact Aleph commit
+`e265281321dc1013fff9cb288a72c15dcc5b749a`: the pure consumer, its five-file
+generated-data closure, deterministic generator, focused tests, and local
+documentation. The source `bench/README.md` change is explicitly excluded;
+this standalone README records the dependency instead.
 
 The sole source-parity gate for this slice is:
 
@@ -35,7 +40,9 @@ directions, including the E3d verifier and E3e runner transformations. It also
 checks the E4a additive inventory, complete 17-path source delta, retained
 licenses and wheel archives, merged attributes file, and in-memory inverse
 transform from the reviewed standalone metrics port to the immutable 41-file
-authority aggregate. With
+authority aggregate. The E4b extension proves the exact upstream 11-path
+delta, its ten copied Git objects, the deliberate source-README exclusion,
+and the installed frozen-semantics tree. With
 `--source-git`, it proves that every reconstructed port input matches the exact
 pinned Git object. Passing the gate does not make the full benchmark test suite,
 release packaging, or authority transition complete.
@@ -61,7 +68,8 @@ release or an admissible model result. The authority transition is tracked in
 - `bench/`, `schemas/v0.2/`, `LICENSE`, and `aleph-bench`: the E2 byte-copy
   slice; E3a metrics; E3b report rendering; E3c deterministic
   scorer-conformance package assembly, checking, and protocol tests; the E3d
-  v0.2 artifact verifier; and the E3e v0.2 repository runner. From the
+  v0.2 artifact verifier; the E3e v0.2 repository runner; and the E4b pure
+  frozen-string-semantics consumer and generator check. From the
   repository root, `./aleph-bench --help` exposes `doctor`, `manifest`, `run`,
   `verify`, `report`, `package-v0.2`, and `validate-croissant`. Direct and
   file-backed reports are schema checked; smoke reports identify themselves as
@@ -97,6 +105,10 @@ release or an admissible model result. The authority transition is tracked in
   `ae1d80c`.
 - `provenance/aleph/e4a.portable-unicode-inputs.json`: the E4a installed-tree
   digest and the two reviewed standalone transforms.
+- `provenance/aleph/e4b.portable-string-semantics.inventory.json`: the exact
+  E4b source delta, including the ten copied files and excluded source README.
+- `provenance/aleph/e4b.portable-string-semantics.json`: the E4b installed-tree
+  digest and binding to the additive inventory.
 - `platform/m0-mock/`: a historical Aleph Bench Frozen Ladder M0 platform
   package snapshot.
 - `references/kaggle-bench/`: local Kaggle Benchmarks syntax notes and a minimal example task.
@@ -120,12 +132,23 @@ release. Preserve the `mock` / `evidenceMode = mock` label in every downstream u
   On Python 3.10–3.12, `doctor` reports the structural incompatibility and
   `run` / `manifest` fail before writing output; parser, verifier diagnostics,
   package build/check, and migration tooling remain available in their
-  documented fail-closed or runtime-neutral modes. The Python 3.14 E4a lane is
-  limited to provenance, authority-projection, and archive-only checks.
+  documented fail-closed or runtime-neutral modes. The Python 3.14 lane is
+  limited to provenance, authority-projection, archive-only checks, and the
+  pure E4b frozen-string-semantics consumer.
 - The E4a CPython 3.11 and 3.12 manylinux x86-64 wheels are reviewed
   supply-chain inputs only. Their hashes, tags, metadata, RECORD closure, and
   embedded license are checked without installation or import. Runtime loading
   and module-origin proof belong to the later portable-runtime gate.
+- The E4b consumer freezes Python 3.13.2 case folding, whitespace, and
+  no-argument split semantics without calling the ambient equivalents. Its
+  read-only `--check` and focused tests run without site packages on Python
+  3.10–3.14; authority regeneration remains restricted to exact CPython
+  3.13.2 / UCD 15.1. The generated tables bind the E4a-retained Unicode inputs
+  and remain accompanied by the retained Unicode License v3. Linux and macOS
+  are supported verification hosts because the file boundary requires POSIX
+  descriptor-relative no-follow operations; Windows fails closed. E4b is not
+  a scorer and makes no numeric-comparability, model-result, Kaggle, Hugging
+  Face, or protocol-cutover claim.
 - `validate-croissant` imports `mlcroissant` only when invoked. In the base
   environment it exits with an installation hint; `mlcroissant` is not a
   mandatory dependency for any other command.

@@ -1,0 +1,26 @@
+{
+  "artifactKind": "aleph_bench_source_migration_receipt",
+  "copyFiles": 10,
+  "excludedSourcePaths": [
+    "bench/README.md"
+  ],
+  "formatVersion": 1,
+  "installedTree": {
+    "algorithm": "sha256-length-framed-canonical-file-records-v1",
+    "domain": "aleph-bench-e4b-installed-delta-v1",
+    "fileCount": 10,
+    "sha256": "70d81dd7fa169d9ea008e9684238fbf011c94ce97c7cc073acae042d3ad29389"
+  },
+  "inventory": {
+    "bytes": 5323,
+    "gitBlobSha1": "228ec75d11363854261566aec17ab761ada40d7f",
+    "path": "provenance/aleph/e4b.portable-string-semantics.inventory.json",
+    "sha256": "389b44d1db1ba47899eee64829b4bae7e5b8f15ebad772da91e19b87a5510982"
+  },
+  "reviewIssue": "https://github.com/p-to-q/aleph-benchmark/issues/16",
+  "slice": "E4b",
+  "sourceCommit": "e265281321dc1013fff9cb288a72c15dcc5b749a",
+  "sourceImmediateParentCommit": "5b47d8946f21eef77c6620fdce3b0784d7a14694",
+  "sourceReviewedDependencyCommit": "7a15c2410e199b82dc65f9caf65f53aa9e8d6c5f",
+  "standaloneParentCommit": "69731a91c14af365ee16eb672d1f64d9e7a07448"
+}

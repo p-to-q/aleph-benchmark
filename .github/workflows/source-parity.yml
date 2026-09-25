@@ -36,6 +36,10 @@ jobs:
         run: |
           python -I -B scripts/check-v0-2-scoring-authority.py
           python -I -B scripts/check-portable-unicode-inputs.py
+      - name: Verify E4b frozen string semantics without site packages
+        run: |
+          python -I -S -B scripts/generate-portable-string-semantics.py --check
+          python -I -S -B bench/tests/test_portable_string_semantics.py
       - name: Run migration contract tests in isolated mode
         run: python -I -B -m unittest discover -s tests -p 'test_source_v0_2_import.py' -v
       - name: Run E4a authority and archive regression tests
@@ -112,6 +116,10 @@ jobs:
         run: |
           python -I -B scripts/check-v0-2-scoring-authority.py
           python -I -B scripts/check-portable-unicode-inputs.py
+      - name: Verify E4b frozen string semantics without site packages
+        run: |
+          python -I -S -B scripts/generate-portable-string-semantics.py --check
+          python -I -S -B bench/tests/test_portable_string_semantics.py
       - name: Exercise Darwin package publication and safety gates
         run: >-
           python -B -m unittest -v
@@ -142,12 +150,35 @@ jobs:
           source_git="${RUNNER_TEMP}/aleph-source"
           git init --quiet "${source_git}"
           git -C "${source_git}" remote add origin https://github.com/p-to-q/aleph.git
-          git -C "${source_git}" fetch --no-tags --depth=1 origin \
+          # Depth four retains e265281 -> 5b47d89 -> a38114b -> 7a15c24 so
+          # the reviewed-dependency ancestry proof does not rely on a shallow edge.
+          git -C "${source_git}" fetch --no-tags --depth=4 origin \
             10abdc1368439d1ab454ee3862a59e14b67a9530 \
             d76206bdaf9ba72730b066560862a3d00cac9699 \
             8fb57eb921d792dbd245d849ab08ac5c7cf11c6e \
-            7a15c2410e199b82dc65f9caf65f53aa9e8d6c5f
+            7a15c2410e199b82dc65f9caf65f53aa9e8d6c5f \
+            5b47d8946f21eef77c6620fdce3b0784d7a14694 \
+            e265281321dc1013fff9cb288a72c15dcc5b749a
       - name: Verify pinned inventory and source tree
         run: >-
           python -I -B scripts/check-source-v0.2-import.py
           --source-git "${RUNNER_TEMP}/aleph-source"
+
+  portable-authority-regeneration:
+    name: Portable authority check (CPython 3.13.2 / UCD 15.1)
+    runs-on: ubuntu-24.04
+    timeout-minutes: 5
+    steps:
+      - name: Check out standalone repository
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Set up exact authority Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: "3.13.2"
+      - name: Regenerate and compare frozen semantics in memory
+        run: |
+          python -I -S -B scripts/generate-portable-string-semantics.py --check
+          python -I -S -B bench/tests/test_portable_string_semantics.py \
+            PortableStringSemanticsTests.test_checked_in_tables_exhaust_the_frozen_domain
