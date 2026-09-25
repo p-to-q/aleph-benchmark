@@ -1,0 +1,114 @@
+{
+  "artifactCount": 5,
+  "artifactKind": "aleph-bench-portable-unicode-inputs",
+  "artifacts": [
+    {
+      "acquiredAt": "2026-09-25T04:06:27Z",
+      "byteCount": 84870,
+      "filename": "CaseFolding.txt",
+      "kind": "unicode-data",
+      "licenseId": "Unicode-3.0",
+      "primaryUrl": "https://www.unicode.org/Public/15.1.0/ucd/CaseFolding.txt",
+      "repositoryPath": "bench/vendor/unicode/15.1.0/ucd/CaseFolding.txt",
+      "sha256": "4e55acfdc32825a22e87670e9056a3bf94ad7c5400065778e9e10f8314372bcf",
+      "unicodeDataFile": "CaseFolding",
+      "unicodeVersion": "15.1.0"
+    },
+    {
+      "acquiredAt": "2026-09-25T04:06:26Z",
+      "byteCount": 2625136,
+      "filename": "NormalizationTest.txt",
+      "kind": "unicode-data",
+      "licenseId": "Unicode-3.0",
+      "primaryUrl": "https://www.unicode.org/Public/15.1.0/ucd/NormalizationTest.txt",
+      "repositoryPath": "bench/vendor/unicode/15.1.0/ucd/NormalizationTest.txt",
+      "sha256": "871238e37e3be0696ec2bd0891119a041b052da1a84485eda05a5438724b223e",
+      "unicodeDataFile": "NormalizationTest",
+      "unicodeVersion": "15.1.0"
+    },
+    {
+      "acquiredAt": "2026-09-25T04:06:28Z",
+      "byteCount": 136397,
+      "filename": "PropList.txt",
+      "kind": "unicode-data",
+      "licenseId": "Unicode-3.0",
+      "primaryUrl": "https://www.unicode.org/Public/15.1.0/ucd/PropList.txt",
+      "repositoryPath": "bench/vendor/unicode/15.1.0/ucd/PropList.txt",
+      "sha256": "05672956317b6296bc2ec3d6cef1f6452b57ff4f2efc6dc55b0a19277d5fcfd1",
+      "unicodeDataFile": "PropList",
+      "unicodeVersion": "15.1.0"
+    },
+    {
+      "abiTag": "cp311",
+      "acquiredAt": "2026-09-25T04:06:22Z",
+      "byteCount": 471444,
+      "distribution": "unicodedata2",
+      "extensionBasename": "unicodedata2.cpython-311-x86_64-linux-gnu.so",
+      "filename": "unicodedata2-15.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "kind": "python-wheel",
+      "licenseId": "Apache-2.0",
+      "platformTags": [
+        "manylinux_2_17_x86_64",
+        "manylinux2014_x86_64"
+      ],
+      "primaryUrl": "https://files.pythonhosted.org/packages/66/5e/89234dad6ae00379996e2f1c48081faeab679c830dd7018fc6341925c052/unicodedata2-15.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "pythonTag": "cp311",
+      "repositoryPath": "bench/vendor/unicodedata2/15.1.0/unicodedata2-15.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "a2442a539d1e493486fdbbdf1d08c8f5d4abe51c9b77b7d39df319a96d30abe4",
+      "version": "15.1.0"
+    },
+    {
+      "abiTag": "cp312",
+      "acquiredAt": "2026-09-25T04:06:24Z",
+      "byteCount": 471953,
+      "distribution": "unicodedata2",
+      "extensionBasename": "unicodedata2.cpython-312-x86_64-linux-gnu.so",
+      "filename": "unicodedata2-15.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "kind": "python-wheel",
+      "licenseId": "Apache-2.0",
+      "platformTags": [
+        "manylinux_2_17_x86_64",
+        "manylinux2014_x86_64"
+      ],
+      "primaryUrl": "https://files.pythonhosted.org/packages/c5/6c/17c5143b33ad44529219187c933d0d4d9de18981b034ac182c71b5318923/unicodedata2-15.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "pythonTag": "cp312",
+      "repositoryPath": "bench/vendor/unicodedata2/15.1.0/unicodedata2-15.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "bcdcd195484ba8ef19bef04ec14dcd8b1f8d6560fc517462ee0e010f5f545d75",
+      "version": "15.1.0"
+    }
+  ],
+  "formatVersion": 1,
+  "hashAlgorithm": "sha256",
+  "licenses": [
+    {
+      "acquiredAt": "2026-09-25T04:06:22Z",
+      "byteCount": 11325,
+      "licenseId": "Apache-2.0",
+      "name": "Apache License 2.0",
+      "path": "bench/vendor/unicodedata2/Apache-2.0.txt",
+      "primaryUrl": "https://files.pythonhosted.org/packages/66/5e/89234dad6ae00379996e2f1c48081faeab679c830dd7018fc6341925c052/unicodedata2-15.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+      "sourceArchiveMember": "unicodedata2-15.1.0.dist-info/LICENSE",
+      "verifiedInArtifacts": [
+        "unicodedata2-15.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+        "unicodedata2-15.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+      ]
+    },
+    {
+      "acquiredAt": "2026-09-25T04:05:23Z",
+      "byteCount": 1995,
+      "licenseId": "Unicode-3.0",
+      "name": "Unicode License v3",
+      "path": "bench/vendor/unicode/UNICODE-LICENSE-v3.txt",
+      "primaryUrl": "https://www.unicode.org/license.txt",
+      "sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+      "verifiedInArtifacts": [
+        "CaseFolding.txt",
+        "NormalizationTest.txt",
+        "PropList.txt"
+      ]
+    }
+  ],
+  "profileVersion": "0.3.0-provisional",
+  "unicodeVersion": "15.1.0"
+}

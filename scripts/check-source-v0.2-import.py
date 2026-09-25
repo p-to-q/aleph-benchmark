@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the content-addressed Aleph Bench E2 through E3e source import.
+"""Verify the content-addressed Aleph Bench E2 through E4a source import.
 
 The default gate is offline. ``--source-git`` adds provenance verification
 against an already-fetched Git object database. This program never fetches and
@@ -102,6 +102,104 @@ E3E_RECEIPT_SHA256 = (
 E3E_SOURCE_PATH = "bench/run.py"
 E3E_STANDALONE_BASE_COMMIT = "f8d144e0a0c6a0393858129e11d871f56a41eaed"
 E3E_REVIEW_ISSUE = "https://github.com/p-to-q/aleph-benchmark/issues/13"
+
+E4A_SOURCE_COMMIT = "7a15c2410e199b82dc65f9caf65f53aa9e8d6c5f"
+E4A_SOURCE_PARENT_COMMIT = "8fb57eb921d792dbd245d849ab08ac5c7cf11c6e"
+E4A_STANDALONE_PARENT_COMMIT = "ae1d80c339957a915d205d7ee015b0b7575d25ca"
+E4A_INVENTORY_PATH = (
+    "provenance/aleph/post-e3-portable-dependencies.inventory.json"
+)
+E4A_INVENTORY_BYTES = 7_299
+E4A_INVENTORY_GIT_BLOB_SHA1 = "1120b766ecadbd8f84052f617c8175532c18e23d"
+E4A_INVENTORY_SHA256 = (
+    "2b94b8f68b60124d8f293bc08cf3d99fd50a55728a88495719a265870ae35030"
+)
+E4A_RECEIPT_PATH = "provenance/aleph/e4a.portable-unicode-inputs.json"
+E4A_RECEIPT_BYTES = 3_376
+E4A_RECEIPT_GIT_BLOB_SHA1 = "d82fadf4acd13547134b982aa6ed052e2a7ae230"
+E4A_RECEIPT_SHA256 = (
+    "f31d9ab06e9ae1f108a13a818046e344df7d5855b8b3aa785796ada848b9639f"
+)
+E4A_SOURCE_TREE_DOMAIN = b"aleph-bench-e4a-source-delta-v1\0"
+E4A_SOURCE_TREE_SHA256 = (
+    "621e3265befc5c3f55b917d3af23d0ce9a4400d294badfb4bbf494c03e4201d2"
+)
+E4A_INSTALLED_TREE_DOMAIN = b"aleph-bench-e4a-installed-delta-v1\0"
+E4A_INSTALLED_TREE_SHA256 = (
+    "0ba14665f0f201634d6d2c1a56ecddb58260502c58708ec4bba6e56a63a4a52a"
+)
+E4A_REVIEW_ISSUE = "https://github.com/p-to-q/aleph-benchmark/issues/15"
+E4A_SOURCE_PATHS = (
+    ".gitattributes",
+    "bench/config/v0.2-scoring-authority-lock.json",
+    "bench/tests/test_portable_unicode_inputs.py",
+    "bench/tests/test_v0_2_scoring_authority_lock.py",
+    "bench/vendor/README.md",
+    "bench/vendor/THIRD_PARTY_NOTICES.md",
+    "bench/vendor/portable-unicode-inputs-v1.json",
+    "bench/vendor/portable-unicode-inputs-v1.schema.json",
+    "bench/vendor/unicode/15.1.0/ucd/CaseFolding.txt",
+    "bench/vendor/unicode/15.1.0/ucd/NormalizationTest.txt",
+    "bench/vendor/unicode/15.1.0/ucd/PropList.txt",
+    "bench/vendor/unicode/UNICODE-LICENSE-v3.txt",
+    (
+        "bench/vendor/unicodedata2/15.1.0/"
+        "unicodedata2-15.1.0-cp311-cp311-manylinux_2_17_x86_64."
+        "manylinux2014_x86_64.whl"
+    ),
+    (
+        "bench/vendor/unicodedata2/15.1.0/"
+        "unicodedata2-15.1.0-cp312-cp312-manylinux_2_17_x86_64."
+        "manylinux2014_x86_64.whl"
+    ),
+    "bench/vendor/unicodedata2/Apache-2.0.txt",
+    "scripts/check-portable-unicode-inputs.py",
+    "scripts/check-v0-2-scoring-authority.py",
+)
+E4A_PORT_PATHS = (
+    ".gitattributes",
+    "scripts/check-v0-2-scoring-authority.py",
+)
+E4A_COPY_FILES = 15
+E4A_COPY_BYTES = 3_865_252
+E4A_PORT_FILES = 2
+E4A_PORT_BYTES = 15_507
+E4A_SOURCE_BYTES = 3_880_759
+E4A_ATTRS_BASE_BYTES = 299
+E4A_ATTRS_BASE_SHA256 = (
+    "b2952e7687a229cfe99bb0be33cc8f2bf48005fd87cb69a5ec059e153ccd74ec"
+)
+E4A_ATTRS_BASE_GIT_BLOB_SHA1 = "f26113969f84641d6e0d998268d9a1a9a9133e5a"
+E4A_METRICS_PATH = "bench/engine/metrics.py"
+E4A_METRICS_SOURCE_DOC_PATH = b"docs/benchmark/02-design-spec.md"
+E4A_METRICS_STANDALONE_DOC_PATH = b"docs/protocol-v0.2.md"
+E4A_METRICS_SOURCE_BYTES = 4_807
+E4A_METRICS_SOURCE_SHA256 = (
+    "23ce9f04cdbc358e7984d346bde1c22679f0902ffc2bbd0afcd597ee0a17c002"
+)
+E4A_METRICS_SOURCE_GIT_BLOB_SHA1 = "681ebb1fcfaee2159b81670b92c4932c55e349c8"
+E4A_METRICS_STANDALONE_BYTES = 4_796
+E4A_METRICS_STANDALONE_SHA256 = (
+    "3628f3bf60998707eeadb6e2ab72a1942ca0459d1c018fa5cf7887d2904461d7"
+)
+E4A_TRANSFORM_OUTPUTS = {
+    ".gitattributes": {
+        "bytes": 446,
+        "gitBlobSha1": "d3d18616c07d4b393bd93394bed0ae63de3f5b7d",
+        "mode": "100644",
+        "sha256": (
+            "1d7e42d731c63f9b7ca0a2a22469687fefa8048872c6fcb1492cd2ada6aa5561"
+        ),
+    },
+    "scripts/check-v0-2-scoring-authority.py": {
+        "bytes": 17_670,
+        "gitBlobSha1": "d1180d4c2b4b0ac75590653a5a4cfc40ed82a679",
+        "mode": "100644",
+        "sha256": (
+            "0fd37720bcdb6564e61b6714223a13dc9be1e3878de1dfba08c0ecf3b1cd63a6"
+        ),
+    },
+}
 
 SOURCE_NOTICE_GIT_BLOB_SHA1 = "be3b6c048fee80545b99e83e0a3e089be1a3ee09"
 SOURCE_NOTICE_SHA256 = "c6fefd8d70b629b2fd61ea481793dc227d5e59cf8ba7e44e92fa3eef8fab886f"
@@ -479,6 +577,306 @@ def _parse_inventory_bytes(
         )
     copy_rows = _validate_inventory(manifest)
     return manifest, copy_rows
+
+
+def _validate_e4a_source_record(record: Any, *, index: int) -> dict[str, Any]:
+    role = f"E4a files[{index}]"
+    expected_keys = {
+        "bytes",
+        "destination",
+        "disposition",
+        "gitBlobSha1",
+        "mode",
+        "sha256",
+        "source",
+    }
+    if not isinstance(record, dict) or set(record) != expected_keys:
+        raise ImportCheckError(f"{role} keys differ")
+    source = _validate_repository_path(record["source"], role=f"{role} source")
+    destination = _validate_repository_path(
+        record["destination"], role=f"{role} destination"
+    )
+    if source != destination:
+        raise ImportCheckError(f"{role} must preserve its path")
+    disposition = record["disposition"]
+    expected_disposition = "port" if source in E4A_PORT_PATHS else "copy"
+    if disposition != expected_disposition:
+        raise ImportCheckError(
+            f"{role} disposition differs: {disposition!r}"
+        )
+    if record["mode"] != "100644":
+        raise ImportCheckError(f"{role} must use Git mode 100644")
+    _exact_int(record["bytes"], field=f"{role}.bytes", minimum=1)
+    if (
+        not isinstance(record["gitBlobSha1"], str)
+        or HEX40.fullmatch(record["gitBlobSha1"]) is None
+    ):
+        raise ImportCheckError(f"{role} has invalid Git blob SHA-1")
+    if (
+        not isinstance(record["sha256"], str)
+        or HEX64.fullmatch(record["sha256"]) is None
+    ):
+        raise ImportCheckError(f"{role} has invalid SHA-256")
+    return record
+
+
+def _parse_e4a_inventory_bytes(
+    raw: bytes,
+    *,
+    expected_raw_sha256: str | None = E4A_INVENTORY_SHA256,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    if len(raw) > MAX_RECEIPT_BYTES:
+        raise ImportCheckError("E4a delta inventory is unreasonably large")
+    try:
+        inventory = json.loads(
+            raw.decode("ascii"),
+            object_pairs_hook=_reject_duplicate_pairs,
+            parse_constant=_reject_json_constant,
+        )
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise ImportCheckError(f"invalid E4a delta inventory JSON: {exc}") from exc
+    if raw != _canonical_file_json(inventory):
+        raise ImportCheckError(
+            "E4a delta inventory must be canonical sorted, indented ASCII JSON "
+            "with one trailing newline"
+        )
+    if expected_raw_sha256 is not None and _sha256(raw) != expected_raw_sha256:
+        raise ImportCheckError(
+            "raw E4a delta inventory SHA-256 differs from the reviewed artifact"
+        )
+    expected_keys = {
+        "artifactKind",
+        "destination",
+        "files",
+        "formatVersion",
+        "slice",
+        "source",
+        "sourceTree",
+        "summary",
+    }
+    if not isinstance(inventory, dict) or set(inventory) != expected_keys:
+        raise ImportCheckError("E4a delta inventory top-level keys differ")
+    if inventory["artifactKind"] != "aleph_bench_source_delta_inventory":
+        raise ImportCheckError("unexpected E4a delta inventory artifactKind")
+    if type(inventory["formatVersion"]) is not int or inventory["formatVersion"] != 1:
+        raise ImportCheckError("E4a inventory formatVersion must be the integer 1")
+    if inventory["slice"] != "E4a":
+        raise ImportCheckError("unexpected E4a delta inventory slice")
+    if inventory["source"] != {
+        "commit": E4A_SOURCE_COMMIT,
+        "objectFormat": "sha1",
+        "parentCommit": E4A_SOURCE_PARENT_COMMIT,
+        "repository": SOURCE_REPOSITORY,
+    }:
+        raise ImportCheckError("E4a inventory source identity differs")
+    if inventory["destination"] != {
+        "parentCommit": E4A_STANDALONE_PARENT_COMMIT,
+        "repository": DESTINATION_REPOSITORY,
+    }:
+        raise ImportCheckError("E4a inventory destination identity differs")
+    files = inventory["files"]
+    if not isinstance(files, list) or len(files) != len(E4A_SOURCE_PATHS):
+        raise ImportCheckError("E4a inventory must contain exactly 17 files")
+    rows = [
+        _validate_e4a_source_record(record, index=index)
+        for index, record in enumerate(files)
+    ]
+    paths = tuple(record["source"] for record in rows)
+    if paths != E4A_SOURCE_PATHS:
+        raise ImportCheckError("E4a source path closure or order differs")
+    _validate_unique_paths(paths, role="E4a source")
+    expected_summary = {
+        "copyBytes": E4A_COPY_BYTES,
+        "copyFiles": E4A_COPY_FILES,
+        "portBytes": E4A_PORT_BYTES,
+        "portFiles": E4A_PORT_FILES,
+        "sourceBytes": E4A_SOURCE_BYTES,
+        "sourceFiles": len(E4A_SOURCE_PATHS),
+    }
+    if inventory["summary"] != expected_summary:
+        raise ImportCheckError("E4a inventory summary differs")
+    source_tree = inventory["sourceTree"]
+    if source_tree != {
+        "algorithm": "sha256-length-framed-canonical-file-records-v1",
+        "domain": "aleph-bench-e4a-source-delta-v1",
+        "sha256": E4A_SOURCE_TREE_SHA256,
+    }:
+        raise ImportCheckError("E4a source-tree contract differs")
+    actual_tree = _records_digest(rows, domain=E4A_SOURCE_TREE_DOMAIN)
+    if actual_tree != E4A_SOURCE_TREE_SHA256:
+        raise ImportCheckError("E4a source-tree digest differs")
+    return inventory, rows
+
+
+def _validate_e4a_content_record(
+    record: Any,
+    *,
+    role: str,
+    require_path: bool,
+) -> dict[str, Any]:
+    expected_keys = {"bytes", "gitBlobSha1", "mode", "sha256"}
+    if require_path:
+        expected_keys.add("path")
+    if not isinstance(record, dict) or set(record) != expected_keys:
+        raise ImportCheckError(f"{role} keys differ")
+    _exact_int(record["bytes"], field=f"{role}.bytes", minimum=1)
+    if record["mode"] != "100644":
+        raise ImportCheckError(f"{role} must use Git mode 100644")
+    if (
+        not isinstance(record["gitBlobSha1"], str)
+        or HEX40.fullmatch(record["gitBlobSha1"]) is None
+        or not isinstance(record["sha256"], str)
+        or HEX64.fullmatch(record["sha256"]) is None
+    ):
+        raise ImportCheckError(f"{role} has an invalid digest")
+    if require_path:
+        _validate_repository_path(record["path"], role=f"{role} path")
+    return record
+
+
+def _parse_e4a_receipt_bytes(
+    raw: bytes,
+    rows: list[dict[str, Any]],
+    *,
+    expected_raw_sha256: str | None = E4A_RECEIPT_SHA256,
+) -> list[dict[str, Any]]:
+    if len(raw) > MAX_RECEIPT_BYTES:
+        raise ImportCheckError("E4a receipt is unreasonably large")
+    try:
+        receipt = json.loads(
+            raw.decode("ascii"),
+            object_pairs_hook=_reject_duplicate_pairs,
+            parse_constant=_reject_json_constant,
+        )
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise ImportCheckError(f"invalid E4a receipt JSON: {exc}") from exc
+    if raw != _canonical_file_json(receipt):
+        raise ImportCheckError(
+            "E4a receipt must be canonical sorted, indented ASCII JSON with one "
+            "trailing newline"
+        )
+    if expected_raw_sha256 is not None and _sha256(raw) != expected_raw_sha256:
+        raise ImportCheckError(
+            "raw E4a receipt SHA-256 differs from the reviewed artifact"
+        )
+    expected_keys = {
+        "artifactKind",
+        "copyFiles",
+        "formatVersion",
+        "installedTree",
+        "inventory",
+        "slice",
+        "sourceCommit",
+        "sourceParentCommit",
+        "standaloneParentCommit",
+        "transformations",
+    }
+    if not isinstance(receipt, dict) or set(receipt) != expected_keys:
+        raise ImportCheckError("E4a receipt top-level keys differ")
+    if (
+        receipt["artifactKind"] != "aleph_bench_source_migration_receipt"
+        or type(receipt["formatVersion"]) is not int
+        or receipt["formatVersion"] != 1
+        or receipt["slice"] != "E4a"
+        or receipt["copyFiles"] != E4A_COPY_FILES
+        or receipt["sourceCommit"] != E4A_SOURCE_COMMIT
+        or receipt["sourceParentCommit"] != E4A_SOURCE_PARENT_COMMIT
+        or receipt["standaloneParentCommit"] != E4A_STANDALONE_PARENT_COMMIT
+    ):
+        raise ImportCheckError("E4a receipt identity differs")
+    if receipt["inventory"] != {
+        "bytes": E4A_INVENTORY_BYTES,
+        "gitBlobSha1": E4A_INVENTORY_GIT_BLOB_SHA1,
+        "path": E4A_INVENTORY_PATH,
+        "sha256": E4A_INVENTORY_SHA256,
+    }:
+        raise ImportCheckError("E4a receipt inventory binding differs")
+    if receipt["installedTree"] != {
+        "algorithm": "sha256-length-framed-canonical-file-records-v1",
+        "domain": "aleph-bench-e4a-installed-delta-v1",
+        "fileCount": len(E4A_SOURCE_PATHS),
+        "sha256": E4A_INSTALLED_TREE_SHA256,
+    }:
+        raise ImportCheckError("E4a installed-tree contract differs")
+
+    transformations = receipt["transformations"]
+    if not isinstance(transformations, list) or len(transformations) != 2:
+        raise ImportCheckError("E4a receipt must contain exactly two transformations")
+    by_source = {row["source"]: row for row in rows}
+    for index, entry in enumerate(transformations):
+        role = f"E4a transformations[{index}]"
+        if not isinstance(entry, dict) or set(entry) != {
+            "destination",
+            "output",
+            "source",
+            "transformation",
+        }:
+            raise ImportCheckError(f"{role} keys differ")
+        destination = _validate_repository_path(
+            entry["destination"], role=f"{role} destination"
+        )
+        if destination != E4A_PORT_PATHS[index]:
+            raise ImportCheckError(f"{role} destination differs")
+        source = _validate_e4a_content_record(
+            entry["source"], role=f"{role}.source", require_path=True
+        )
+        row = by_source[destination]
+        expected_source = {
+            "bytes": row["bytes"],
+            "gitBlobSha1": row["gitBlobSha1"],
+            "mode": row["mode"],
+            "path": row["source"],
+            "sha256": row["sha256"],
+        }
+        if source != expected_source:
+            raise ImportCheckError(f"{role} source differs from the inventory")
+        output = _validate_e4a_content_record(
+            entry["output"], role=f"{role}.output", require_path=False
+        )
+        if output != E4A_TRANSFORM_OUTPUTS[destination]:
+            raise ImportCheckError(f"{role} output differs")
+
+    attrs_transform = transformations[0]["transformation"]
+    if attrs_transform != {
+        "algorithm": "append-source-after-single-lf-v1",
+        "reviewIssue": E4A_REVIEW_ISSUE,
+        "separatorHex": "0a",
+        "standaloneBase": {
+            "bytes": E4A_ATTRS_BASE_BYTES,
+            "gitBlobSha1": E4A_ATTRS_BASE_GIT_BLOB_SHA1,
+            "mode": "100644",
+            "path": ".gitattributes",
+            "sha256": E4A_ATTRS_BASE_SHA256,
+        },
+    }:
+        raise ImportCheckError("E4a .gitattributes transformation differs")
+    authority_transform = transformations[1]["transformation"]
+    if authority_transform != {
+        "algorithm": "reviewed-standalone-authority-projection-v1",
+        "authorityProjection": {
+            "aggregateSha256": (
+                "be5aaa575fcc6314aa4f5518d2314b2fecfa5efe320ab84ec595d3fc586a59f2"
+            ),
+            "algorithm": "utf8-replace-once-v1",
+            "installed": {
+                "bytes": E4A_METRICS_STANDALONE_BYTES,
+                "path": E4A_METRICS_PATH,
+                "sha256": E4A_METRICS_STANDALONE_SHA256,
+            },
+            "replacement": {
+                "from": E4A_METRICS_SOURCE_DOC_PATH.decode("ascii"),
+                "to": E4A_METRICS_STANDALONE_DOC_PATH.decode("ascii"),
+            },
+            "source": {
+                "bytes": E4A_METRICS_SOURCE_BYTES,
+                "path": E4A_METRICS_PATH,
+                "sha256": E4A_METRICS_SOURCE_SHA256,
+            },
+        },
+        "reviewIssue": E4A_REVIEW_ISSUE,
+    }:
+        raise ImportCheckError("E4a authority-checker transformation differs")
+    return transformations
 
 
 def _parse_e3a_receipt_bytes(
@@ -1332,6 +1730,10 @@ def _read_regular_path(
             raise ImportCheckError(
                 f"installed path must be a regular file: {relative}"
             )
+        if opened.st_nlink != 1:
+            raise ImportCheckError(
+                f"installed path must be singly linked: {relative}"
+            )
         if (expected.st_dev, expected.st_ino) != (opened.st_dev, opened.st_ino):
             raise ImportCheckError(f"installed file changed while opening: {relative}")
         if expected_bytes is not None and opened.st_size != expected_bytes:
@@ -1513,11 +1915,16 @@ def _verify_installed(
     manifest: dict[str, Any],
     copy_rows: list[dict[str, Any]],
     transformations: list[dict[str, Any]],
+    e4a_rows: Iterable[dict[str, Any]] = (),
 ) -> None:
     expected_copy_paths = {row["destination"] for row in copy_rows}
     transformed_paths = {entry["destination"] for entry in transformations}
+    e4a_paths = {row["destination"] for row in e4a_rows}
     expected_managed_paths = (
-        expected_copy_paths | transformed_paths | SUPPORT_MANAGED_PATHS
+        expected_copy_paths
+        | transformed_paths
+        | e4a_paths
+        | SUPPORT_MANAGED_PATHS
     )
     for prefix in MANAGED_PREFIXES:
         actual_files, actual_directories = _scan_closed_tree(root, prefix)
@@ -1607,6 +2014,138 @@ def _verify_installed(
         )
 
 
+def _content_record(
+    path: str,
+    payload: bytes,
+    status: os.stat_result,
+) -> dict[str, Any]:
+    return {
+        "bytes": len(payload),
+        "gitBlobSha1": _git_blob_sha1(payload),
+        "mode": _git_mode_from_stat(status, path=path),
+        "path": path,
+        "sha256": _sha256(payload),
+    }
+
+
+def _path_records_digest(
+    records: Iterable[dict[str, Any]], *, domain: bytes
+) -> str:
+    digest = hashlib.sha256(domain)
+    for record in sorted(records, key=lambda row: row["path"]):
+        encoded = _canonical_compact_json(record)
+        digest.update(len(encoded).to_bytes(8, "big"))
+        digest.update(encoded)
+    return digest.hexdigest()
+
+
+def _verify_e4a_installed(
+    root: Path,
+    rows: list[dict[str, Any]],
+    transformations: list[dict[str, Any]],
+) -> dict[str, Any]:
+    transform_by_path = {
+        entry["destination"]: entry for entry in transformations
+    }
+    payloads: dict[str, bytes] = {}
+    installed_records: list[dict[str, Any]] = []
+    for row in rows:
+        path = row["destination"]
+        expected = (
+            transform_by_path[path]["output"]
+            if row["disposition"] == "port"
+            else {
+                "bytes": row["bytes"],
+                "gitBlobSha1": row["gitBlobSha1"],
+                "mode": row["mode"],
+                "sha256": row["sha256"],
+            }
+        )
+        payload, status = _read_regular_path(
+            root,
+            path,
+            expected_bytes=expected["bytes"],
+            max_bytes=expected["bytes"],
+        )
+        observed = _content_record(path, payload, status)
+        expected_record = {"path": path, **expected}
+        if observed != expected_record:
+            raise ImportCheckError(f"installed E4a metadata differs at {path}")
+        payloads[path] = payload
+        installed_records.append(observed)
+
+    attrs_entry = transformations[0]
+    attrs_payload = payloads[attrs_entry["destination"]]
+    attrs_base = attrs_payload[:E4A_ATTRS_BASE_BYTES]
+    separator = attrs_payload[E4A_ATTRS_BASE_BYTES : E4A_ATTRS_BASE_BYTES + 1]
+    attrs_source = attrs_payload[E4A_ATTRS_BASE_BYTES + 1 :]
+    if (
+        len(attrs_base) != E4A_ATTRS_BASE_BYTES
+        or _sha256(attrs_base) != E4A_ATTRS_BASE_SHA256
+        or _git_blob_sha1(attrs_base) != E4A_ATTRS_BASE_GIT_BLOB_SHA1
+        or separator != b"\n"
+    ):
+        raise ImportCheckError(
+            "installed E4a .gitattributes does not preserve its standalone base"
+        )
+    attrs_source_record = attrs_entry["source"]
+    if (
+        len(attrs_source) != attrs_source_record["bytes"]
+        or _sha256(attrs_source) != attrs_source_record["sha256"]
+        or _git_blob_sha1(attrs_source) != attrs_source_record["gitBlobSha1"]
+    ):
+        raise ImportCheckError(
+            "installed E4a .gitattributes does not append the pinned source bytes"
+        )
+
+    metrics, _ = _read_regular_path(
+        root,
+        E4A_METRICS_PATH,
+        expected_bytes=E4A_METRICS_STANDALONE_BYTES,
+        max_bytes=E4A_METRICS_STANDALONE_BYTES,
+    )
+    if _sha256(metrics) != E4A_METRICS_STANDALONE_SHA256:
+        raise ImportCheckError("installed standalone metrics port differs")
+    if metrics.count(E4A_METRICS_STANDALONE_DOC_PATH) != 1:
+        raise ImportCheckError(
+            "standalone metrics path must occur exactly once before reconstruction"
+        )
+    if E4A_METRICS_SOURCE_DOC_PATH in metrics:
+        raise ImportCheckError("standalone metrics unexpectedly contains source path")
+    reconstructed_metrics = metrics.replace(
+        E4A_METRICS_STANDALONE_DOC_PATH,
+        E4A_METRICS_SOURCE_DOC_PATH,
+        1,
+    )
+    if (
+        len(reconstructed_metrics) != E4A_METRICS_SOURCE_BYTES
+        or _sha256(reconstructed_metrics) != E4A_METRICS_SOURCE_SHA256
+    ):
+        raise ImportCheckError(
+            "standalone metrics inverse transform does not reconstruct authority"
+        )
+    replayed_metrics = reconstructed_metrics.replace(
+        E4A_METRICS_SOURCE_DOC_PATH,
+        E4A_METRICS_STANDALONE_DOC_PATH,
+        1,
+    )
+    if replayed_metrics != metrics:
+        raise ImportCheckError("standalone metrics transform is not reversible")
+
+    installed_tree = _path_records_digest(
+        installed_records,
+        domain=E4A_INSTALLED_TREE_DOMAIN,
+    )
+    if installed_tree != E4A_INSTALLED_TREE_SHA256:
+        raise ImportCheckError("installed E4a delta-tree digest differs")
+    return {
+        "copyFiles": sum(row["disposition"] == "copy" for row in rows),
+        "fileCount": len(rows),
+        "portFiles": sum(row["disposition"] == "port" for row in rows),
+        "sha256": installed_tree,
+    }
+
+
 def _git_environment() -> dict[str, str]:
     environment = {
         key: value for key, value in os.environ.items() if not key.startswith("GIT_")
@@ -1658,6 +2197,103 @@ def _verify_commit(repository: Path, commit: str) -> None:
     ).strip()
     if object_type != "commit":
         raise ImportCheckError(f"source object is not a commit: {commit}")
+
+
+def _parse_nul_paths(raw: bytes, *, role: str) -> tuple[str, ...]:
+    encoded_paths = raw.split(b"\0")
+    if encoded_paths and encoded_paths[-1] == b"":
+        encoded_paths.pop()
+    paths: list[str] = []
+    for encoded in encoded_paths:
+        try:
+            path = encoded.decode("utf-8")
+        except UnicodeError as exc:
+            raise ImportCheckError(f"{role} contains a non-UTF-8 path") from exc
+        _validate_repository_path(path, role=role)
+        paths.append(path)
+    _validate_unique_paths(paths, role=role)
+    return tuple(paths)
+
+
+def _verify_e4a_delta_at_source(
+    repository: Path,
+    root: Path,
+    rows: list[dict[str, Any]],
+) -> None:
+    _verify_commit(repository, E4A_SOURCE_PARENT_COMMIT)
+    _verify_commit(repository, E4A_SOURCE_COMMIT)
+    diff_arguments = [
+        "diff",
+        "--no-ext-diff",
+        "--no-renames",
+        "--name-only",
+        "-z",
+        E4A_SOURCE_PARENT_COMMIT,
+        E4A_SOURCE_COMMIT,
+        "--",
+    ]
+    all_paths = _parse_nul_paths(
+        _git(repository, diff_arguments), role="E4a source delta"
+    )
+    added_paths = _parse_nul_paths(
+        _git(
+            repository,
+            [
+                *diff_arguments[:4],
+                "--diff-filter=A",
+                *diff_arguments[4:],
+            ],
+        ),
+        role="E4a added source delta",
+    )
+    if all_paths != E4A_SOURCE_PATHS or added_paths != E4A_SOURCE_PATHS:
+        raise ImportCheckError(
+            "E4a pinned commit must add exactly the reviewed 17-path closure"
+        )
+    source_payloads = _verify_rows_at_commit(
+        repository,
+        E4A_SOURCE_COMMIT,
+        rows,
+    )
+
+    metrics_row = {
+        "bytes": E4A_METRICS_SOURCE_BYTES,
+        "gitBlobSha1": E4A_METRICS_SOURCE_GIT_BLOB_SHA1,
+        "mode": "100644",
+        "sha256": E4A_METRICS_SOURCE_SHA256,
+        "source": E4A_METRICS_PATH,
+    }
+    metrics_source = _verify_rows_at_commit(
+        repository,
+        E4A_SOURCE_COMMIT,
+        [metrics_row],
+    )[E4A_METRICS_PATH]
+    installed_metrics, _ = _read_regular_path(
+        root,
+        E4A_METRICS_PATH,
+        expected_bytes=E4A_METRICS_STANDALONE_BYTES,
+        max_bytes=E4A_METRICS_STANDALONE_BYTES,
+    )
+    reconstructed = installed_metrics.replace(
+        E4A_METRICS_STANDALONE_DOC_PATH,
+        E4A_METRICS_SOURCE_DOC_PATH,
+        1,
+    )
+    if reconstructed != metrics_source:
+        raise ImportCheckError(
+            "standalone metrics inverse transform differs from the pinned source object"
+        )
+
+    attrs_output, _ = _read_regular_path(
+        root,
+        ".gitattributes",
+        expected_bytes=E4A_TRANSFORM_OUTPUTS[".gitattributes"]["bytes"],
+        max_bytes=E4A_TRANSFORM_OUTPUTS[".gitattributes"]["bytes"],
+    )
+    if attrs_output[E4A_ATTRS_BASE_BYTES + 1 :] != source_payloads[".gitattributes"]:
+        raise ImportCheckError(
+            "installed .gitattributes suffix differs from the pinned E4a source object"
+        )
 
 
 def _parse_ls_tree(raw: bytes) -> dict[str, dict[str, Any]]:
@@ -2026,6 +2662,7 @@ def _verify_source(
     e3c_transformations: list[dict[str, Any]],
     e3d_transformations: list[dict[str, Any]],
     e3e_transformations: list[dict[str, Any]],
+    e4a_rows: list[dict[str, Any]],
     installed_inventory_raw: bytes,
 ) -> None:
     repository = _validate_source_root(repository)
@@ -2040,6 +2677,7 @@ def _verify_source(
     _verify_commit(repository, INVENTORY_COMMIT)
     _verify_inventory_object(repository, installed_inventory_raw)
     _verify_rows_at_commit(repository, SOURCE_COMMIT, copy_rows)
+    _verify_e4a_delta_at_source(repository, root, e4a_rows)
 
     inventory_by_source = {row["source"]: row for row in manifest["files"]}
     all_transformations = (
@@ -2183,6 +2821,35 @@ def verify_repository(
     e3e_transformations = _parse_e3e_receipt_bytes(
         e3e_receipt_raw, manifest
     )
+    e4a_inventory_raw, e4a_inventory_status = _read_regular_path(
+        root,
+        E4A_INVENTORY_PATH,
+        expected_bytes=E4A_INVENTORY_BYTES,
+        max_bytes=MAX_RECEIPT_BYTES,
+    )
+    if (
+        _git_mode_from_stat(e4a_inventory_status, path=E4A_INVENTORY_PATH)
+        != "100644"
+        or _git_blob_sha1(e4a_inventory_raw) != E4A_INVENTORY_GIT_BLOB_SHA1
+    ):
+        raise ImportCheckError("installed E4a inventory metadata differs")
+    _e4a_inventory, e4a_rows = _parse_e4a_inventory_bytes(e4a_inventory_raw)
+    e4a_receipt_raw, e4a_receipt_status = _read_regular_path(
+        root,
+        E4A_RECEIPT_PATH,
+        expected_bytes=E4A_RECEIPT_BYTES,
+        max_bytes=MAX_RECEIPT_BYTES,
+    )
+    if (
+        _git_mode_from_stat(e4a_receipt_status, path=E4A_RECEIPT_PATH)
+        != "100644"
+        or _git_blob_sha1(e4a_receipt_raw) != E4A_RECEIPT_GIT_BLOB_SHA1
+    ):
+        raise ImportCheckError("installed E4a receipt metadata differs")
+    e4a_transformations = _parse_e4a_receipt_bytes(
+        e4a_receipt_raw,
+        e4a_rows,
+    )
     all_transformations = (
         e3a_transformations
         + e3b_transformations
@@ -2190,7 +2857,18 @@ def verify_repository(
         + e3d_transformations
         + e3e_transformations
     )
-    _verify_installed(root, manifest, copy_rows, all_transformations)
+    _verify_installed(
+        root,
+        manifest,
+        copy_rows,
+        all_transformations,
+        e4a_rows,
+    )
+    e4a_report = _verify_e4a_installed(
+        root,
+        e4a_rows,
+        e4a_transformations,
+    )
     _reconstruct_e3c_sources(root, e3c_transformations)
     _reconstruct_e3d_source(root, e3d_transformations)
     _reconstruct_e3e_source(root, e3e_transformations)
@@ -2205,6 +2883,7 @@ def verify_repository(
             e3c_transformations,
             e3d_transformations,
             e3e_transformations,
+            e4a_rows,
             inventory_raw,
         )
     return {
@@ -2217,6 +2896,10 @@ def verify_repository(
         "e3cPackageTreeSha256": E3C_PACKAGE_TREE_SHA256,
         "e3dFiles": len(e3d_transformations),
         "e3eFiles": len(e3e_transformations),
+        "e4aCopyFiles": e4a_report["copyFiles"],
+        "e4aFiles": e4a_report["fileCount"],
+        "e4aInstalledTreeSha256": e4a_report["sha256"],
+        "e4aPortFiles": e4a_report["portFiles"],
         "sourceVerified": source_git is not None,
     }
 
@@ -2224,7 +2907,7 @@ def verify_repository(
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Verify the pinned Aleph Bench E2 through E3e source import."
+            "Verify the pinned Aleph Bench E2 through E4a source import."
         )
     )
     parser.add_argument(
@@ -2247,6 +2930,10 @@ def main(argv: list[str] | None = None) -> int:
         f"e3cFiles={result['e3cFiles']} "
         f"e3dFiles={result['e3dFiles']} "
         f"e3eFiles={result['e3eFiles']} "
+        f"e4aFiles={result['e4aFiles']} "
+        f"e4aCopyFiles={result['e4aCopyFiles']} "
+        f"e4aPortFiles={result['e4aPortFiles']} "
+        f"e4aInstalledTreeSha256={result['e4aInstalledTreeSha256']} "
         f"e3cPackageTreeSha256={result['e3cPackageTreeSha256']} "
         f"copyTreeSha256={result['copyTreeSha256']}"
     )

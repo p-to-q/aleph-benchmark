@@ -1,0 +1,274 @@
+{
+  "$id": "https://github.com/p-to-q/aleph/bench/vendor/portable-unicode-inputs-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$defs": {
+    "artifact": {
+      "additionalProperties": false,
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "unicode-data"
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "required": [
+              "unicodeDataFile",
+              "unicodeVersion"
+            ],
+            "type": "object"
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "kind": {
+                "const": "python-wheel"
+              }
+            },
+            "required": [
+              "kind"
+            ],
+            "type": "object"
+          },
+          "then": {
+            "required": [
+              "abiTag",
+              "distribution",
+              "extensionBasename",
+              "platformTags",
+              "pythonTag",
+              "version"
+            ],
+            "type": "object"
+          }
+        }
+      ],
+      "properties": {
+        "abiTag": {
+          "pattern": "^cp(311|312)$",
+          "type": "string"
+        },
+        "acquiredAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "byteCount": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "distribution": {
+          "const": "unicodedata2",
+          "type": "string"
+        },
+        "extensionBasename": {
+          "pattern": "^unicodedata2\\.cpython-(311|312)-x86_64-linux-gnu\\.so$",
+          "type": "string"
+        },
+        "filename": {
+          "minLength": 1,
+          "pattern": "^[^/\\\\]+$",
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "python-wheel",
+            "unicode-data"
+          ],
+          "type": "string"
+        },
+        "licenseId": {
+          "enum": [
+            "Apache-2.0",
+            "Unicode-3.0"
+          ],
+          "type": "string"
+        },
+        "platformTags": {
+          "items": {
+            "enum": [
+              "manylinux2014_x86_64",
+              "manylinux_2_17_x86_64"
+            ],
+            "type": "string"
+          },
+          "maxItems": 2,
+          "minItems": 2,
+          "type": "array",
+          "uniqueItems": true
+        },
+        "primaryUrl": {
+          "pattern": "^https://",
+          "type": "string"
+        },
+        "pythonTag": {
+          "pattern": "^cp(311|312)$",
+          "type": "string"
+        },
+        "repositoryPath": {
+          "minLength": 1,
+          "pattern": "^bench/vendor/",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "unicodeDataFile": {
+          "enum": [
+            "CaseFolding",
+            "NormalizationTest",
+            "PropList"
+          ],
+          "type": "string"
+        },
+        "unicodeVersion": {
+          "const": "15.1.0",
+          "type": "string"
+        },
+        "version": {
+          "const": "15.1.0",
+          "type": "string"
+        }
+      },
+      "required": [
+        "acquiredAt",
+        "byteCount",
+        "filename",
+        "kind",
+        "licenseId",
+        "primaryUrl",
+        "repositoryPath",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "license": {
+      "additionalProperties": false,
+      "properties": {
+        "acquiredAt": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "byteCount": {
+          "minimum": 1,
+          "type": "integer"
+        },
+        "licenseId": {
+          "enum": [
+            "Apache-2.0",
+            "Unicode-3.0"
+          ],
+          "type": "string"
+        },
+        "name": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "path": {
+          "pattern": "^bench/vendor/",
+          "type": "string"
+        },
+        "primaryUrl": {
+          "pattern": "^https://",
+          "type": "string"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "sourceArchiveMember": {
+          "minLength": 1,
+          "type": "string"
+        },
+        "verifiedInArtifacts": {
+          "items": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "minItems": 1,
+          "type": "array",
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "acquiredAt",
+        "byteCount",
+        "licenseId",
+        "name",
+        "path",
+        "primaryUrl",
+        "sha256",
+        "verifiedInArtifacts"
+      ],
+      "type": "object"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "type": "string"
+    },
+    "timestamp": {
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$",
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "properties": {
+    "artifactCount": {
+      "const": 5,
+      "type": "integer"
+    },
+    "artifactKind": {
+      "const": "aleph-bench-portable-unicode-inputs",
+      "type": "string"
+    },
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/artifact"
+      },
+      "maxItems": 5,
+      "minItems": 5,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "formatVersion": {
+      "const": 1,
+      "type": "integer"
+    },
+    "hashAlgorithm": {
+      "const": "sha256",
+      "type": "string"
+    },
+    "licenses": {
+      "items": {
+        "$ref": "#/$defs/license"
+      },
+      "maxItems": 2,
+      "minItems": 2,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "profileVersion": {
+      "const": "0.3.0-provisional",
+      "type": "string"
+    },
+    "unicodeVersion": {
+      "const": "15.1.0",
+      "type": "string"
+    }
+  },
+  "required": [
+    "artifactCount",
+    "artifactKind",
+    "artifacts",
+    "formatVersion",
+    "hashAlgorithm",
+    "licenses",
+    "profileVersion",
+    "unicodeVersion"
+  ],
+  "title": "Aleph Bench portable Unicode input lock",
+  "type": "object"
+}

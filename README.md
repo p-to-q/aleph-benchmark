@@ -15,7 +15,10 @@ v0.2-only artifact verifier with bounded snapshot reads, final path binding,
 and retained-output replay. E3e adds the v0.2-only repository runner, turns the
 byte-identical `aleph-bench` launcher into a working repository-root CLI, and
 replaces its excluded legacy output dependency with a descriptor-relative
-atomic writer.
+atomic writer. E4a adds the reviewed portable-Unicode input closure from exact
+Aleph commit `7a15c2410e199b82dc65f9caf65f53aa9e8d6c5f`: 15 byte-identical
+copies and two explicitly receipted standalone ports. The retained wheels
+remain inert archives; E4a neither installs nor imports them.
 
 The sole source-parity gate for this slice is:
 
@@ -28,11 +31,15 @@ closed managed source trees, the top-level import surface, the reviewed
 standalone notice, the two E3a transformations, and the E3b report transform.
 It also verifies the two E3c output digests, exact modes, package-tree contract,
 and mechanically replays the declared UTF-8/code-point splice sequences in both
-directions, including the E3d verifier and E3e runner transformations. With
+directions, including the E3d verifier and E3e runner transformations. It also
+checks the E4a additive inventory, complete 17-path source delta, retained
+licenses and wheel archives, merged attributes file, and in-memory inverse
+transform from the reviewed standalone metrics port to the immutable 41-file
+authority aggregate. With
 `--source-git`, it proves that every reconstructed port input matches the exact
 pinned Git object. Passing the gate does not make the full benchmark test suite,
 release packaging, or authority transition complete.
-The migration checker is tested with Python 3.10 through 3.13 on POSIX systems
+The migration checker is tested with Python 3.10 through 3.14 on POSIX systems
 with no-follow file APIs. This tooling range does not relax the separate v0.2
 scoring contract, which remains pinned to Python 3.13 and Unicode 15.1.0.
 
@@ -85,6 +92,11 @@ release or an admissible model result. The authority transition is tracked in
   reversible splice contract for the standalone v0.2 verifier.
 - `provenance/aleph/e3e.runner.json`: exact source/output identities and a
   reversible splice contract for the standalone v0.2 runner.
+- `provenance/aleph/post-e3-portable-dependencies.inventory.json`: the exact
+  17-file E4a source delta pinned to Aleph `7a15c24` and standalone parent
+  `ae1d80c`.
+- `provenance/aleph/e4a.portable-unicode-inputs.json`: the E4a installed-tree
+  digest and the two reviewed standalone transforms.
 - `platform/m0-mock/`: a historical Aleph Bench Frozen Ladder M0 platform
   package snapshot.
 - `references/kaggle-bench/`: local Kaggle Benchmarks syntax notes and a minimal example task.
@@ -108,7 +120,12 @@ release. Preserve the `mock` / `evidenceMode = mock` label in every downstream u
   On Python 3.10–3.12, `doctor` reports the structural incompatibility and
   `run` / `manifest` fail before writing output; parser, verifier diagnostics,
   package build/check, and migration tooling remain available in their
-  documented fail-closed or runtime-neutral modes.
+  documented fail-closed or runtime-neutral modes. The Python 3.14 E4a lane is
+  limited to provenance, authority-projection, and archive-only checks.
+- The E4a CPython 3.11 and 3.12 manylinux x86-64 wheels are reviewed
+  supply-chain inputs only. Their hashes, tags, metadata, RECORD closure, and
+  embedded license are checked without installation or import. Runtime loading
+  and module-origin proof belong to the later portable-runtime gate.
 - `validate-croissant` imports `mlcroissant` only when invoked. In the base
   environment it exits with an installation hint; `mlcroissant` is not a
   mandatory dependency for any other command.

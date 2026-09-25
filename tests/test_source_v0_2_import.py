@@ -71,6 +71,19 @@ class InventoryContractTests(unittest.TestCase):
         cls.e3e_transformations = checker._parse_e3e_receipt_bytes(
             cls.e3e_receipt_raw, cls.manifest
         )
+        cls.e4a_inventory_raw = (
+            REPOSITORY_ROOT / checker.E4A_INVENTORY_PATH
+        ).read_bytes()
+        cls.e4a_inventory, cls.e4a_rows = checker._parse_e4a_inventory_bytes(
+            cls.e4a_inventory_raw
+        )
+        cls.e4a_receipt_raw = (
+            REPOSITORY_ROOT / checker.E4A_RECEIPT_PATH
+        ).read_bytes()
+        cls.e4a_transformations = checker._parse_e4a_receipt_bytes(
+            cls.e4a_receipt_raw,
+            cls.e4a_rows,
+        )
 
     def test_reviewed_inventory_and_copy_selection(self) -> None:
         self.assertEqual(len(self.copy_rows), 78)
@@ -238,6 +251,61 @@ class InventoryContractTests(unittest.TestCase):
             "5a4a67bd9979d84c2ca6e402df55967c0c86186e246bdde056d517af9ccd9c51",
         )
 
+    def test_reviewed_e4a_inventory_and_receipt(self) -> None:
+        self.assertEqual(len(self.e4a_rows), 17)
+        self.assertEqual(
+            sum(row["disposition"] == "copy" for row in self.e4a_rows),
+            15,
+        )
+        self.assertEqual(
+            tuple(row["source"] for row in self.e4a_rows),
+            checker.E4A_SOURCE_PATHS,
+        )
+        self.assertEqual(
+            [entry["destination"] for entry in self.e4a_transformations],
+            list(checker.E4A_PORT_PATHS),
+        )
+
+    def test_e4a_inventory_tamper_is_rejected(self) -> None:
+        value = json.loads(self.e4a_inventory_raw)
+        value["summary"]["sourceFiles"] += 1
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "raw E4a delta"):
+            checker._parse_e4a_inventory_bytes(tampered)
+
+    def test_e4a_inventory_contract_tamper_fails_without_digest_pin(self) -> None:
+        value = json.loads(self.e4a_inventory_raw)
+        value["files"][0]["disposition"] = "copy"
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "disposition differs"):
+            checker._parse_e4a_inventory_bytes(
+                tampered,
+                expected_raw_sha256=None,
+            )
+
+    def test_e4a_receipt_tamper_is_rejected(self) -> None:
+        value = json.loads(self.e4a_receipt_raw)
+        value["installedTree"]["sha256"] = "0" * 64
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "raw E4a receipt"):
+            checker._parse_e4a_receipt_bytes(tampered, self.e4a_rows)
+
+    def test_e4a_transform_contract_tamper_fails_without_digest_pin(self) -> None:
+        value = json.loads(self.e4a_receipt_raw)
+        value["transformations"][1]["transformation"]["authorityProjection"][
+            "replacement"
+        ]["to"] = "docs/other.md"
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(
+            checker.ImportCheckError,
+            "authority-checker transformation differs",
+        ):
+            checker._parse_e4a_receipt_bytes(
+                tampered,
+                self.e4a_rows,
+                expected_raw_sha256=None,
+            )
+
     def test_e3e_receipt_tamper_is_rejected(self) -> None:
         value = json.loads(self.e3e_receipt_raw)
         value["transformations"][0]["output"]["bytes"] += 1
@@ -377,6 +445,19 @@ class InstalledTreeTests(unittest.TestCase):
         e3e_transformations = checker._parse_e3e_receipt_bytes(
             e3e_receipt_raw, cls.manifest
         )
+        e4a_inventory_raw = (
+            REPOSITORY_ROOT / checker.E4A_INVENTORY_PATH
+        ).read_bytes()
+        cls.e4a_inventory, cls.e4a_rows = checker._parse_e4a_inventory_bytes(
+            e4a_inventory_raw
+        )
+        e4a_receipt_raw = (
+            REPOSITORY_ROOT / checker.E4A_RECEIPT_PATH
+        ).read_bytes()
+        cls.e4a_transformations = checker._parse_e4a_receipt_bytes(
+            e4a_receipt_raw,
+            cls.e4a_rows,
+        )
         cls.transformations = (
             e3a_transformations
             + e3b_transformations
@@ -406,6 +487,12 @@ class InstalledTreeTests(unittest.TestCase):
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, destination)
             destination.chmod(0o644)
+        for row in self.e4a_rows:
+            source = REPOSITORY_ROOT / row["destination"]
+            destination = root / row["destination"]
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, destination)
+            destination.chmod(0o644)
         shutil.copyfile(REPOSITORY_ROOT / "NOTICE", root / "NOTICE")
         (root / "NOTICE").chmod(0o644)
         return temporary, root
@@ -420,6 +507,18 @@ class InstalledTreeTests(unittest.TestCase):
                     self.manifest,
                     self.copy_rows,
                     self.transformations,
+                    self.e4a_rows,
+                )
+
+    def assert_e4a_rejected(self, mutate) -> None:
+        temporary, root = self.materialize()
+        with temporary:
+            mutate(root)
+            with self.assertRaises(checker.ImportCheckError):
+                checker._verify_e4a_installed(
+                    root,
+                    self.e4a_rows,
+                    self.e4a_transformations,
                 )
 
     def test_complete_tree_passes(self) -> None:
@@ -430,6 +529,12 @@ class InstalledTreeTests(unittest.TestCase):
                 self.manifest,
                 self.copy_rows,
                 self.transformations,
+                self.e4a_rows,
+            )
+            checker._verify_e4a_installed(
+                root,
+                self.e4a_rows,
+                self.e4a_transformations,
             )
 
     def test_missing_file_is_rejected(self) -> None:
@@ -438,6 +543,11 @@ class InstalledTreeTests(unittest.TestCase):
     def test_extra_file_is_rejected(self) -> None:
         self.assert_rejected(
             lambda root: (root / "bench/extra.py").write_text("extra\n")
+        )
+
+    def test_extra_vendor_file_is_rejected(self) -> None:
+        self.assert_rejected(
+            lambda root: (root / "bench/vendor/unreviewed.bin").write_bytes(b"x")
         )
 
     def test_extra_schema_outside_v0_2_is_rejected(self) -> None:
@@ -473,6 +583,54 @@ class InstalledTreeTests(unittest.TestCase):
             path.symlink_to("elsewhere")
 
         self.assert_rejected(mutate)
+
+    def test_e4a_symlink_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            path = root / "bench/vendor/portable-unicode-inputs-v1.json"
+            path.unlink()
+            path.symlink_to("README.md")
+
+        self.assert_e4a_rejected(mutate)
+
+    def test_e4a_hardlink_is_rejected(self) -> None:
+        def mutate(root: Path) -> None:
+            path = root / "bench/vendor/portable-unicode-inputs-v1.json"
+            outside = root / "outside-manifest.json"
+            shutil.move(path, outside)
+            os.link(outside, path)
+
+        self.assert_e4a_rejected(mutate)
+
+    def test_e4a_mode_and_byte_drift_are_rejected(self) -> None:
+        self.assert_e4a_rejected(
+            lambda root: (
+                root / "bench/vendor/portable-unicode-inputs-v1.json"
+            ).chmod(0o755)
+        )
+
+        def mutate_wheel(root: Path) -> None:
+            path = root / self.e4a_rows[12]["destination"]
+            data = path.read_bytes()
+            path.write_bytes(bytes([data[0] ^ 1]) + data[1:])
+
+        self.assert_e4a_rejected(mutate_wheel)
+
+    def test_e4a_ports_and_metrics_projection_are_exact(self) -> None:
+        self.assert_e4a_rejected(
+            lambda root: (root / ".gitattributes").write_text("drift\n")
+        )
+        self.assert_e4a_rejected(
+            lambda root: (
+                root / "scripts/check-v0-2-scoring-authority.py"
+            ).write_text("drift\n")
+        )
+        self.assert_e4a_rejected(
+            lambda root: (root / checker.E4A_METRICS_PATH).write_bytes(
+                (root / checker.E4A_METRICS_PATH)
+                .read_bytes()
+                .replace(b"Lower is better", b"Lower is bettor", 1)
+            )
+        )
 
     @unittest.skipUnless(hasattr(os, "mkfifo"), "FIFO requires POSIX")
     def test_fifo_is_rejected(self) -> None:
@@ -856,6 +1014,13 @@ class LiveGateTests(unittest.TestCase):
         self.assertEqual(result["e3cFiles"], 2)
         self.assertEqual(result["e3dFiles"], 1)
         self.assertEqual(result["e3eFiles"], 1)
+        self.assertEqual(result["e4aFiles"], 17)
+        self.assertEqual(result["e4aCopyFiles"], 15)
+        self.assertEqual(result["e4aPortFiles"], 2)
+        self.assertEqual(
+            result["e4aInstalledTreeSha256"],
+            checker.E4A_INSTALLED_TREE_SHA256,
+        )
         self.assertEqual(
             result["e3cPackageTreeSha256"],
             checker.E3C_PACKAGE_TREE_SHA256,
