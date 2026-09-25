@@ -1,0 +1,89 @@
+{
+  "artifactKind": "aleph_bench_source_migration_receipt",
+  "copyFiles": 15,
+  "formatVersion": 1,
+  "installedTree": {
+    "algorithm": "sha256-length-framed-canonical-file-records-v1",
+    "domain": "aleph-bench-e4a-installed-delta-v1",
+    "fileCount": 17,
+    "sha256": "0ba14665f0f201634d6d2c1a56ecddb58260502c58708ec4bba6e56a63a4a52a"
+  },
+  "inventory": {
+    "bytes": 7299,
+    "gitBlobSha1": "1120b766ecadbd8f84052f617c8175532c18e23d",
+    "path": "provenance/aleph/post-e3-portable-dependencies.inventory.json",
+    "sha256": "2b94b8f68b60124d8f293bc08cf3d99fd50a55728a88495719a265870ae35030"
+  },
+  "slice": "E4a",
+  "sourceCommit": "7a15c2410e199b82dc65f9caf65f53aa9e8d6c5f",
+  "sourceParentCommit": "8fb57eb921d792dbd245d849ab08ac5c7cf11c6e",
+  "standaloneParentCommit": "ae1d80c339957a915d205d7ee015b0b7575d25ca",
+  "transformations": [
+    {
+      "destination": ".gitattributes",
+      "output": {
+        "bytes": 446,
+        "gitBlobSha1": "d3d18616c07d4b393bd93394bed0ae63de3f5b7d",
+        "mode": "100644",
+        "sha256": "1d7e42d731c63f9b7ca0a2a22469687fefa8048872c6fcb1492cd2ada6aa5561"
+      },
+      "source": {
+        "bytes": 146,
+        "gitBlobSha1": "98a2307e8fa6071621ce9870565cbd3f2ed50de2",
+        "mode": "100644",
+        "path": ".gitattributes",
+        "sha256": "f2419ea82edeaf26f01d201d678b7b7b794bb744cdd5397357184a46c7bbd0bd"
+      },
+      "transformation": {
+        "algorithm": "append-source-after-single-lf-v1",
+        "reviewIssue": "https://github.com/p-to-q/aleph-benchmark/issues/15",
+        "separatorHex": "0a",
+        "standaloneBase": {
+          "bytes": 299,
+          "gitBlobSha1": "f26113969f84641d6e0d998268d9a1a9a9133e5a",
+          "mode": "100644",
+          "path": ".gitattributes",
+          "sha256": "b2952e7687a229cfe99bb0be33cc8f2bf48005fd87cb69a5ec059e153ccd74ec"
+        }
+      }
+    },
+    {
+      "destination": "scripts/check-v0-2-scoring-authority.py",
+      "output": {
+        "bytes": 17670,
+        "gitBlobSha1": "d1180d4c2b4b0ac75590653a5a4cfc40ed82a679",
+        "mode": "100644",
+        "sha256": "0fd37720bcdb6564e61b6714223a13dc9be1e3878de1dfba08c0ecf3b1cd63a6"
+      },
+      "source": {
+        "bytes": 15361,
+        "gitBlobSha1": "04d743bc2dc5d3f38bba4f13b1833120abfb25f8",
+        "mode": "100644",
+        "path": "scripts/check-v0-2-scoring-authority.py",
+        "sha256": "652f1b442c18d1ced6d917b590707cea08dc10be90d16da7a3d50c559a77cde0"
+      },
+      "transformation": {
+        "algorithm": "reviewed-standalone-authority-projection-v1",
+        "authorityProjection": {
+          "aggregateSha256": "be5aaa575fcc6314aa4f5518d2314b2fecfa5efe320ab84ec595d3fc586a59f2",
+          "algorithm": "utf8-replace-once-v1",
+          "installed": {
+            "bytes": 4796,
+            "path": "bench/engine/metrics.py",
+            "sha256": "3628f3bf60998707eeadb6e2ab72a1942ca0459d1c018fa5cf7887d2904461d7"
+          },
+          "replacement": {
+            "from": "docs/benchmark/02-design-spec.md",
+            "to": "docs/protocol-v0.2.md"
+          },
+          "source": {
+            "bytes": 4807,
+            "path": "bench/engine/metrics.py",
+            "sha256": "23ce9f04cdbc358e7984d346bde1c22679f0902ffc2bbd0afcd597ee0a17c002"
+          }
+        },
+        "reviewIssue": "https://github.com/p-to-q/aleph-benchmark/issues/15"
+      }
+    }
+  ]
+}

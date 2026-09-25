@@ -1,0 +1,261 @@
+{
+  "aggregate": {
+    "algorithm": "sha256-length-framed-path-and-content-v1",
+    "domain": "aleph-bench-v0.2-scoring-authority-v1",
+    "sha256": "be5aaa575fcc6314aa4f5518d2314b2fecfa5efe320ab84ec595d3fc586a59f2"
+  },
+  "artifactKind": "aleph-bench-v0.2-scoring-authority-lock",
+  "fileCount": 41,
+  "files": [
+    {
+      "bytes": 703,
+      "path": "bench/config/frozen_ladder-v0.2.json",
+      "role": "protocol-config",
+      "sha256": "c4cc5d97655de91fcf22674d5133a689faee8ac27dd8c60a1a67caccae648ba8"
+    },
+    {
+      "bytes": 18057,
+      "path": "bench/conformance/scorer-v0.2.json",
+      "role": "conformance",
+      "sha256": "044925b055db9051329e1556ed524f165d6c8e1e47f02eaf9bdb129aeadf67c6"
+    },
+    {
+      "bytes": 3413,
+      "path": "bench/data/v0.2/public/s2/s2-001.json",
+      "role": "public-s2-item",
+      "sha256": "6a250424862f0859d49ef9e32fe3de18f66c243e4c6337c6cbc65396b48aad42"
+    },
+    {
+      "bytes": 3943,
+      "path": "bench/data/v0.2/public/s2/s2-002.json",
+      "role": "public-s2-item",
+      "sha256": "650ad28c3b99582f6326b8e3a23057a3aca2722477d33f01bb70e2af5e9f0c53"
+    },
+    {
+      "bytes": 3481,
+      "path": "bench/data/v0.2/public/s2/s2-003.json",
+      "role": "public-s2-item",
+      "sha256": "74e537781c76d31ffd91c3e50317376d64e8f19000244aacd880ad6aa8a21522"
+    },
+    {
+      "bytes": 3462,
+      "path": "bench/data/v0.2/public/s2/s2-004.json",
+      "role": "public-s2-item",
+      "sha256": "32b950beebfcf0cef91cec0e52b665ccf30e18d1e81dbaab3ed351abef5eb411"
+    },
+    {
+      "bytes": 3909,
+      "path": "bench/data/v0.2/public/s2/s2-005.json",
+      "role": "public-s2-item",
+      "sha256": "06050f574694be118e91ee04ff3f3c54bf29ac42780ea69c01673c8d267070b9"
+    },
+    {
+      "bytes": 3473,
+      "path": "bench/data/v0.2/public/s2/s2-006.json",
+      "role": "public-s2-item",
+      "sha256": "9d18c86c39da485add5eed01955e914d5ccf952a28b22a7c590f9780e21947ed"
+    },
+    {
+      "bytes": 3429,
+      "path": "bench/data/v0.2/public/s2/s2-007.json",
+      "role": "public-s2-item",
+      "sha256": "a86e12aebee7710a6598d9393b5500c01bc3fa49ec830808f2ed3468da240f1d"
+    },
+    {
+      "bytes": 3898,
+      "path": "bench/data/v0.2/public/s2/s2-008.json",
+      "role": "public-s2-item",
+      "sha256": "13650545523abfa5225d53b16a26ad6f18eac336b711a7e656fc63f2e23a54f3"
+    },
+    {
+      "bytes": 3497,
+      "path": "bench/data/v0.2/public/s2/s2-009.json",
+      "role": "public-s2-item",
+      "sha256": "8885ddb89f7681d3d8b45b045ab8d0da031c7686396b81d1617e096dd56f0f32"
+    },
+    {
+      "bytes": 3445,
+      "path": "bench/data/v0.2/public/s2/s2-010.json",
+      "role": "public-s2-item",
+      "sha256": "f5eec7c0bd25a36afc7c94ae29f9f1e4a9ebcee867349cb2b0ca58aa69c6eb3a"
+    },
+    {
+      "bytes": 3932,
+      "path": "bench/data/v0.2/public/s2/s2-011.json",
+      "role": "public-s2-item",
+      "sha256": "c639ad89f4ba752d00de610a41880932dd581f4c53c98b17864a8e787bd904c9"
+    },
+    {
+      "bytes": 3481,
+      "path": "bench/data/v0.2/public/s2/s2-012.json",
+      "role": "public-s2-item",
+      "sha256": "15e9c41169a885e2c854891d7704973cb9b35f3a8ace3a030f6c0eb99dd3d003"
+    },
+    {
+      "bytes": 3467,
+      "path": "bench/data/v0.2/public/s2/s2-013.json",
+      "role": "public-s2-item",
+      "sha256": "7a7a27ca46f87e3872e2a8ac6464ddd9806b3ecf8c983507733d52624f46f6d6"
+    },
+    {
+      "bytes": 3902,
+      "path": "bench/data/v0.2/public/s2/s2-014.json",
+      "role": "public-s2-item",
+      "sha256": "64cfdc7da9d9c68d87e81cef5a9e21dab628aa713aa87ab29bf9a2ba938a38f0"
+    },
+    {
+      "bytes": 3473,
+      "path": "bench/data/v0.2/public/s2/s2-015.json",
+      "role": "public-s2-item",
+      "sha256": "64fd15feacc9d694883dc337d88e91ddbecfee683a611d851797db32049cd0d1"
+    },
+    {
+      "bytes": 3437,
+      "path": "bench/data/v0.2/public/s2/s2-016.json",
+      "role": "public-s2-item",
+      "sha256": "e899a0f06f9b090b60d4bc2f338a16b0705cd293c8e4eb31e281614c0b9c55c9"
+    },
+    {
+      "bytes": 3932,
+      "path": "bench/data/v0.2/public/s2/s2-017.json",
+      "role": "public-s2-item",
+      "sha256": "64ed023716763a75c245cc04e494c0e65974f75285ffce3420e86a3a4a63670b"
+    },
+    {
+      "bytes": 3465,
+      "path": "bench/data/v0.2/public/s2/s2-018.json",
+      "role": "public-s2-item",
+      "sha256": "38296476678e202ad90de8d0c5b26886f28a7be6f1316156fdefc221f1e356b0"
+    },
+    {
+      "bytes": 3454,
+      "path": "bench/data/v0.2/public/s2/s2-019.json",
+      "role": "public-s2-item",
+      "sha256": "93aae617d26a1f2f23c83e0bf952a1634458ccfbd33e5fbe22e9f6bd68a0d410"
+    },
+    {
+      "bytes": 3942,
+      "path": "bench/data/v0.2/public/s2/s2-020.json",
+      "role": "public-s2-item",
+      "sha256": "dd0406f2f5107973d8b35f00afaa184241305fbc16089285c604bf3c07408caf"
+    },
+    {
+      "bytes": 3473,
+      "path": "bench/data/v0.2/public/s2/s2-021.json",
+      "role": "public-s2-item",
+      "sha256": "0dedc5bc327dbd021648cd3c29abc3c48848e94ef5cb7faddca07d080610fa0e"
+    },
+    {
+      "bytes": 3462,
+      "path": "bench/data/v0.2/public/s2/s2-022.json",
+      "role": "public-s2-item",
+      "sha256": "bb3243677496eb3f9ea5e407ffd1a92ae4fa944fa5336830638da31b998ea13c"
+    },
+    {
+      "bytes": 3909,
+      "path": "bench/data/v0.2/public/s2/s2-023.json",
+      "role": "public-s2-item",
+      "sha256": "e8798d797a55fdb6d206cd2a7d52b686c32e1f6a3d044521cdfbe704d1b4f6f0"
+    },
+    {
+      "bytes": 3465,
+      "path": "bench/data/v0.2/public/s2/s2-024.json",
+      "role": "public-s2-item",
+      "sha256": "f4718837d6340a523635c383b24a984959af7b608bf50db63d6e400dad009b6e"
+    },
+    {
+      "bytes": 3429,
+      "path": "bench/data/v0.2/public/s2/s2-025.json",
+      "role": "public-s2-item",
+      "sha256": "1efe43a2d3893006a09b66d3c4490b11c411391b6afb4f2e1be74d6f3b29f914"
+    },
+    {
+      "bytes": 3943,
+      "path": "bench/data/v0.2/public/s2/s2-026.json",
+      "role": "public-s2-item",
+      "sha256": "0a89d35f0087bc9b9845c95f4fbf983e0c9eda2f51ba65d328b6c21afad17a22"
+    },
+    {
+      "bytes": 3481,
+      "path": "bench/data/v0.2/public/s2/s2-027.json",
+      "role": "public-s2-item",
+      "sha256": "f971dd77213df4b8f7bb4e124afb921de915b882fa396649570cbd5f9b439c6c"
+    },
+    {
+      "bytes": 3478,
+      "path": "bench/data/v0.2/public/s2/s2-028.json",
+      "role": "public-s2-item",
+      "sha256": "d44517e68dd7e727015cfa726d2408266b39d125aad9134fcce0e36669c9655e"
+    },
+    {
+      "bytes": 3909,
+      "path": "bench/data/v0.2/public/s2/s2-029.json",
+      "role": "public-s2-item",
+      "sha256": "a8bf2681c65853787b29f57740eacaf249643b097bd799f97e3d59ccf762dd94"
+    },
+    {
+      "bytes": 3481,
+      "path": "bench/data/v0.2/public/s2/s2-030.json",
+      "role": "public-s2-item",
+      "sha256": "fd6aea421aa87f927e53242af60099c6bdf91c9df130eaff428ad6db0aaee095"
+    },
+    {
+      "bytes": 21866,
+      "path": "bench/engine/frozen_ladder.py",
+      "role": "aggregation-module",
+      "sha256": "42415e6858a57cc7562000cb4a21f28b274a9c875a9e752a064288d2d4c96753"
+    },
+    {
+      "bytes": 940,
+      "path": "bench/engine/leakage_gate.py",
+      "role": "leakage-module",
+      "sha256": "f54d5a5cb201524d67ec4321cbbed09aae92933a19901a602733559731a0815d"
+    },
+    {
+      "bytes": 4807,
+      "path": "bench/engine/metrics.py",
+      "role": "metrics-module",
+      "sha256": "23ce9f04cdbc358e7984d346bde1c22679f0902ffc2bbd0afcd597ee0a17c002"
+    },
+    {
+      "bytes": 10690,
+      "path": "bench/engine/protocol.py",
+      "role": "protocol-module",
+      "sha256": "0f5fcfe2e16003f516de260fba5c6c6fdc19a1ccf2eced7b2b25dbac911887fc"
+    },
+    {
+      "bytes": 16621,
+      "path": "bench/engine/scoring_core.py",
+      "role": "scorer",
+      "sha256": "bf38b1ac35bc1cdb99fb59f26de5d0e6ac953ca7f29a07a2b90e7cf3b028dd01"
+    },
+    {
+      "bytes": 2446,
+      "path": "schemas/v0.2/aleph-bench-item.schema.json",
+      "role": "public-schema",
+      "sha256": "ad2b014b897084552b481aa73eb0e399f137f16edbd2248a2c8a1578fd8a1bc9"
+    },
+    {
+      "bytes": 11498,
+      "path": "schemas/v0.2/aleph-bench-manifest.schema.json",
+      "role": "public-schema",
+      "sha256": "81360d210a95846f3b17321f6c1694748cadb64b7bdac1e38becb42dd3981c42"
+    },
+    {
+      "bytes": 3494,
+      "path": "schemas/v0.2/aleph-bench-platform-package.schema.json",
+      "role": "public-schema",
+      "sha256": "48a395a6ba930785556fe356c8eb2a142a8042ba12a38c4e5fdd9649ffc765bf"
+    },
+    {
+      "bytes": 20453,
+      "path": "schemas/v0.2/aleph-bench-result.schema.json",
+      "role": "public-schema",
+      "sha256": "05414d02ef0d12a678e22387777adab4fb720967f8dafc58faa908b4b57f9bfb"
+    }
+  ],
+  "formatVersion": 1,
+  "hashAlgorithm": "sha256",
+  "protocolVersion": "0.2.0",
+  "sourceCommit": "8fb57eb921d792dbd245d849ab08ac5c7cf11c6e"
+}

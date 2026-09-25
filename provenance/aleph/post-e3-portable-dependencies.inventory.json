@@ -1,0 +1,183 @@
+{
+  "artifactKind": "aleph_bench_source_delta_inventory",
+  "destination": {
+    "parentCommit": "ae1d80c339957a915d205d7ee015b0b7575d25ca",
+    "repository": "https://github.com/p-to-q/aleph-benchmark"
+  },
+  "files": [
+    {
+      "bytes": 146,
+      "destination": ".gitattributes",
+      "disposition": "port",
+      "gitBlobSha1": "98a2307e8fa6071621ce9870565cbd3f2ed50de2",
+      "mode": "100644",
+      "sha256": "f2419ea82edeaf26f01d201d678b7b7b794bb744cdd5397357184a46c7bbd0bd",
+      "source": ".gitattributes"
+    },
+    {
+      "bytes": 8798,
+      "destination": "bench/config/v0.2-scoring-authority-lock.json",
+      "disposition": "copy",
+      "gitBlobSha1": "8388f70072ed4c26d2e78efbbe7622318413dcf8",
+      "mode": "100644",
+      "sha256": "ddeb745bc4690009eb317f0192d63474fa5b1c3fbd6c5ec43f2fbf54c480cee7",
+      "source": "bench/config/v0.2-scoring-authority-lock.json"
+    },
+    {
+      "bytes": 11454,
+      "destination": "bench/tests/test_portable_unicode_inputs.py",
+      "disposition": "copy",
+      "gitBlobSha1": "20f02d7532999639e502e3989fad8e937905febf",
+      "mode": "100644",
+      "sha256": "83ca8c0efdb1feb62409dfa8d920e7de8d7a9699f4527597bec2e14b4416e7c8",
+      "source": "bench/tests/test_portable_unicode_inputs.py"
+    },
+    {
+      "bytes": 5473,
+      "destination": "bench/tests/test_v0_2_scoring_authority_lock.py",
+      "disposition": "copy",
+      "gitBlobSha1": "9317ff3e39512c5f3652e57a8d6700f5e3c18713",
+      "mode": "100644",
+      "sha256": "2f124b15427d9f82fcb3954921c036bbe420f8b8049391d227b4ede193373452",
+      "source": "bench/tests/test_v0_2_scoring_authority_lock.py"
+    },
+    {
+      "bytes": 1323,
+      "destination": "bench/vendor/README.md",
+      "disposition": "copy",
+      "gitBlobSha1": "938dc14fc2ba141287f13d6cf84850d7ba6a3886",
+      "mode": "100644",
+      "sha256": "ecce1207801ffa2608ea68f6557dc8a0eed1baf41a5da7e76944f2ac61e012c9",
+      "source": "bench/vendor/README.md"
+    },
+    {
+      "bytes": 1071,
+      "destination": "bench/vendor/THIRD_PARTY_NOTICES.md",
+      "disposition": "copy",
+      "gitBlobSha1": "5880457ec8ab3892eba589b69db95b51c085ca18",
+      "mode": "100644",
+      "sha256": "831ee79391fc051b8faab63864ed500615af1d76d3b47ea71056abf3f3d9ae46",
+      "source": "bench/vendor/THIRD_PARTY_NOTICES.md"
+    },
+    {
+      "bytes": 4956,
+      "destination": "bench/vendor/portable-unicode-inputs-v1.json",
+      "disposition": "copy",
+      "gitBlobSha1": "c2125649e62f8f79af5d004d354eed64e6994270",
+      "mode": "100644",
+      "sha256": "159f90fad34e9e4e925afbaac8a2ae20a31a5170bfa05852cd62707ac156bfe9",
+      "source": "bench/vendor/portable-unicode-inputs-v1.json"
+    },
+    {
+      "bytes": 6109,
+      "destination": "bench/vendor/portable-unicode-inputs-v1.schema.json",
+      "disposition": "copy",
+      "gitBlobSha1": "562882f3bcc376411eedcbf1a5f207730b190ea9",
+      "mode": "100644",
+      "sha256": "81ff92bc02b16ffb88a4c1c31f0ad0c10e4b6bbe79aefafce3b73592dbf8ad05",
+      "source": "bench/vendor/portable-unicode-inputs-v1.schema.json"
+    },
+    {
+      "bytes": 84870,
+      "destination": "bench/vendor/unicode/15.1.0/ucd/CaseFolding.txt",
+      "disposition": "copy",
+      "gitBlobSha1": "69c5c64b4c6a124f4608722db723a9e32667f190",
+      "mode": "100644",
+      "sha256": "4e55acfdc32825a22e87670e9056a3bf94ad7c5400065778e9e10f8314372bcf",
+      "source": "bench/vendor/unicode/15.1.0/ucd/CaseFolding.txt"
+    },
+    {
+      "bytes": 2625136,
+      "destination": "bench/vendor/unicode/15.1.0/ucd/NormalizationTest.txt",
+      "disposition": "copy",
+      "gitBlobSha1": "2e88574243dbb5dd4109f54bd25d43588e78226f",
+      "mode": "100644",
+      "sha256": "871238e37e3be0696ec2bd0891119a041b052da1a84485eda05a5438724b223e",
+      "source": "bench/vendor/unicode/15.1.0/ucd/NormalizationTest.txt"
+    },
+    {
+      "bytes": 136397,
+      "destination": "bench/vendor/unicode/15.1.0/ucd/PropList.txt",
+      "disposition": "copy",
+      "gitBlobSha1": "777e8a288188e8c5c275ea6367db605b2ed17dfb",
+      "mode": "100644",
+      "sha256": "05672956317b6296bc2ec3d6cef1f6452b57ff4f2efc6dc55b0a19277d5fcfd1",
+      "source": "bench/vendor/unicode/15.1.0/ucd/PropList.txt"
+    },
+    {
+      "bytes": 1995,
+      "destination": "bench/vendor/unicode/UNICODE-LICENSE-v3.txt",
+      "disposition": "copy",
+      "gitBlobSha1": "56da58912807030b451a4700687d5bd02c72d6ed",
+      "mode": "100644",
+      "sha256": "e7a93b009565cfce55919a381437ac4db883e9da2126fa28b91d12732bc53d96",
+      "source": "bench/vendor/unicode/UNICODE-LICENSE-v3.txt"
+    },
+    {
+      "bytes": 471444,
+      "destination": "bench/vendor/unicodedata2/15.1.0/unicodedata2-15.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "disposition": "copy",
+      "gitBlobSha1": "89d576cca4b97ef822dffe0ef9d5909fe90be8db",
+      "mode": "100644",
+      "sha256": "a2442a539d1e493486fdbbdf1d08c8f5d4abe51c9b77b7d39df319a96d30abe4",
+      "source": "bench/vendor/unicodedata2/15.1.0/unicodedata2-15.1.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+    },
+    {
+      "bytes": 471953,
+      "destination": "bench/vendor/unicodedata2/15.1.0/unicodedata2-15.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl",
+      "disposition": "copy",
+      "gitBlobSha1": "e82d2b477395f71475eed658ec67c2a86daadf71",
+      "mode": "100644",
+      "sha256": "bcdcd195484ba8ef19bef04ec14dcd8b1f8d6560fc517462ee0e010f5f545d75",
+      "source": "bench/vendor/unicodedata2/15.1.0/unicodedata2-15.1.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl"
+    },
+    {
+      "bytes": 11325,
+      "destination": "bench/vendor/unicodedata2/Apache-2.0.txt",
+      "disposition": "copy",
+      "gitBlobSha1": "e06d2081865a766a8668acc12878f98b27fc9ea0",
+      "mode": "100644",
+      "sha256": "cb5e8e7e5f4a3988e1063c142c60dc2df75605f4c46515e776e3aca6df976e14",
+      "source": "bench/vendor/unicodedata2/Apache-2.0.txt"
+    },
+    {
+      "bytes": 22948,
+      "destination": "scripts/check-portable-unicode-inputs.py",
+      "disposition": "copy",
+      "gitBlobSha1": "f7279523430db9a0956d14eca4e3d47aa65f8c2a",
+      "mode": "100644",
+      "sha256": "91eea5ee00e43bfa544ff5f7574a50d700d699742df02a779a2d0869efa4efb6",
+      "source": "scripts/check-portable-unicode-inputs.py"
+    },
+    {
+      "bytes": 15361,
+      "destination": "scripts/check-v0-2-scoring-authority.py",
+      "disposition": "port",
+      "gitBlobSha1": "04d743bc2dc5d3f38bba4f13b1833120abfb25f8",
+      "mode": "100644",
+      "sha256": "652f1b442c18d1ced6d917b590707cea08dc10be90d16da7a3d50c559a77cde0",
+      "source": "scripts/check-v0-2-scoring-authority.py"
+    }
+  ],
+  "formatVersion": 1,
+  "slice": "E4a",
+  "source": {
+    "commit": "7a15c2410e199b82dc65f9caf65f53aa9e8d6c5f",
+    "objectFormat": "sha1",
+    "parentCommit": "8fb57eb921d792dbd245d849ab08ac5c7cf11c6e",
+    "repository": "https://github.com/p-to-q/aleph"
+  },
+  "sourceTree": {
+    "algorithm": "sha256-length-framed-canonical-file-records-v1",
+    "domain": "aleph-bench-e4a-source-delta-v1",
+    "sha256": "621e3265befc5c3f55b917d3af23d0ce9a4400d294badfb4bbf494c03e4201d2"
+  },
+  "summary": {
+    "copyBytes": 3865252,
+    "copyFiles": 15,
+    "portBytes": 15507,
+    "portFiles": 2,
+    "sourceBytes": 3880759,
+    "sourceFiles": 17
+  }
+}
