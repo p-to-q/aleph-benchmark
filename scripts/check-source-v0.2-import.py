@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Verify the content-addressed Aleph Bench E2 through E4a source import.
+"""Verify the content-addressed Aleph Bench E2 through E4b source import.
 
 The default gate is offline. ``--source-git`` adds provenance verification
 against an already-fetched Git object database. This program never fetches and
@@ -200,6 +200,63 @@ E4A_TRANSFORM_OUTPUTS = {
         ),
     },
 }
+
+E4B_SOURCE_COMMIT = "e265281321dc1013fff9cb288a72c15dcc5b749a"
+E4B_SOURCE_IMMEDIATE_PARENT_COMMIT = (
+    "5b47d8946f21eef77c6620fdce3b0784d7a14694"
+)
+E4B_SOURCE_REVIEWED_DEPENDENCY_COMMIT = E4A_SOURCE_COMMIT
+E4B_STANDALONE_PARENT_COMMIT = "69731a91c14af365ee16eb672d1f64d9e7a07448"
+E4B_INVENTORY_PATH = (
+    "provenance/aleph/e4b.portable-string-semantics.inventory.json"
+)
+E4B_INVENTORY_BYTES = 5_323
+E4B_INVENTORY_GIT_BLOB_SHA1 = "228ec75d11363854261566aec17ab761ada40d7f"
+E4B_INVENTORY_SHA256 = (
+    "389b44d1db1ba47899eee64829b4bae7e5b8f15ebad772da91e19b87a5510982"
+)
+E4B_RECEIPT_PATH = "provenance/aleph/e4b.portable-string-semantics.json"
+E4B_RECEIPT_BYTES = 1_046
+E4B_RECEIPT_GIT_BLOB_SHA1 = "4ac8c65d7ea82e2468ea1dbed8d5baf8b78b7f6d"
+E4B_RECEIPT_SHA256 = (
+    "9e63d5fda637b03699015636785a6a5095403f00118c1edb8ad2b0e98aea509b"
+)
+E4B_SOURCE_TREE_DOMAIN = b"aleph-bench-e4b-source-delta-v1\0"
+E4B_SOURCE_TREE_SHA256 = (
+    "bae238c459dae1243282a2d52cdd629098e619b6ef79dbe3d68df947bf9c1709"
+)
+E4B_INSTALLED_TREE_DOMAIN = b"aleph-bench-e4b-installed-delta-v1\0"
+E4B_INSTALLED_TREE_SHA256 = (
+    "70d81dd7fa169d9ea008e9684238fbf011c94ce97c7cc073acae042d3ad29389"
+)
+E4B_REVIEW_ISSUE = "https://github.com/p-to-q/aleph-benchmark/issues/16"
+E4B_EXCLUDED_PATH = "bench/README.md"
+E4B_COPY_PATHS = (
+    "bench/portable/README.md",
+    "bench/portable/__init__.py",
+    (
+        "bench/portable/data/"
+        "casefold-cf-8533dc269f617f04de23910cee5b420ecedadb42346ebce196bb1581211e9c4b.json"
+    ),
+    "bench/portable/data/portable-string-semantics-v1.manifest.json",
+    "bench/portable/data/portable-string-semantics-v1.schema.json",
+    (
+        "bench/portable/data/"
+        "python-3.13.2-ucd-15.1-string-semantics-generation-receipt-v1.json"
+    ),
+    (
+        "bench/portable/data/"
+        "python-whitespace-fc0be47a186e2b5de78ef81a8834c8a138628cd73d0c06742c3e56a295179ef3.json"
+    ),
+    "bench/portable/string_semantics.py",
+    "bench/tests/test_portable_string_semantics.py",
+    "scripts/generate-portable-string-semantics.py",
+)
+E4B_SOURCE_PATHS = (E4B_EXCLUDED_PATH, *E4B_COPY_PATHS)
+E4B_COPY_FILES = 10
+E4B_COPY_BYTES = 200_608
+E4B_EXCLUDED_FILES = 1
+E4B_SOURCE_BYTES = 227_432
 
 SOURCE_NOTICE_GIT_BLOB_SHA1 = "be3b6c048fee80545b99e83e0a3e089be1a3ee09"
 SOURCE_NOTICE_SHA256 = "c6fefd8d70b629b2fd61ea481793dc227d5e59cf8ba7e44e92fa3eef8fab886f"
@@ -877,6 +934,219 @@ def _parse_e4a_receipt_bytes(
     }:
         raise ImportCheckError("E4a authority-checker transformation differs")
     return transformations
+
+
+def _validate_e4b_source_record(record: Any, *, index: int) -> dict[str, Any]:
+    role = f"E4b files[{index}]"
+    if not isinstance(record, dict):
+        raise ImportCheckError(f"{role} must be an object")
+    source = _validate_repository_path(record.get("source"), role=f"{role} source")
+    expected_keys = {
+        "bytes",
+        "destination",
+        "disposition",
+        "gitBlobSha1",
+        "mode",
+        "sha256",
+        "source",
+    }
+    if source == E4B_EXCLUDED_PATH:
+        expected_keys.add("exclusion")
+    if set(record) != expected_keys:
+        raise ImportCheckError(f"{role} keys differ")
+    if source == E4B_EXCLUDED_PATH:
+        if (
+            record["destination"] is not None
+            or record["disposition"] != "exclude"
+            or record["exclusion"]
+            != (
+                "Standalone keeps docs/protocol-v0.2.md and records the "
+                "dependency in its root README."
+            )
+        ):
+            raise ImportCheckError(f"{role} exclusion contract differs")
+    else:
+        destination = _validate_repository_path(
+            record["destination"], role=f"{role} destination"
+        )
+        if destination != source or record["disposition"] != "copy":
+            raise ImportCheckError(f"{role} copy contract differs")
+    if record["mode"] != "100644":
+        raise ImportCheckError(f"{role} must use Git mode 100644")
+    _exact_int(record["bytes"], field=f"{role}.bytes", minimum=1)
+    if (
+        not isinstance(record["gitBlobSha1"], str)
+        or HEX40.fullmatch(record["gitBlobSha1"]) is None
+        or not isinstance(record["sha256"], str)
+        or HEX64.fullmatch(record["sha256"]) is None
+    ):
+        raise ImportCheckError(f"{role} has an invalid digest")
+    return record
+
+
+def _parse_e4b_inventory_bytes(
+    raw: bytes,
+    *,
+    expected_raw_sha256: str | None = E4B_INVENTORY_SHA256,
+) -> tuple[dict[str, Any], list[dict[str, Any]]]:
+    if len(raw) > MAX_RECEIPT_BYTES:
+        raise ImportCheckError("E4b delta inventory is unreasonably large")
+    try:
+        inventory = json.loads(
+            raw.decode("ascii"),
+            object_pairs_hook=_reject_duplicate_pairs,
+            parse_constant=_reject_json_constant,
+        )
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise ImportCheckError(f"invalid E4b delta inventory JSON: {exc}") from exc
+    if raw != _canonical_file_json(inventory):
+        raise ImportCheckError(
+            "E4b delta inventory must be canonical sorted, indented ASCII JSON "
+            "with one trailing newline"
+        )
+    if expected_raw_sha256 is not None and _sha256(raw) != expected_raw_sha256:
+        raise ImportCheckError(
+            "raw E4b delta inventory SHA-256 differs from the reviewed artifact"
+        )
+    expected_keys = {
+        "artifactKind",
+        "destination",
+        "files",
+        "formatVersion",
+        "slice",
+        "source",
+        "sourceTree",
+        "summary",
+    }
+    if not isinstance(inventory, dict) or set(inventory) != expected_keys:
+        raise ImportCheckError("E4b delta inventory top-level keys differ")
+    if inventory["artifactKind"] != "aleph_bench_source_delta_inventory":
+        raise ImportCheckError("unexpected E4b delta inventory artifactKind")
+    if type(inventory["formatVersion"]) is not int or inventory["formatVersion"] != 1:
+        raise ImportCheckError("E4b inventory formatVersion must be the integer 1")
+    if inventory["slice"] != "E4b":
+        raise ImportCheckError("unexpected E4b delta inventory slice")
+    if inventory["source"] != {
+        "commit": E4B_SOURCE_COMMIT,
+        "immediateParentCommit": E4B_SOURCE_IMMEDIATE_PARENT_COMMIT,
+        "objectFormat": "sha1",
+        "repository": SOURCE_REPOSITORY,
+        "reviewedDependencyCommit": E4B_SOURCE_REVIEWED_DEPENDENCY_COMMIT,
+    }:
+        raise ImportCheckError("E4b inventory source identity differs")
+    if inventory["destination"] != {
+        "parentCommit": E4B_STANDALONE_PARENT_COMMIT,
+        "repository": DESTINATION_REPOSITORY,
+    }:
+        raise ImportCheckError("E4b inventory destination identity differs")
+    files = inventory["files"]
+    if not isinstance(files, list) or len(files) != len(E4B_SOURCE_PATHS):
+        raise ImportCheckError("E4b inventory must contain exactly 11 files")
+    rows = [
+        _validate_e4b_source_record(record, index=index)
+        for index, record in enumerate(files)
+    ]
+    paths = tuple(record["source"] for record in rows)
+    if paths != E4B_SOURCE_PATHS:
+        raise ImportCheckError("E4b source path closure or order differs")
+    _validate_unique_paths(paths, role="E4b source")
+    copy_rows = [row for row in rows if row["disposition"] == "copy"]
+    excluded_rows = [row for row in rows if row["disposition"] == "exclude"]
+    if tuple(row["source"] for row in copy_rows) != E4B_COPY_PATHS:
+        raise ImportCheckError("E4b copy path closure differs")
+    if [row["source"] for row in excluded_rows] != [E4B_EXCLUDED_PATH]:
+        raise ImportCheckError("E4b exclusion closure differs")
+    if inventory["summary"] != {
+        "copyBytes": E4B_COPY_BYTES,
+        "copyFiles": E4B_COPY_FILES,
+        "excludedFiles": E4B_EXCLUDED_FILES,
+        "sourceBytes": E4B_SOURCE_BYTES,
+        "sourceFiles": len(E4B_SOURCE_PATHS),
+    }:
+        raise ImportCheckError("E4b inventory summary differs")
+    if len(copy_rows) != E4B_COPY_FILES or sum(
+        row["bytes"] for row in copy_rows
+    ) != E4B_COPY_BYTES:
+        raise ImportCheckError("E4b computed copy summary differs")
+    if sum(row["bytes"] for row in rows) != E4B_SOURCE_BYTES:
+        raise ImportCheckError("E4b computed source byte count differs")
+    if inventory["sourceTree"] != {
+        "algorithm": "sha256-length-framed-canonical-file-records-v1",
+        "domain": "aleph-bench-e4b-source-delta-v1",
+        "sha256": E4B_SOURCE_TREE_SHA256,
+    }:
+        raise ImportCheckError("E4b source-tree contract differs")
+    if _records_digest(rows, domain=E4B_SOURCE_TREE_DOMAIN) != E4B_SOURCE_TREE_SHA256:
+        raise ImportCheckError("E4b source-tree digest differs")
+    return inventory, rows
+
+
+def _parse_e4b_receipt_bytes(
+    raw: bytes,
+    *,
+    expected_raw_sha256: str | None = E4B_RECEIPT_SHA256,
+) -> dict[str, Any]:
+    if len(raw) > MAX_RECEIPT_BYTES:
+        raise ImportCheckError("E4b receipt is unreasonably large")
+    try:
+        receipt = json.loads(
+            raw.decode("ascii"),
+            object_pairs_hook=_reject_duplicate_pairs,
+            parse_constant=_reject_json_constant,
+        )
+    except (UnicodeError, json.JSONDecodeError) as exc:
+        raise ImportCheckError(f"invalid E4b receipt JSON: {exc}") from exc
+    if raw != _canonical_file_json(receipt):
+        raise ImportCheckError(
+            "E4b receipt must be canonical sorted, indented ASCII JSON with one "
+            "trailing newline"
+        )
+    if expected_raw_sha256 is not None and _sha256(raw) != expected_raw_sha256:
+        raise ImportCheckError(
+            "raw E4b receipt SHA-256 differs from the reviewed artifact"
+        )
+    expected_keys = {
+        "artifactKind",
+        "copyFiles",
+        "excludedSourcePaths",
+        "formatVersion",
+        "installedTree",
+        "inventory",
+        "reviewIssue",
+        "slice",
+        "sourceCommit",
+        "sourceImmediateParentCommit",
+        "sourceReviewedDependencyCommit",
+        "standaloneParentCommit",
+    }
+    if not isinstance(receipt, dict) or set(receipt) != expected_keys:
+        raise ImportCheckError("E4b receipt top-level keys differ")
+    if receipt != {
+        "artifactKind": "aleph_bench_source_migration_receipt",
+        "copyFiles": E4B_COPY_FILES,
+        "excludedSourcePaths": [E4B_EXCLUDED_PATH],
+        "formatVersion": 1,
+        "installedTree": {
+            "algorithm": "sha256-length-framed-canonical-file-records-v1",
+            "domain": "aleph-bench-e4b-installed-delta-v1",
+            "fileCount": E4B_COPY_FILES,
+            "sha256": E4B_INSTALLED_TREE_SHA256,
+        },
+        "inventory": {
+            "bytes": E4B_INVENTORY_BYTES,
+            "gitBlobSha1": E4B_INVENTORY_GIT_BLOB_SHA1,
+            "path": E4B_INVENTORY_PATH,
+            "sha256": E4B_INVENTORY_SHA256,
+        },
+        "reviewIssue": E4B_REVIEW_ISSUE,
+        "slice": "E4b",
+        "sourceCommit": E4B_SOURCE_COMMIT,
+        "sourceImmediateParentCommit": E4B_SOURCE_IMMEDIATE_PARENT_COMMIT,
+        "sourceReviewedDependencyCommit": E4B_SOURCE_REVIEWED_DEPENDENCY_COMMIT,
+        "standaloneParentCommit": E4B_STANDALONE_PARENT_COMMIT,
+    }:
+        raise ImportCheckError("E4b receipt contract differs")
+    return receipt
 
 
 def _parse_e3a_receipt_bytes(
@@ -1916,14 +2186,21 @@ def _verify_installed(
     copy_rows: list[dict[str, Any]],
     transformations: list[dict[str, Any]],
     e4a_rows: Iterable[dict[str, Any]] = (),
+    e4b_rows: Iterable[dict[str, Any]] = (),
 ) -> None:
     expected_copy_paths = {row["destination"] for row in copy_rows}
     transformed_paths = {entry["destination"] for entry in transformations}
     e4a_paths = {row["destination"] for row in e4a_rows}
+    e4b_paths = {
+        row["destination"]
+        for row in e4b_rows
+        if row["disposition"] == "copy"
+    }
     expected_managed_paths = (
         expected_copy_paths
         | transformed_paths
         | e4a_paths
+        | e4b_paths
         | SUPPORT_MANAGED_PATHS
     )
     for prefix in MANAGED_PREFIXES:
@@ -2146,6 +2423,46 @@ def _verify_e4a_installed(
     }
 
 
+def _verify_e4b_installed(
+    root: Path,
+    rows: list[dict[str, Any]],
+) -> dict[str, Any]:
+    copy_rows = [row for row in rows if row["disposition"] == "copy"]
+    if tuple(row["destination"] for row in copy_rows) != E4B_COPY_PATHS:
+        raise ImportCheckError("installed E4b copy path closure differs")
+    installed_records: list[dict[str, Any]] = []
+    for row in copy_rows:
+        path = row["destination"]
+        payload, status = _read_regular_path(
+            root,
+            path,
+            expected_bytes=row["bytes"],
+            max_bytes=row["bytes"],
+        )
+        observed = _content_record(path, payload, status)
+        expected = {
+            "bytes": row["bytes"],
+            "gitBlobSha1": row["gitBlobSha1"],
+            "mode": row["mode"],
+            "path": path,
+            "sha256": row["sha256"],
+        }
+        if observed != expected:
+            raise ImportCheckError(f"installed E4b metadata differs at {path}")
+        installed_records.append(observed)
+    installed_tree = _path_records_digest(
+        installed_records,
+        domain=E4B_INSTALLED_TREE_DOMAIN,
+    )
+    if installed_tree != E4B_INSTALLED_TREE_SHA256:
+        raise ImportCheckError("installed E4b delta-tree digest differs")
+    return {
+        "copyFiles": len(copy_rows),
+        "fileCount": len(copy_rows),
+        "sha256": installed_tree,
+    }
+
+
 def _git_environment() -> dict[str, str]:
     environment = {
         key: value for key, value in os.environ.items() if not key.startswith("GIT_")
@@ -2197,6 +2514,24 @@ def _verify_commit(repository: Path, commit: str) -> None:
     ).strip()
     if object_type != "commit":
         raise ImportCheckError(f"source object is not a commit: {commit}")
+
+
+def _verify_ancestor(
+    repository: Path,
+    ancestor: str,
+    descendant: str,
+    *,
+    role: str,
+) -> None:
+    try:
+        _git(
+            repository,
+            ["merge-base", "--is-ancestor", ancestor, descendant],
+        )
+    except ImportCheckError as exc:
+        raise ImportCheckError(
+            f"{role} is not an ancestor of the reviewed descendant"
+        ) from exc
 
 
 def _parse_nul_paths(raw: bytes, *, role: str) -> tuple[str, ...]:
@@ -2294,6 +2629,95 @@ def _verify_e4a_delta_at_source(
         raise ImportCheckError(
             "installed .gitattributes suffix differs from the pinned E4a source object"
         )
+
+
+def _verify_e4b_delta_at_source(
+    repository: Path,
+    root: Path,
+    rows: list[dict[str, Any]],
+) -> None:
+    _verify_commit(repository, E4B_SOURCE_REVIEWED_DEPENDENCY_COMMIT)
+    _verify_commit(repository, E4B_SOURCE_IMMEDIATE_PARENT_COMMIT)
+    _verify_commit(repository, E4B_SOURCE_COMMIT)
+    _verify_ancestor(
+        repository,
+        E4B_SOURCE_REVIEWED_DEPENDENCY_COMMIT,
+        E4B_SOURCE_IMMEDIATE_PARENT_COMMIT,
+        role="E4b reviewed dependency",
+    )
+    resolved_parent = _git(
+        repository,
+        ["rev-parse", "--verify", f"{E4B_SOURCE_COMMIT}^"],
+    ).decode("ascii").strip()
+    if resolved_parent != E4B_SOURCE_IMMEDIATE_PARENT_COMMIT:
+        raise ImportCheckError(
+            "E4b source immediate parent differs from the reviewed identity"
+        )
+
+    diff_arguments = [
+        "diff",
+        "--no-ext-diff",
+        "--no-renames",
+        "--name-only",
+        "-z",
+        E4B_SOURCE_IMMEDIATE_PARENT_COMMIT,
+        E4B_SOURCE_COMMIT,
+        "--",
+    ]
+    all_paths = _parse_nul_paths(
+        _git(repository, diff_arguments), role="E4b source delta"
+    )
+    added_paths = _parse_nul_paths(
+        _git(
+            repository,
+            [
+                *diff_arguments[:4],
+                "--diff-filter=A",
+                *diff_arguments[4:],
+            ],
+        ),
+        role="E4b added source delta",
+    )
+    modified_paths = _parse_nul_paths(
+        _git(
+            repository,
+            [
+                *diff_arguments[:4],
+                "--diff-filter=M",
+                *diff_arguments[4:],
+            ],
+        ),
+        role="E4b modified source delta",
+    )
+    if (
+        all_paths != E4B_SOURCE_PATHS
+        or added_paths != E4B_COPY_PATHS
+        or modified_paths != (E4B_EXCLUDED_PATH,)
+    ):
+        raise ImportCheckError(
+            "E4b pinned commit delta differs from the reviewed 10-copy/one-exclusion closure"
+        )
+
+    source_payloads = _verify_rows_at_commit(
+        repository,
+        E4B_SOURCE_COMMIT,
+        rows,
+    )
+    for row in rows:
+        if row["disposition"] != "copy":
+            continue
+        installed, _ = _read_regular_path(
+            root,
+            row["destination"],
+            expected_bytes=row["bytes"],
+            max_bytes=row["bytes"],
+        )
+        if installed != source_payloads[row["source"]]:
+            raise ImportCheckError(
+                f"installed E4b copy differs from the pinned source object: {row['source']}"
+            )
+    if _path_or_parent_exists(root, E4B_EXCLUDED_PATH):
+        raise ImportCheckError("excluded source bench/README.md must not be installed")
 
 
 def _parse_ls_tree(raw: bytes) -> dict[str, dict[str, Any]]:
@@ -2663,6 +3087,7 @@ def _verify_source(
     e3d_transformations: list[dict[str, Any]],
     e3e_transformations: list[dict[str, Any]],
     e4a_rows: list[dict[str, Any]],
+    e4b_rows: list[dict[str, Any]],
     installed_inventory_raw: bytes,
 ) -> None:
     repository = _validate_source_root(repository)
@@ -2678,6 +3103,7 @@ def _verify_source(
     _verify_inventory_object(repository, installed_inventory_raw)
     _verify_rows_at_commit(repository, SOURCE_COMMIT, copy_rows)
     _verify_e4a_delta_at_source(repository, root, e4a_rows)
+    _verify_e4b_delta_at_source(repository, root, e4b_rows)
 
     inventory_by_source = {row["source"]: row for row in manifest["files"]}
     all_transformations = (
@@ -2850,6 +3276,32 @@ def verify_repository(
         e4a_receipt_raw,
         e4a_rows,
     )
+    e4b_inventory_raw, e4b_inventory_status = _read_regular_path(
+        root,
+        E4B_INVENTORY_PATH,
+        expected_bytes=E4B_INVENTORY_BYTES,
+        max_bytes=MAX_RECEIPT_BYTES,
+    )
+    if (
+        _git_mode_from_stat(e4b_inventory_status, path=E4B_INVENTORY_PATH)
+        != "100644"
+        or _git_blob_sha1(e4b_inventory_raw) != E4B_INVENTORY_GIT_BLOB_SHA1
+    ):
+        raise ImportCheckError("installed E4b inventory metadata differs")
+    _e4b_inventory, e4b_rows = _parse_e4b_inventory_bytes(e4b_inventory_raw)
+    e4b_receipt_raw, e4b_receipt_status = _read_regular_path(
+        root,
+        E4B_RECEIPT_PATH,
+        expected_bytes=E4B_RECEIPT_BYTES,
+        max_bytes=MAX_RECEIPT_BYTES,
+    )
+    if (
+        _git_mode_from_stat(e4b_receipt_status, path=E4B_RECEIPT_PATH)
+        != "100644"
+        or _git_blob_sha1(e4b_receipt_raw) != E4B_RECEIPT_GIT_BLOB_SHA1
+    ):
+        raise ImportCheckError("installed E4b receipt metadata differs")
+    _parse_e4b_receipt_bytes(e4b_receipt_raw)
     all_transformations = (
         e3a_transformations
         + e3b_transformations
@@ -2863,12 +3315,14 @@ def verify_repository(
         copy_rows,
         all_transformations,
         e4a_rows,
+        e4b_rows,
     )
     e4a_report = _verify_e4a_installed(
         root,
         e4a_rows,
         e4a_transformations,
     )
+    e4b_report = _verify_e4b_installed(root, e4b_rows)
     _reconstruct_e3c_sources(root, e3c_transformations)
     _reconstruct_e3d_source(root, e3d_transformations)
     _reconstruct_e3e_source(root, e3e_transformations)
@@ -2884,6 +3338,7 @@ def verify_repository(
             e3d_transformations,
             e3e_transformations,
             e4a_rows,
+            e4b_rows,
             inventory_raw,
         )
     return {
@@ -2900,6 +3355,9 @@ def verify_repository(
         "e4aFiles": e4a_report["fileCount"],
         "e4aInstalledTreeSha256": e4a_report["sha256"],
         "e4aPortFiles": e4a_report["portFiles"],
+        "e4bCopyFiles": e4b_report["copyFiles"],
+        "e4bFiles": e4b_report["fileCount"],
+        "e4bInstalledTreeSha256": e4b_report["sha256"],
         "sourceVerified": source_git is not None,
     }
 
@@ -2907,7 +3365,7 @@ def verify_repository(
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(
         description=(
-            "Verify the pinned Aleph Bench E2 through E4a source import."
+            "Verify the pinned Aleph Bench E2 through E4b source import."
         )
     )
     parser.add_argument(
@@ -2934,6 +3392,9 @@ def main(argv: list[str] | None = None) -> int:
         f"e4aCopyFiles={result['e4aCopyFiles']} "
         f"e4aPortFiles={result['e4aPortFiles']} "
         f"e4aInstalledTreeSha256={result['e4aInstalledTreeSha256']} "
+        f"e4bFiles={result['e4bFiles']} "
+        f"e4bCopyFiles={result['e4bCopyFiles']} "
+        f"e4bInstalledTreeSha256={result['e4bInstalledTreeSha256']} "
         f"e3cPackageTreeSha256={result['e3cPackageTreeSha256']} "
         f"copyTreeSha256={result['copyTreeSha256']}"
     )

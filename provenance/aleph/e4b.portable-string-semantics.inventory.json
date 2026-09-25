@@ -1,0 +1,130 @@
+{
+  "artifactKind": "aleph_bench_source_delta_inventory",
+  "destination": {
+    "parentCommit": "69731a91c14af365ee16eb672d1f64d9e7a07448",
+    "repository": "https://github.com/p-to-q/aleph-benchmark"
+  },
+  "files": [
+    {
+      "bytes": 26824,
+      "destination": null,
+      "disposition": "exclude",
+      "exclusion": "Standalone keeps docs/protocol-v0.2.md and records the dependency in its root README.",
+      "gitBlobSha1": "dfe2fdbf1cc7fd9c973c5d73a18f81c39f7796f5",
+      "mode": "100644",
+      "sha256": "21cc549f570744a6b2b5226ee5611a885b630eab272abeb71d92e89b196044d6",
+      "source": "bench/README.md"
+    },
+    {
+      "bytes": 2984,
+      "destination": "bench/portable/README.md",
+      "disposition": "copy",
+      "gitBlobSha1": "f43f38eabb640fbdddb6a70bbd7c405f5c47e84d",
+      "mode": "100644",
+      "sha256": "b4f033ef4fd1ab34d51414879391f49263ee7ba60cd147829c09090d26e47fb6",
+      "source": "bench/portable/README.md"
+    },
+    {
+      "bytes": 360,
+      "destination": "bench/portable/__init__.py",
+      "disposition": "copy",
+      "gitBlobSha1": "d264784ac422b00f4643eccd86d2dbf488f84afc",
+      "mode": "100644",
+      "sha256": "f277c83482506ded5e91c89ae754f1ed7244e005a62a9db5019ada93ca78aa0e",
+      "source": "bench/portable/__init__.py"
+    },
+    {
+      "bytes": 85356,
+      "destination": "bench/portable/data/casefold-cf-8533dc269f617f04de23910cee5b420ecedadb42346ebce196bb1581211e9c4b.json",
+      "disposition": "copy",
+      "gitBlobSha1": "c22b6c458a745d3252de1b48c1f3ab1a8b6dbee1",
+      "mode": "100644",
+      "sha256": "8533dc269f617f04de23910cee5b420ecedadb42346ebce196bb1581211e9c4b",
+      "source": "bench/portable/data/casefold-cf-8533dc269f617f04de23910cee5b420ecedadb42346ebce196bb1581211e9c4b.json"
+    },
+    {
+      "bytes": 1276,
+      "destination": "bench/portable/data/portable-string-semantics-v1.manifest.json",
+      "disposition": "copy",
+      "gitBlobSha1": "23fe364cfdfa92fb547dbc68f40ddc9dd40f657b",
+      "mode": "100644",
+      "sha256": "ca28e6cfc636493e9a18156d313ddea4cb77a57212a12530163564a4d3e0f19f",
+      "source": "bench/portable/data/portable-string-semantics-v1.manifest.json"
+    },
+    {
+      "bytes": 2618,
+      "destination": "bench/portable/data/portable-string-semantics-v1.schema.json",
+      "disposition": "copy",
+      "gitBlobSha1": "eac943e5ce33d30c87a4810686eb31406618290f",
+      "mode": "100644",
+      "sha256": "046b6b714fdb0e4358b352840fa2b4763ce396082e86dd1e1cbe492976c76b61",
+      "source": "bench/portable/data/portable-string-semantics-v1.schema.json"
+    },
+    {
+      "bytes": 3208,
+      "destination": "bench/portable/data/python-3.13.2-ucd-15.1-string-semantics-generation-receipt-v1.json",
+      "disposition": "copy",
+      "gitBlobSha1": "584562c1789c43c7b6f9bc29450c5b411990d1b9",
+      "mode": "100644",
+      "sha256": "2f7c8954cd581ef926fe149531cb92ca448f520f52f70373bc04ecb8bac2bb62",
+      "source": "bench/portable/data/python-3.13.2-ucd-15.1-string-semantics-generation-receipt-v1.json"
+    },
+    {
+      "bytes": 1238,
+      "destination": "bench/portable/data/python-whitespace-fc0be47a186e2b5de78ef81a8834c8a138628cd73d0c06742c3e56a295179ef3.json",
+      "disposition": "copy",
+      "gitBlobSha1": "59b0bedbc7a45ba0d05cd14ceaf298e8a729a863",
+      "mode": "100644",
+      "sha256": "fc0be47a186e2b5de78ef81a8834c8a138628cd73d0c06742c3e56a295179ef3",
+      "source": "bench/portable/data/python-whitespace-fc0be47a186e2b5de78ef81a8834c8a138628cd73d0c06742c3e56a295179ef3.json"
+    },
+    {
+      "bytes": 36903,
+      "destination": "bench/portable/string_semantics.py",
+      "disposition": "copy",
+      "gitBlobSha1": "59222faa37234150c6d6c54e29c2acb3dcf439f8",
+      "mode": "100644",
+      "sha256": "cc3cfa21db4c5f9eb612ce04a5501d70a3a8728d8d5ac99e44315c0dbb776cd7",
+      "source": "bench/portable/string_semantics.py"
+    },
+    {
+      "bytes": 29501,
+      "destination": "bench/tests/test_portable_string_semantics.py",
+      "disposition": "copy",
+      "gitBlobSha1": "a7ff5c6075b4a29a473ad6c4a36fab4ab29070fa",
+      "mode": "100644",
+      "sha256": "d7a21f0e85ed6984ad3f92c3f10b5c5471de79d90e1533d89f5942ebd4e89f54",
+      "source": "bench/tests/test_portable_string_semantics.py"
+    },
+    {
+      "bytes": 37164,
+      "destination": "scripts/generate-portable-string-semantics.py",
+      "disposition": "copy",
+      "gitBlobSha1": "1d8ffe039155fc3fcae9e424335d4c6d544acddb",
+      "mode": "100644",
+      "sha256": "02a76cec7c63f51783212ea5accca36bfd340a84cf7325d8f2ed0ae0c25f9b11",
+      "source": "scripts/generate-portable-string-semantics.py"
+    }
+  ],
+  "formatVersion": 1,
+  "slice": "E4b",
+  "source": {
+    "commit": "e265281321dc1013fff9cb288a72c15dcc5b749a",
+    "immediateParentCommit": "5b47d8946f21eef77c6620fdce3b0784d7a14694",
+    "objectFormat": "sha1",
+    "repository": "https://github.com/p-to-q/aleph",
+    "reviewedDependencyCommit": "7a15c2410e199b82dc65f9caf65f53aa9e8d6c5f"
+  },
+  "sourceTree": {
+    "algorithm": "sha256-length-framed-canonical-file-records-v1",
+    "domain": "aleph-bench-e4b-source-delta-v1",
+    "sha256": "bae238c459dae1243282a2d52cdd629098e619b6ef79dbe3d68df947bf9c1709"
+  },
+  "summary": {
+    "copyBytes": 200608,
+    "copyFiles": 10,
+    "excludedFiles": 1,
+    "sourceBytes": 227432,
+    "sourceFiles": 11
+  }
+}

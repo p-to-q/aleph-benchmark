@@ -1,0 +1,33 @@
+{
+  "artifactCount": 3,
+  "artifactKind": "aleph-portable-string-semantics-manifest",
+  "artifacts": [
+    {
+      "byteCount": 85356,
+      "kind": "casefold-table",
+      "path": "bench/portable/data/casefold-cf-8533dc269f617f04de23910cee5b420ecedadb42346ebce196bb1581211e9c4b.json",
+      "sha256": "8533dc269f617f04de23910cee5b420ecedadb42346ebce196bb1581211e9c4b"
+    },
+    {
+      "byteCount": 3208,
+      "kind": "generation-receipt",
+      "path": "bench/portable/data/python-3.13.2-ucd-15.1-string-semantics-generation-receipt-v1.json",
+      "sha256": "2f7c8954cd581ef926fe149531cb92ca448f520f52f70373bc04ecb8bac2bb62"
+    },
+    {
+      "byteCount": 1238,
+      "kind": "whitespace-table",
+      "path": "bench/portable/data/python-whitespace-fc0be47a186e2b5de78ef81a8834c8a138628cd73d0c06742c3e56a295179ef3.json",
+      "sha256": "fc0be47a186e2b5de78ef81a8834c8a138628cd73d0c06742c3e56a295179ef3"
+    }
+  ],
+  "formatVersion": 1,
+  "hashAlgorithm": "sha256",
+  "profileVersion": "0.3.0-provisional",
+  "schema": {
+    "byteCount": 2618,
+    "path": "bench/portable/data/portable-string-semantics-v1.schema.json",
+    "sha256": "046b6b714fdb0e4358b352840fa2b4763ce396082e86dd1e1cbe492976c76b61"
+  },
+  "semanticsId": "python-3.13.2-ucd-15.1-string-semantics-v1"
+}

@@ -1,0 +1,116 @@
+{
+  "$defs": {
+    "artifact": {
+      "additionalProperties": false,
+      "properties": {
+        "byteCount": {
+          "maximum": 524288,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "kind": {
+          "enum": [
+            "casefold-table",
+            "generation-receipt",
+            "whitespace-table"
+          ],
+          "type": "string"
+        },
+        "path": {
+          "maxLength": 240,
+          "minLength": 1,
+          "pattern": "^bench/portable/data/[a-z0-9][a-z0-9.\\-]+\\.json$",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "byteCount",
+        "kind",
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    },
+    "schemaRecord": {
+      "additionalProperties": false,
+      "properties": {
+        "byteCount": {
+          "maximum": 65536,
+          "minimum": 1,
+          "type": "integer"
+        },
+        "path": {
+          "const": "bench/portable/data/portable-string-semantics-v1.schema.json",
+          "type": "string"
+        },
+        "sha256": {
+          "pattern": "^[0-9a-f]{64}$",
+          "type": "string"
+        }
+      },
+      "required": [
+        "byteCount",
+        "path",
+        "sha256"
+      ],
+      "type": "object"
+    }
+  },
+  "$id": "https://github.com/p-to-q/aleph/bench/portable/data/portable-string-semantics-v1.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "artifactCount": {
+      "const": 3,
+      "type": "integer"
+    },
+    "artifactKind": {
+      "const": "aleph-portable-string-semantics-manifest",
+      "type": "string"
+    },
+    "artifacts": {
+      "items": {
+        "$ref": "#/$defs/artifact"
+      },
+      "maxItems": 3,
+      "minItems": 3,
+      "type": "array",
+      "uniqueItems": true
+    },
+    "formatVersion": {
+      "const": 1,
+      "type": "integer"
+    },
+    "hashAlgorithm": {
+      "const": "sha256",
+      "type": "string"
+    },
+    "profileVersion": {
+      "const": "0.3.0-provisional",
+      "type": "string"
+    },
+    "schema": {
+      "$ref": "#/$defs/schemaRecord"
+    },
+    "semanticsId": {
+      "const": "python-3.13.2-ucd-15.1-string-semantics-v1",
+      "type": "string"
+    }
+  },
+  "required": [
+    "artifactCount",
+    "artifactKind",
+    "artifacts",
+    "formatVersion",
+    "hashAlgorithm",
+    "profileVersion",
+    "schema",
+    "semanticsId"
+  ],
+  "title": "Aleph portable Python string-semantics manifest",
+  "type": "object"
+}

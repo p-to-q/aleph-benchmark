@@ -1,0 +1,103 @@
+{
+  "artifactKind": "aleph-portable-string-semantics-generation-receipt",
+  "authorityRuntime": {
+    "cacheTag": "cpython-313",
+    "implementation": "CPython",
+    "pythonHexVersion": "0x030d02f0",
+    "pythonVersion": "3.13.2",
+    "unicodeDatabaseVersion": "15.1.0"
+  },
+  "casefold": {
+    "changedMappingCount": 1530,
+    "changedMappingsSha256": "b4127130645c3d4a153f99d25f7fa6ffcf28c32c4f6cd5e553790e490170a9cd",
+    "defaultMapping": "identity",
+    "excludedStatuses": [
+      "S",
+      "T"
+    ],
+    "selectedStatuses": [
+      "C",
+      "F"
+    ]
+  },
+  "domain": {
+    "codePointPositionCount": 1114112,
+    "combinedFullDomainSha256": "0e1ff78255295b92d0c7f5e13aa5f9dfa9df72f55609d90373ca2f199f2a7e52",
+    "endCodePointInclusive": 1114111,
+    "framing": "code-point-u32be+whitespace-u8+mapping-length-u32be+mapping-code-points-u32be-v1",
+    "scalarValuePositionCount": 1112064,
+    "startCodePoint": 0,
+    "surrogatePositionCount": 2048
+  },
+  "formatVersion": 1,
+  "generator": {
+    "byteCount": 37164,
+    "path": "scripts/generate-portable-string-semantics.py",
+    "sha256": "02a76cec7c63f51783212ea5accca36bfd340a84cf7325d8f2ed0ae0c25f9b11"
+  },
+  "inputs": [
+    {
+      "byteCount": 84870,
+      "path": "bench/vendor/unicode/15.1.0/ucd/CaseFolding.txt",
+      "sha256": "4e55acfdc32825a22e87670e9056a3bf94ad7c5400065778e9e10f8314372bcf",
+      "unicodeVersion": "15.1.0"
+    },
+    {
+      "byteCount": 136397,
+      "path": "bench/vendor/unicode/15.1.0/ucd/PropList.txt",
+      "sha256": "05672956317b6296bc2ec3d6cef1f6452b57ff4f2efc6dc55b0a19277d5fcfd1",
+      "unicodeVersion": "15.1.0"
+    }
+  ],
+  "profileVersion": "0.3.0-provisional",
+  "semanticsId": "python-3.13.2-ucd-15.1-string-semantics-v1",
+  "splitConformance": {
+    "caseCount": 8,
+    "corpusFraming": "canonical-json-ensure-ascii-sort-keys-indent-2-lf-v1",
+    "corpusSha256": "2ae9846ed89da198e6e14dcc9d5646a8a8919b25acdffcdf5927e2cdd3607749",
+    "observedTransitions": [
+      "eof:emit",
+      "eof:idle",
+      "token:continue",
+      "token:end",
+      "token:start",
+      "whitespace:skip"
+    ],
+    "requiredTransitions": [
+      "eof:emit",
+      "eof:idle",
+      "token:continue",
+      "token:end",
+      "token:start",
+      "whitespace:skip"
+    ]
+  },
+  "tables": [
+    {
+      "byteCount": 85356,
+      "kind": "casefold-table",
+      "path": "bench/portable/data/casefold-cf-8533dc269f617f04de23910cee5b420ecedadb42346ebce196bb1581211e9c4b.json",
+      "sha256": "8533dc269f617f04de23910cee5b420ecedadb42346ebce196bb1581211e9c4b"
+    },
+    {
+      "byteCount": 1238,
+      "kind": "whitespace-table",
+      "path": "bench/portable/data/python-whitespace-fc0be47a186e2b5de78ef81a8834c8a138628cd73d0c06742c3e56a295179ef3.json",
+      "sha256": "fc0be47a186e2b5de78ef81a8834c8a138628cd73d0c06742c3e56a295179ef3"
+    }
+  ],
+  "unicodeVersion": "15.1.0",
+  "whitespace": {
+    "predicate": "python-str-isspace-v1",
+    "pythonOnlyCodePoints": [
+      28,
+      29,
+      30,
+      31
+    ],
+    "pythonWhitespaceCount": 29,
+    "pythonWhitespaceSha256": "9096d8eea85f36f62cb291c93fbae4baa00cb701d2145ba9f0ca646fe2e619bb",
+    "unicodeOnlyCodePoints": [],
+    "unicodeWhiteSpaceCount": 25
+  }
+}

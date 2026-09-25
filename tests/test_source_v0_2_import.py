@@ -84,6 +84,18 @@ class InventoryContractTests(unittest.TestCase):
             cls.e4a_receipt_raw,
             cls.e4a_rows,
         )
+        cls.e4b_inventory_raw = (
+            REPOSITORY_ROOT / checker.E4B_INVENTORY_PATH
+        ).read_bytes()
+        cls.e4b_inventory, cls.e4b_rows = checker._parse_e4b_inventory_bytes(
+            cls.e4b_inventory_raw
+        )
+        cls.e4b_receipt_raw = (
+            REPOSITORY_ROOT / checker.E4B_RECEIPT_PATH
+        ).read_bytes()
+        cls.e4b_receipt = checker._parse_e4b_receipt_bytes(
+            cls.e4b_receipt_raw
+        )
 
     def test_reviewed_inventory_and_copy_selection(self) -> None:
         self.assertEqual(len(self.copy_rows), 78)
@@ -306,6 +318,68 @@ class InventoryContractTests(unittest.TestCase):
                 expected_raw_sha256=None,
             )
 
+    def test_reviewed_e4b_inventory_and_receipt(self) -> None:
+        self.assertEqual(len(self.e4b_rows), 11)
+        self.assertEqual(
+            tuple(
+                row["source"]
+                for row in self.e4b_rows
+                if row["disposition"] == "copy"
+            ),
+            checker.E4B_COPY_PATHS,
+        )
+        self.assertEqual(
+            [
+                row["source"]
+                for row in self.e4b_rows
+                if row["disposition"] == "exclude"
+            ],
+            [checker.E4B_EXCLUDED_PATH],
+        )
+        self.assertEqual(self.e4b_receipt["copyFiles"], 10)
+        self.assertEqual(
+            self.e4b_receipt["sourceImmediateParentCommit"],
+            checker.E4B_SOURCE_IMMEDIATE_PARENT_COMMIT,
+        )
+        self.assertEqual(
+            self.e4b_receipt["sourceReviewedDependencyCommit"],
+            checker.E4A_SOURCE_COMMIT,
+        )
+
+    def test_e4b_inventory_tamper_is_rejected(self) -> None:
+        value = json.loads(self.e4b_inventory_raw)
+        value["summary"]["copyFiles"] += 1
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "raw E4b delta"):
+            checker._parse_e4b_inventory_bytes(tampered)
+
+    def test_e4b_inventory_contract_tamper_fails_without_digest_pin(self) -> None:
+        value = json.loads(self.e4b_inventory_raw)
+        value["files"][0]["destination"] = "bench/README.md"
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "exclusion contract"):
+            checker._parse_e4b_inventory_bytes(
+                tampered,
+                expected_raw_sha256=None,
+            )
+
+    def test_e4b_receipt_tamper_is_rejected(self) -> None:
+        value = json.loads(self.e4b_receipt_raw)
+        value["installedTree"]["sha256"] = "0" * 64
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "raw E4b receipt"):
+            checker._parse_e4b_receipt_bytes(tampered)
+
+    def test_e4b_receipt_contract_tamper_fails_without_digest_pin(self) -> None:
+        value = json.loads(self.e4b_receipt_raw)
+        value["sourceReviewedDependencyCommit"] = "0" * 40
+        tampered = checker._canonical_file_json(value)
+        with self.assertRaisesRegex(checker.ImportCheckError, "receipt contract"):
+            checker._parse_e4b_receipt_bytes(
+                tampered,
+                expected_raw_sha256=None,
+            )
+
     def test_e3e_receipt_tamper_is_rejected(self) -> None:
         value = json.loads(self.e3e_receipt_raw)
         value["transformations"][0]["output"]["bytes"] += 1
@@ -458,6 +532,16 @@ class InstalledTreeTests(unittest.TestCase):
             e4a_receipt_raw,
             cls.e4a_rows,
         )
+        e4b_inventory_raw = (
+            REPOSITORY_ROOT / checker.E4B_INVENTORY_PATH
+        ).read_bytes()
+        cls.e4b_inventory, cls.e4b_rows = checker._parse_e4b_inventory_bytes(
+            e4b_inventory_raw
+        )
+        e4b_receipt_raw = (
+            REPOSITORY_ROOT / checker.E4B_RECEIPT_PATH
+        ).read_bytes()
+        cls.e4b_receipt = checker._parse_e4b_receipt_bytes(e4b_receipt_raw)
         cls.transformations = (
             e3a_transformations
             + e3b_transformations
@@ -493,6 +577,14 @@ class InstalledTreeTests(unittest.TestCase):
             destination.parent.mkdir(parents=True, exist_ok=True)
             shutil.copyfile(source, destination)
             destination.chmod(0o644)
+        for row in self.e4b_rows:
+            if row["disposition"] != "copy":
+                continue
+            source = REPOSITORY_ROOT / row["destination"]
+            destination = root / row["destination"]
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copyfile(source, destination)
+            destination.chmod(0o644)
         shutil.copyfile(REPOSITORY_ROOT / "NOTICE", root / "NOTICE")
         (root / "NOTICE").chmod(0o644)
         return temporary, root
@@ -508,6 +600,7 @@ class InstalledTreeTests(unittest.TestCase):
                     self.copy_rows,
                     self.transformations,
                     self.e4a_rows,
+                    self.e4b_rows,
                 )
 
     def assert_e4a_rejected(self, mutate) -> None:
@@ -521,6 +614,13 @@ class InstalledTreeTests(unittest.TestCase):
                     self.e4a_transformations,
                 )
 
+    def assert_e4b_rejected(self, mutate) -> None:
+        temporary, root = self.materialize()
+        with temporary:
+            mutate(root)
+            with self.assertRaises(checker.ImportCheckError):
+                checker._verify_e4b_installed(root, self.e4b_rows)
+
     def test_complete_tree_passes(self) -> None:
         temporary, root = self.materialize()
         with temporary:
@@ -530,12 +630,14 @@ class InstalledTreeTests(unittest.TestCase):
                 self.copy_rows,
                 self.transformations,
                 self.e4a_rows,
+                self.e4b_rows,
             )
             checker._verify_e4a_installed(
                 root,
                 self.e4a_rows,
                 self.e4a_transformations,
             )
+            checker._verify_e4b_installed(root, self.e4b_rows)
 
     def test_missing_file_is_rejected(self) -> None:
         self.assert_rejected(lambda root: (root / "bench/__init__.py").unlink())
@@ -548,6 +650,14 @@ class InstalledTreeTests(unittest.TestCase):
     def test_extra_vendor_file_is_rejected(self) -> None:
         self.assert_rejected(
             lambda root: (root / "bench/vendor/unreviewed.bin").write_bytes(b"x")
+        )
+
+    def test_missing_or_extra_e4b_file_is_rejected(self) -> None:
+        self.assert_rejected(
+            lambda root: (root / checker.E4B_COPY_PATHS[0]).unlink()
+        )
+        self.assert_rejected(
+            lambda root: (root / "bench/portable/data/extra.json").write_text("{}\n")
         )
 
     def test_extra_schema_outside_v0_2_is_rejected(self) -> None:
@@ -631,6 +741,41 @@ class InstalledTreeTests(unittest.TestCase):
                 .replace(b"Lower is better", b"Lower is bettor", 1)
             )
         )
+
+    def test_e4b_symlink_hardlink_mode_and_byte_drift_are_rejected(self) -> None:
+        target_path = "bench/portable/data/portable-string-semantics-v1.manifest.json"
+
+        def symlink(root: Path) -> None:
+            target = root / target_path
+            target.unlink()
+            target.symlink_to("portable-string-semantics-v1.schema.json")
+
+        self.assert_e4b_rejected(symlink)
+
+        def hardlink(root: Path) -> None:
+            target = root / target_path
+            outside = root / "outside-e4b-manifest.json"
+            shutil.move(target, outside)
+            os.link(outside, target)
+
+        self.assert_e4b_rejected(hardlink)
+        self.assert_e4b_rejected(lambda root: (root / target_path).chmod(0o755))
+
+        def byte_drift(root: Path) -> None:
+            target = root / target_path
+            data = target.read_bytes()
+            target.write_bytes(data[:-2] + b" \n")
+
+        self.assert_e4b_rejected(byte_drift)
+
+    @unittest.skipUnless(hasattr(os, "mkfifo"), "FIFO requires POSIX")
+    def test_e4b_fifo_is_rejected_without_blocking(self) -> None:
+        def mutate(root: Path) -> None:
+            target = root / checker.E4B_COPY_PATHS[0]
+            target.unlink()
+            os.mkfifo(target)
+
+        self.assert_e4b_rejected(mutate)
 
     @unittest.skipUnless(hasattr(os, "mkfifo"), "FIFO requires POSIX")
     def test_fifo_is_rejected(self) -> None:
@@ -753,6 +898,41 @@ class GitObjectVerificationTests(unittest.TestCase):
             self.repository, commit, [record]
         )
         self.assertEqual(payloads[record["source"]], b"object bytes\n")
+
+    def test_reviewed_dependency_must_be_an_ancestor(self) -> None:
+        ancestor, _ = self.commit_file(b"ancestor\n")
+        descendant, _ = self.commit_file(b"descendant\n")
+        checker._verify_ancestor(
+            self.repository,
+            ancestor,
+            descendant,
+            role="test dependency",
+        )
+        with self.assertRaisesRegex(
+            checker.ImportCheckError,
+            "test dependency is not an ancestor",
+        ):
+            checker._verify_ancestor(
+                self.repository,
+                descendant,
+                ancestor,
+                role="test dependency",
+            )
+
+    def test_ancestor_check_uses_fail_closed_git_command(self) -> None:
+        ancestor = "a" * 40
+        descendant = "b" * 40
+        with mock.patch.object(checker, "_git", return_value=b"") as git_call:
+            checker._verify_ancestor(
+                self.repository,
+                ancestor,
+                descendant,
+                role="E4b reviewed dependency",
+            )
+        git_call.assert_called_once_with(
+            self.repository,
+            ["merge-base", "--is-ancestor", ancestor, descendant],
+        )
 
     def test_missing_source_and_mode_drift_are_rejected(self) -> None:
         commit, record = self.commit_file(b"object bytes\n")
@@ -1020,6 +1200,12 @@ class LiveGateTests(unittest.TestCase):
         self.assertEqual(
             result["e4aInstalledTreeSha256"],
             checker.E4A_INSTALLED_TREE_SHA256,
+        )
+        self.assertEqual(result["e4bFiles"], 10)
+        self.assertEqual(result["e4bCopyFiles"], 10)
+        self.assertEqual(
+            result["e4bInstalledTreeSha256"],
+            checker.E4B_INSTALLED_TREE_SHA256,
         )
         self.assertEqual(
             result["e3cPackageTreeSha256"],
