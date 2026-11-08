@@ -73,7 +73,38 @@ def _index_outputs(
 
 
 def _index_prompts(prompt_rows: list[dict[str, Any]]) -> dict[tuple[str, str], dict[str, Any]]:
-    return {(str(row["item_id"]), str(row["prompt_id"])): row for row in prompt_rows}
+    prompts: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in prompt_rows:
+        key = (str(row["item_id"]), str(row["prompt_id"]))
+        if key in prompts:
+            raise ValueError(f"duplicate prompt row: {key[0]}:{key[1]}")
+        prompts[key] = row
+    return prompts
+
+
+def _validate_prompt_gates(
+    items: list[dict[str, Any]],
+    prompt_index: dict[tuple[str, str], dict[str, Any]],
+    thresholds: dict[str, float | int],
+) -> dict[tuple[str, str], bool]:
+    """Recompute every ladder gate and reject stale packaged flags."""
+
+    gate_by_key: dict[tuple[str, str], bool] = {}
+    for item in items:
+        target = item["target"]["text"]
+        for ladder in item["frozenLadder"]:
+            key = (str(item["id"]), str(ladder["id"]))
+            gate = _scoring.evaluate_leakage(ladder["prompt"], target, thresholds)
+            gate_by_key[key] = gate.disqualified
+            packed_prompt = prompt_index.get(key)
+            if packed_prompt is not None and bool(packed_prompt.get("disqualified")) != gate.disqualified:
+                raise ValueError(
+                    "prompt leakage gate mismatch for "
+                    f"{key[0]}:{key[1]}: packaged disqualified="
+                    f"{bool(packed_prompt.get('disqualified'))}, "
+                    f"recomputed disqualified={gate.disqualified}"
+                )
+    return gate_by_key
 
 
 def score_submission(
@@ -95,15 +126,14 @@ def score_submission(
     if isinstance(submission_rows, (str, Path)):
         submission_rows = _load_submission_rows(Path(submission_rows))
     prompt_index = _index_prompts(prompt_rows)
-    valid_prompt_keys = {
-        key for key, row in prompt_index.items() if not bool(row.get("disqualified"))
-    }
+    thresholds = dict(_scoring.DEFAULT_LEAKAGE_THRESHOLDS if leakage_thresholds is None else leakage_thresholds)
+    gate_by_key = _validate_prompt_gates(items, prompt_index, thresholds)
+    valid_prompt_keys = {key for key, disqualified in gate_by_key.items() if not disqualified}
     outputs = _index_outputs(
         submission_rows,
         valid_prompt_keys=valid_prompt_keys,
         expected_model_id=model_id,
     )
-    thresholds = dict(_scoring.DEFAULT_LEAKAGE_THRESHOLDS if leakage_thresholds is None else leakage_thresholds)
 
     item_runs: list[dict[str, Any]] = []
     aurc_values: list[float] = []
@@ -125,9 +155,7 @@ def score_submission(
         for ladder in item["frozenLadder"]:
             prompt_text = ladder["prompt"]
             key = (str(item["id"]), str(ladder["id"]))
-            packed_prompt = prompt_index.get(key)
-            gate = _scoring.evaluate_leakage(prompt_text, target, thresholds)
-            disqualified = bool((packed_prompt or {}).get("disqualified", gate.disqualified))
+            disqualified = gate_by_key[key]
             if disqualified:
                 leakage_hits += 1
                 fid = 0.0

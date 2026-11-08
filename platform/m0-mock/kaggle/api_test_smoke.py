@@ -21,6 +21,7 @@ import json
 from pathlib import Path
 import shutil
 import sys
+import tempfile
 
 
 KAGGLE_DIR = Path(__file__).resolve().parent
@@ -95,6 +96,56 @@ def _check_metric_invariants(bench_result: dict, errors: list[str]) -> None:
             )
 
 
+def _check_scorer_boundaries(errors: list[str]) -> None:
+    prompt_rows = [
+        json.loads(line)
+        for line in PROMPTS_PATH.read_text(encoding="utf-8").splitlines()
+        if line.strip()
+    ]
+    with tempfile.TemporaryDirectory() as directory:
+        temp_root = Path(directory)
+
+        stale_rows = [dict(row) for row in prompt_rows]
+        stale_row = next(row for row in stale_rows if row.get("disqualified"))
+        stale_row["disqualified"] = False
+        stale_path = temp_root / "stale-prompts.jsonl"
+        stale_path.write_text(
+            "".join(json.dumps(row, sort_keys=True) + "\n" for row in stale_rows),
+            encoding="utf-8",
+        )
+        try:
+            score_outputs.score_submission(
+                items_path=str(ITEMS_PATH),
+                prompts_path=str(stale_path),
+                submission_rows=[],
+                model_id="stub/model",
+            )
+        except ValueError as error:
+            if "prompt leakage gate mismatch" not in str(error):
+                errors.append(f"stale leakage flag raised the wrong error: {error}")
+        else:
+            errors.append("stale leakage flag was accepted")
+
+        duplicate_path = temp_root / "duplicate-prompts.jsonl"
+        duplicate_rows = prompt_rows + [dict(prompt_rows[0])]
+        duplicate_path.write_text(
+            "".join(json.dumps(row, sort_keys=True) + "\n" for row in duplicate_rows),
+            encoding="utf-8",
+        )
+        try:
+            score_outputs.score_submission(
+                items_path=str(ITEMS_PATH),
+                prompts_path=str(duplicate_path),
+                submission_rows=[],
+                model_id="stub/model",
+            )
+        except ValueError as error:
+            if "duplicate prompt row" not in str(error):
+                errors.append(f"duplicate prompt key raised the wrong error: {error}")
+        else:
+            errors.append("duplicate prompt key was accepted")
+
+
 def main() -> None:
     expected_rows = load_submission_rows()
     prompts = aleph_bench_m0_task.load_sendable_prompts()
@@ -137,6 +188,7 @@ def main() -> None:
         model_id="stub/model",
     )
     _check_metric_invariants(bench_result, errors)
+    _check_scorer_boundaries(errors)
     aggregate_aurc = bench_result.get("aggregate", {}).get("aurc")
 
     report = {
