@@ -201,20 +201,20 @@
       "sha256": "6c15bb221d69822209aff2f14518fb1efa9dc823fdf1a34f640527a92164e4fc"
     },
     {
-      "bytes": 6072,
+      "bytes": 8091,
       "encodingFormat": "text/plain",
       "note": "Kaggle Community Benchmark preparation artifact.",
       "path": "kaggle/api_test_smoke.py",
       "role": "kaggle",
-      "sha256": "0fa4d1912f87a8861c93c978a87c8e9da2173ec6d1cbe2846e93b7aaa80b6afb"
+      "sha256": "f495f69bc5bf58124dba74b682285fd7461a7390ceef80aac2771b4d3218f1a1"
     },
     {
-      "bytes": 9964,
+      "bytes": 11137,
       "encodingFormat": "text/plain",
       "note": "Kaggle Community Benchmark preparation artifact.",
       "path": "kaggle/score_outputs.py",
       "role": "kaggle",
-      "sha256": "af02758150ed761e2ccf77553fb0c870d8fce9ab529462fef765beb1b94466fa"
+      "sha256": "ae0d92540d8ee84ae7246fa763131d4f73c77974c3496c2c2d10c8d1759b53bb"
     },
     {
       "bytes": 1170,
